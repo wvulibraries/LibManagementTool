@@ -1,4 +1,4 @@
-class DepartmentsController < ApplicationController
+class Admin::DepartmentsController < ApplicationController
   before_action :set_department, only: [:show, :edit, :update, :destroy]
 
   # GET /departments
@@ -69,6 +69,6 @@ class DepartmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def department_params
-      params.require(:department).permit(:name, :description)
+      params.require(:department).permit(:name, :description, :library_id)
     end
 end
