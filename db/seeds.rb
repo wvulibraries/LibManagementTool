@@ -16,3 +16,14 @@ libs = [
 libs.each do |name, desc|
   Library.create(name:name, description: desc)
 end
+
+
+depts = [
+  ["Access Services", "Helps students access stuff like research material.", 1],
+  ["Eliza's Coffee Shop",  "Food, Coffee, Anime.", 1],
+  ["Access Services", "Helps students find research stuff.", 2]
+]
+
+depts.each do |name, desc, lib|
+  Department.create(name:name, description: desc, library_id: lib)
+end
