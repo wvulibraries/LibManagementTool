@@ -2,10 +2,8 @@
 
 one:
   name: MyString
-  hasDepartment: 
   description: MyText
 
 two:
   name: MyString
-  hasDepartment: 
   description: MyText
