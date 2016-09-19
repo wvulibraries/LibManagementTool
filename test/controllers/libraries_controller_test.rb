@@ -17,7 +17,7 @@ class LibrariesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create library" do
     assert_difference('Library.count') do
-      post libraries_url, params: { library: { description: @library.description, hasDepartment: @library.hasDepartment, name: @library.name } }
+      post libraries_url, params: { library: { description: @library.description, name: @library.name } }
     end
 
     assert_redirected_to library_url(Library.last)
@@ -34,7 +34,7 @@ class LibrariesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update library" do
-    patch library_url(@library), params: { library: { description: @library.description, hasDepartment: @library.hasDepartment, name: @library.name } }
+    patch library_url(@library), params: { library: { description: @library.description, name: @library.name } }
     assert_redirected_to library_url(@library)
   end
 

@@ -3,6 +3,8 @@ require 'test_helper'
 class DepartmentsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @department = departments(:one)
+    @library = libraries(:one)
+    @department.library_id = @library.id
   end
 
   test "should get index" do
