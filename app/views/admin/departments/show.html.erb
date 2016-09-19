@@ -12,8 +12,8 @@
 
 <p>
   <strong> Library: </strong>
-  <%= @department.library_id %>
-</p> 
+  <%= @department.library.name %>
+</p>
 
 <%= link_to 'Edit', edit_department_path(@department) %> |
 <%= link_to 'Back', departments_path %>
