@@ -5,9 +5,9 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Hasdepartment</th>
-      <th>Description</th>
+      <th> Name </th>
+      <th> Description </th>
+      <th> Departments </th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,8 +16,14 @@
     <% @libraries.each do |library| %>
       <tr>
         <td><%= library.name %></td>
-        <td><%= library.hasDepartment %></td>
         <td><%= library.description %></td>
+        <td>
+          <ul>
+          <% library.departments.each do |dept| %>
+            <li> <%= dept.name %> </li>
+          <% end %>
+          </ul>
+        </td>
         <td><%= link_to 'Show', library %></td>
         <td><%= link_to 'Edit', edit_library_path(library) %></td>
         <td><%= link_to 'Destroy', library, method: :delete, data: { confirm: 'Are you sure?' } %></td>

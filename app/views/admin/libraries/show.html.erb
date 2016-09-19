@@ -6,13 +6,17 @@
 </p>
 
 <p>
-  <strong>Hasdepartment:</strong>
-  <%= @library.hasDepartment %>
+  <strong>Description:</strong>
+  <%= @library.description %>
 </p>
 
 <p>
-  <strong>Description:</strong>
-  <%= @library.description %>
+  <strong>Departments: </strong>
+  <ul>
+    <% @library.departments.each do |dept| %>
+      <li> <%= dept.name %> </li>
+    <% end %>
+  </ul>
 </p>
 
 <%= link_to 'Edit', edit_library_path(@library) %> |
