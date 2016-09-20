@@ -41,6 +41,19 @@ The goal of this application is to create an application using a standard web fr
   - followed by  `rails db:migrate`
 
 ### Run the Server
+  - use `rails server` to boot server with vagrant by adding to the `config/boot.rb` file
+
+  ```ruby
+  require 'rails/commands/server'
+  module Rails
+    class Server
+      def default_options
+        super.merge(Host:  '0.0.0.0', Port: 3000)
+      end
+    end
+  end
+  ```
+
   - `rails server -b 0.0.0.0` this runs the rails server on an ip and helps to
 
 # Deployment
