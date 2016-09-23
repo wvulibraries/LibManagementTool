@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Admin Normal Hours</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th> Open </th>
+      <th> Close </th>
+      <th> Department / Library </th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @normal_hours.each do |normal_hour| %>
+      <tr>
+        <td><%= normal_hour.hr_open_time %> </td>
+        <td><%= normal_hour.hr_close_time %> </td>
+        <td><%= normal_hour.get_resource %></td>
+        <td><%= link_to 'Show', normal_hour %></td>
+        <td><%= link_to 'Edit', edit_normal_hour_path(normal_hour) %></td>
+        <td><%= link_to 'Destroy', normal_hour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Admin Normal Hour', new_normal_hour_path %>

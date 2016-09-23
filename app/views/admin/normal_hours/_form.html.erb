@@ -1,0 +1,51 @@
+<%= form_for(normal_hour) do |f| %>
+  <% if normal_hour.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralizer(normal_hour.errors.count, "error") %> prohibited this normal_hour from being saved:</h2>
+
+      <ul>
+      <% normal_hour.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="hidden-field">
+    <%= f.hidden_field :resource_type %>
+  </div>
+
+  <% if @normal_hour.resource_type == "library" %>
+    <div class="field">
+      <%= f.label :resource_id, 'Location' %>
+      <%= f.collection_select(:resource_id, Library.all, :id, :name)  %>
+    </div>
+  <% end %>
+
+  <% if @normal_hour.resource_type == "department" %>
+    <div class="field">
+      <%= f.label :resource_id, 'Location' %>
+      <%= f.collection_select(:resource_id, Department.all, :id, :reformat_name) %>
+    </div>
+  <% end %>
+
+
+  <div class="field">
+    <%= f.label :day_of_week %>
+    <%= f.text_field :day_of_week %>
+  </div>
+
+  <div class="field">
+    <%= f.label :open_time %>
+    <%= f.time_field :open_time, id: "timepicker" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :close_time %>
+    <%= f.time_field :close_time, id: "timepicker" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
