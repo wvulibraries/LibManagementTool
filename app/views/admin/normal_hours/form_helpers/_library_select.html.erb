@@ -1,0 +1,4 @@
+<div class="field">
+  <%= f.label :resource_id, 'Location' %>
+  <%= f.collection_select(:resource_id, Library.all, :id, :name)  %>
+</div>

@@ -11,22 +11,21 @@
     </div>
   <% end %>
 
-  <div class="hidden-field">
-    <%= f.hidden_field :resource_type %>
-  </div>
-
-  <% if @normal_hour.resource_type == "library" %>
+  <% if @normal_hour.resource_type == nil %>
     <div class="field">
-      <%= f.label :resource_id, 'Location' %>
-      <%= f.collection_select(:resource_id, Library.all, :id, :name)  %>
+      <%= f.label :resource_type, "Select A Location Type" %>
+      <%= f.select :resource_type, ['library', 'department']%>
     </div>
   <% end %>
 
-  <% if @normal_hour.resource_type == "department" %>
-    <div class="field">
-      <%= f.label :resource_id, 'Location' %>
-      <%= f.collection_select(:resource_id, Department.all, :id, :reformat_name) %>
-    </div>
+
+
+  <% if @normal_hour.resource_type == "library" %>
+      <%= render :partial => 'admin/normal_hours/form_helpers/library_select', :locals => {:f => f} %>
+  <% elsif @normal_hour.resource_type == "department" %>
+      <%= render :partial => 'admin/normal_hours/form_helpers/department_select', :locals => {:f => f} %>
+  <% else %>
+    <div class="resource_id"> </div>
   <% end %>
 
 
@@ -48,4 +47,15 @@
   <div class="actions">
     <%= f.submit %>
   </div>
+
+<script type='text/javascript'>
+   $(document).on("change","#normal_hour_resource_type", function (){
+      var selectValue = $(this).val();
+      var $resourceContainer = $('.resoure_id');
+   });
+   $(function(){
+     $('#normal_hour_resource_type').change();
+   });
+</script>
+
 <% end %>
