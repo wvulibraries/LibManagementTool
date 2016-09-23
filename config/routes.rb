@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  
   # admin
   get     '/admin', to: 'admin#index'
 
@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   # resources generates all routes for crud of libraries, departments, users, etc.
 
   scope '/admin' do
-    resources :libraries, :departments, :users, module: 'admin'
+    resources :libraries, :departments, :users, :normal_hours, module: 'admin'
   end
 
   # login
