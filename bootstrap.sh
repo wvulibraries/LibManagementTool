@@ -22,6 +22,9 @@ yum install -y zlib-devel
 yum install -y readline-devel
 yum install -y ntp git vim emacs
 
+echo "Change server time to Eastern"
+ln -s /usr/share/zoneinfo/US/Eastern /etc/localtime
+
 
 echo "Installing mysql ... "
 echo " -------------------------------------------------------------------------- "
