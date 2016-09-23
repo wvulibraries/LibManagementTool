@@ -9,8 +9,11 @@
 libs = [
   [ "Downtown Campus Library", "Main campus located in downtown Morgantown."],
   [ "Evansdale Library", "Evansdale library more suited to majors on the Evandale campus."],
+  [ "Health Sciences Library (Charleston)", "HSC"],
   [ "Health Sciences Library", "Library associated with the health sciences and focusing on medical care."],
-  [ "Potomac State College Library", "PSC library located on PSC campus."],
+  [ "Mary F. Shipper Library (Potomac State)", "PSC library located on PSC campus."],
+  [ "Law Library", "Legal Library"],
+  [ "Vining Library (Institute of Technology)", " "]
 ]
 
 libs.each do |name, desc|
@@ -19,11 +22,42 @@ end
 
 
 depts = [
-  ["Access Services", "Helps students access stuff like research material.", 1],
+  ["Access Services", "Helps accessing of material.", 1],
+  ["Access Services", "Helps accessing of material.", 2],
+  ["Research Services", "Helps students research. ", 2],
+  ["Research Services", "Helps students research. ", 1],
+  ["Research Services", "Helps students research. ", 3],
   ["Eliza's Coffee Shop",  "Food, Coffee, Anime.", 1],
-  ["Access Services", "Helps students find research stuff.", 2]
+  ["DaVinci's Cafe",  "Coffee. Food. Snacks.", 2],
+  ["Multimedia Services","",1],
+  ["Multimedia Services","",2],
+  ["WV Regional History Center", "Historical preservation and digital finding aids.", 1]
 ]
 
 depts.each do |name, desc, lib|
   Department.create(name:name, description: desc, library_id: lib)
+end
+
+start_time = Time.now
+end_time = Time.now + 10*60*60
+
+normal_hours = [
+  ['department', 1, 1, start_time, end_time],
+  ['department', 1, 2, start_time, end_time],
+  ['department', 1, 3, start_time, end_time],
+  ['department', 1, 4, start_time, end_time],
+  ['department', 1, 5, start_time, end_time],
+  ['department', 1, 6, start_time, end_time],
+  ['department', 1, 7, nil, nil],
+  ['library', 1, 1, nil, nil],
+  ['library', 1, 2, start_time, end_time],
+  ['library', 1, 3, start_time, end_time],
+  ['library', 1, 4, start_time, end_time],
+  ['library', 1, 5, start_time, end_time],
+  ['library', 1, 6, start_time, end_time],
+  ['library', 1, 7, nil, nil]
+]
+
+normal_hours.each do | rtype, rid, day, open_time, close_time |
+  NormalHour.create(resource_type: rtype, resource_id: rid, day_of_week: day, open_time: open_time, close_time: close_time)
 end
