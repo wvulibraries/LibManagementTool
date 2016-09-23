@@ -54,7 +54,7 @@ The goal of this application is to create an application using a standard web fr
   end
   ```
 
-  - `rails server -b 0.0.0.0` this runs the rails server on an ip and helps to
+  - `rails server -b 0.0.0.0` this runs the rails server on an ip and helps to work with vagrant
 
 # Deployment
 
