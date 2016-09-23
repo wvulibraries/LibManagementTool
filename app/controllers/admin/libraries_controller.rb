@@ -1,4 +1,4 @@
-class Admin::LibrariesController < ApplicationController
+class Admin::LibrariesController < AdminController
   before_action :set_library, only: [:show, :edit, :update, :destroy]
 
   # GET /libraries
