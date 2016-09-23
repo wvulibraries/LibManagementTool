@@ -4,7 +4,7 @@ class Admin::LibrariesController < AdminController
   # GET /libraries
   # GET /libraries.json
   def index
-    @libraries = Library.all
+    @libraries = Library.all.order(:name)
   end
 
   # GET /libraries/1

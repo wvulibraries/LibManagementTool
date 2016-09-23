@@ -4,7 +4,7 @@ class Admin::DepartmentsController < AdminController
   # GET /departments
   # GET /departments.json
   def index
-    @departments = Department.all
+    @departments = Department.all.joins(:library).order('libraries.name')
   end
 
   # GET /departments/1
