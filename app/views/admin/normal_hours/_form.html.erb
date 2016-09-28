@@ -18,14 +18,13 @@
     </div>
   <% end %>
 
-
-
   <% if @normal_hour.resource_type == "library" %>
       <%= render :partial => 'admin/normal_hours/form_helpers/library_select', :locals => {:f => f} %>
   <% elsif @normal_hour.resource_type == "department" %>
       <%= render :partial => 'admin/normal_hours/form_helpers/department_select', :locals => {:f => f} %>
   <% else %>
-    <div class="resource_id"> </div>
+      <%= render :partial => 'admin/normal_hours/form_helpers/library_select', :locals => {:f => f} %>
+      <%= render :partial => 'admin/normal_hours/form_helpers/department_select', :locals => {:f => f} %>
   <% end %>
 
 
