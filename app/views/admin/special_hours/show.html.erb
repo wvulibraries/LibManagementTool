@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @special_hour.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @special_hour.end_date %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @special_hour.name %>
+</p>
+
+<p>
+  <strong>Open time:</strong>
+  <%= @special_hour.open_time %>
+</p>
+
+<p>
+  <strong>Close time:</strong>
+  <%= @special_hour.close_time %>
+</p>
+
+<p>
+  <strong>Open 24:</strong>
+  <%= @special_hour.open_24 %>
+</p>
+
+<p>
+  <strong>No close time:</strong>
+  <%= @special_hour.no_close_time %>
+</p>
+
+<p>
+  <strong>No open time:</strong>
+  <%= @special_hour.no_open_time %>
+</p>
+
+<%= link_to 'Edit', edit_special_hour_path(@special_hour) %> |
+<%= link_to 'Back', special_hours_path %>

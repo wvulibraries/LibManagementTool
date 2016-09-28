@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160920200107) do
+ActiveRecord::Schema.define(version: 20160927141303) do
 
   create_table "departments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -37,11 +37,27 @@ ActiveRecord::Schema.define(version: 20160920200107) do
     t.string   "resource_type"
     t.integer  "resource_id"
     t.integer  "day_of_week"
-    t.datetime   "open_time"
-    t.datetime   "close_time"
+    t.datetime "open_time"
+    t.datetime "close_time"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.index ["resource_type", "resource_id"], name: "index_normal_hours_on_resource_type_and_resource_id", using: :btree
+  end
+
+  create_table "special_hours", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "special_type"
+    t.integer  "special_id"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string   "name"
+    t.datetime "open_time"
+    t.datetime "close_time"
+    t.boolean  "open_24"
+    t.boolean  "no_close_time"
+    t.boolean  "no_open_time"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["special_type", "special_id"], name: "index_special_hours_on_special_type_and_special_id", using: :btree
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

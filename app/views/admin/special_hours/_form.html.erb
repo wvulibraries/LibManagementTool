@@ -1,0 +1,89 @@
+<%= form_for(special_hour) do |f| %>
+  <% if special_hour.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(special_hour.errors.count, "error") %> prohibited this special_hour from being saved:</h2>
+
+      <ul>
+      <% special_hour.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :special_type, "Select A Location Type" %>
+    <%= f.select :special_type, ['library', 'department']%>
+  </div>
+
+  <% if @special_hour.special_type == "library" %>
+      <%= render :partial => 'admin/special_hours/form_helpers/library_select', :locals => {:f => f} %>
+  <% elsif @special_hour.special_type == "department" %>
+      <%= render :partial => 'admin/special_hours/form_helpers/department_select', :locals => {:f => f} %>
+  <% else %>
+    <%= render :partial => 'admin/special_hours/form_helpers/library_select', :locals => {:f => f} %>
+    <%= render :partial => 'admin/special_hours/form_helpers/department_select', :locals => {:f => f} %>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :start_date %>
+    <%= f.datetime_select :start_date %>
+  </div>
+
+  <div class="field">
+    <%= f.label :end_date %>
+    <%= f.datetime_select :end_date %>
+  </div>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :open_time %>
+    <%= f.time_field :open_time, id: "timepicker" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :close_time %>
+    <%= f.time_field :close_time, id: "timepicker" %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :open_24 %>
+    <%= f.check_box :open_24 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :no_close_time %>
+    <%= f.check_box :no_close_time %>
+  </div>
+
+  <div class="field">
+    <%= f.label :no_open_time %>
+    <%= f.check_box :no_open_time %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<script type='text/javascript'>
+   $(document).on("change","#special_hour_special_type", function (){
+      var selectValue = $(this).val();
+
+      if(selectValue == 'library'){
+        $('.department').hide();
+        $('.library').show();
+      } else {
+        $('.library').hide();
+        $('.department').show();
+      }
+   });
+   $(function(){
+     $('#special_hour_special_type').change();
+   });
+</script>

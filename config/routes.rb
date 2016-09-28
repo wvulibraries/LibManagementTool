@@ -1,22 +1,23 @@
 Rails.application.routes.draw do
-  
+  # root
+  root 'public#index'
+
   # admin
-  get     '/admin', to: 'admin#index'
+  get  '/admin', to: 'admin#index'
 
   # forces the controllers to use the admin name space
   # this is going to allow for the addition of a function to restrict access
   # resources generates all routes for crud of libraries, departments, users, etc.
 
   scope '/admin' do
-    resources :libraries, :departments, :users, :normal_hours, module: 'admin'
+    resources :libraries, :departments, :users, :normal_hours, :special_hours, module: 'admin'
   end
+
+  get '/admin/departments/list', to: 'departments#index'
 
   # login
   get     '/login',   to: 'sesions#new'
   post    '/login',   to: 'sessions#create'
   delete  '/logout',  to: 'sessions#destroy'
-
-  # root
-  root 'public#index'
 
 end

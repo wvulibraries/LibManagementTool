@@ -1,0 +1,2 @@
+module SpecialHoursHelper
+end

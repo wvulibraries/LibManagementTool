@@ -1,0 +1,1 @@
+json.partial! "special_hours/special_hour", special_hour: @special_hour

@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Special Hours</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Name</th>
+      <th>Open time</th>
+      <th>Close time</th>
+      <th>Open 24</th>
+      <th>No close time</th>
+      <th>No open time</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @special_hours.each do |special_hour| %>
+      <tr>
+        <td><%= special_hour.hr_start_date %></td>
+        <td><%= special_hour.hr_end_date %></td>
+        <td><%= special_hour.name %></td>
+        <td><%= special_hour.hr_open_time %></td>
+        <td><%= special_hour.hr_close_time %></td>
+        <td><%= special_hour.open_24 ? "yes" : "no" %></td>
+        <td><%= special_hour.no_close_time ? "yes" : "no" %></td>
+        <td><%= special_hour.no_open_time ? "yes" : "no" %></td>
+        <td><%= link_to 'Show', special_hour %></td>
+        <td><%= link_to 'Edit', edit_special_hour_path(special_hour) %></td>
+        <td><%= link_to 'Destroy', special_hour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Special Hour', new_special_hour_path %>
