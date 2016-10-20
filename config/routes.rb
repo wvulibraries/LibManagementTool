@@ -14,10 +14,4 @@ Rails.application.routes.draw do
   end
 
   get '/admin/departments/list', to: 'departments#index'
-
-  # login
-  get     '/login',   to: 'sesions#new'
-  post    '/login',   to: 'sessions#create'
-  delete  '/logout',  to: 'sessions#destroy'
-
 end

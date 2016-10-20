@@ -1,4 +1,0 @@
-<div class="field">
-  <%= f.label :resource_id, 'Location' %>
-  <%= f.collection_select(:resource_id, Department.all, :id, :reformat_name, {}, {:class=>'department'}) %>
-</div>

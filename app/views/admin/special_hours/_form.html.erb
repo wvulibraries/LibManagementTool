@@ -16,14 +16,15 @@
     <%= f.select :special_type, ['library', 'department']%>
   </div>
 
-  <% if @special_hour.special_type == "library" %>
-      <%= render :partial => 'admin/special_hours/form_helpers/library_select', :locals => {:f => f} %>
-  <% elsif @special_hour.special_type == "department" %>
-      <%= render :partial => 'admin/special_hours/form_helpers/department_select', :locals => {:f => f} %>
-  <% else %>
-    <%= render :partial => 'admin/special_hours/form_helpers/library_select', :locals => {:f => f} %>
-    <%= render :partial => 'admin/special_hours/form_helpers/department_select', :locals => {:f => f} %>
-  <% end %>
+  <div class="field department">
+    <%= f.label :special_id, 'Location' %>
+    <%= f.collection_select(:special_id, Department.all, :id, :reformat_name) %>
+  </div>
+
+  <div class="field library">
+    <%= f.label :special_id, 'Location' %>
+    <%= f.collection_select(:special_id, Library.all, :id, :name)  %>
+  </div>
 
   <div class="field">
     <%= f.label :start_date %>

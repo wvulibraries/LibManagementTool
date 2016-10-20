@@ -19,6 +19,10 @@
 @import "neat";
 @import "neat-helpers";
 
+@import "pickadate/default";
+@import "pickadate/default.date";
+@import "pickadate/default.time";
+
 html, body {
   @include span-columns(12);
   height:100%;

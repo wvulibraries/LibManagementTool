@@ -18,29 +18,29 @@
     </div>
   <% end %>
 
-  <% if @normal_hour.resource_type == "library" %>
-      <%= render :partial => 'admin/normal_hours/form_helpers/library_select', :locals => {:f => f} %>
-  <% elsif @normal_hour.resource_type == "department" %>
-      <%= render :partial => 'admin/normal_hours/form_helpers/department_select', :locals => {:f => f} %>
-  <% else %>
-      <%= render :partial => 'admin/normal_hours/form_helpers/library_select', :locals => {:f => f} %>
-      <%= render :partial => 'admin/normal_hours/form_helpers/department_select', :locals => {:f => f} %>
-  <% end %>
+  <div class="department field">
+    <%= f.label :resource_id, 'Location' %>
+    <%= f.collection_select(:resource_id, Department.all, :id, :reformat_name, {}, {:class=>'department'}) %>
+  </div>
 
+  <div class="library field">
+    <%= f.label :resource_id, 'Location' %>
+    <%= f.collection_select(:resource_id, Library.all, :id, :name, {}, {:class=>'library'})  %>
+  </div>
 
   <div class="field">
     <%= f.label :day_of_week %>
-    <%= f.text_field :day_of_week %>
+    <%= f.select :day_of_week, Date::DAYNAMES.zip((0..6).to_a)%>
   </div>
 
   <div class="field">
     <%= f.label :open_time %>
-    <%= f.time_field :open_time, id: "timepicker" %>
+    <%= f.time_field :open_time, id: "timepicker", :class => "timepicker" %>
   </div>
 
   <div class="field">
     <%= f.label :close_time %>
-    <%= f.time_field :close_time, id: "timepicker" %>
+    <%= f.time_field :close_time, id: "timepicker", :class => "timepicker" %>
   </div>
 
   <div class="actions">
@@ -50,9 +50,24 @@
 <script type='text/javascript'>
    $(document).on("change","#normal_hour_resource_type", function (){
       var selectValue = $(this).val();
-      var $resourceContainer = $('.resoure_id');
+
+      if(selectValue == 'library'){
+        $('.department').hide();
+        $('.library').show();
+      } else {
+        $('.library').hide();
+        $('.department').show();
+      }
    });
+
+
    $(function(){
+     // timepicker stuff
+     $(".timepicker").pickatime({
+       interval: 60,
+       format:'h:i A',
+     });
+
      $('#normal_hour_resource_type').change();
    });
 </script>
