@@ -1,3 +1,4 @@
+<div class="normal_hours_form">
 <%= form_for(normal_hour) do |f| %>
   <% if normal_hour.errors.any? %>
     <div id="error_explanation">
@@ -35,41 +36,17 @@
 
   <div class="field">
     <%= f.label :open_time %>
-    <%= f.time_field :open_time, id: "timepicker", :class => "timepicker" %>
+    <%= f.time_field :open_time, :value => normal_hour.hr_open_time, id: "timepicker", :class => "timepicker" %>
+
   </div>
 
   <div class="field">
     <%= f.label :close_time %>
-    <%= f.time_field :close_time, id: "timepicker", :class => "timepicker" %>
+    <%= f.time_field :close_time, :value => normal_hour.hr_close_time, id: "timepicker", :class => "timepicker" %>
   </div>
 
   <div class="actions">
     <%= f.submit %>
   </div>
-
-<script type='text/javascript'>
-   $(document).on("change","#normal_hour_resource_type", function (){
-      var selectValue = $(this).val();
-
-      if(selectValue == 'library'){
-        $('.department').hide();
-        $('.library').show();
-      } else {
-        $('.library').hide();
-        $('.department').show();
-      }
-   });
-
-
-   $(function(){
-     // timepicker stuff
-     $(".timepicker").pickatime({
-       interval: 60,
-       format:'h:i A',
-     });
-
-     $('#normal_hour_resource_type').change();
-   });
-</script>
-
 <% end %>
+</div>

@@ -1,3 +1,4 @@
+<div class="special-hour-form">
 <%= form_for(special_hour) do |f| %>
   <% if special_hour.errors.any? %>
     <div id="error_explanation">
@@ -43,12 +44,12 @@
 
   <div class="field">
     <%= f.label :open_time %>
-    <%= f.time_field :open_time, id: "timepicker" %>
+    <%= f.time_field :open_time, :value => special_hour.hr_open_time, :class => "timepicker"  %>
   </div>
 
   <div class="field">
     <%= f.label :close_time %>
-    <%= f.time_field :close_time, id: "timepicker" %>
+    <%= f.time_field :close_time, :value => special_hour.hr_close_time, :class => "timepicker" %>
   </div>
 
 
@@ -71,20 +72,4 @@
     <%= f.submit %>
   </div>
 <% end %>
-
-<script type='text/javascript'>
-   $(document).on("change","#special_hour_special_type", function (){
-      var selectValue = $(this).val();
-
-      if(selectValue == 'library'){
-        $('.department').hide();
-        $('.library').show();
-      } else {
-        $('.library').hide();
-        $('.department').show();
-      }
-   });
-   $(function(){
-     $('#special_hour_special_type').change();
-   });
-</script>
+</div>
