@@ -20,9 +20,9 @@ class SpecialHour < ApplicationRecord
   private
     def hr_time(time)
       if time != nil
-          return time.strftime("%l : %M %P")
+          return time.strftime("%l:%M %p")
       else
-          return "- -"
+          return ""
       end
     end
 
