@@ -9,7 +9,7 @@
 //
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
-//
+
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
@@ -17,3 +17,10 @@
 //= require pickadate/picker
 //= require pickadate/picker.date
 //= require pickadate/picker.time
+
+
+//  Special and Normal Hours Forms 
+// --------------------------------
+//= require admin/normal_hours
+//= require admin/special_hours
+//= require admin/time_picker
