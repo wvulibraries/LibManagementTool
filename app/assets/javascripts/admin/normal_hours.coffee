@@ -7,7 +7,7 @@ $(document).on 'change', '#normal_hour_resource_type', ->
     $('.library').hide()
     $('.department').show()
   return
-$ ->
+$(document).on "turbolinks:load ready", ->
   if $('#normal_hour_resource_type').length
     $('#normal_hour_resource_type').change()
   return

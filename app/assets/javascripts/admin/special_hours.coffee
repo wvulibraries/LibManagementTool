@@ -7,7 +7,7 @@ $(document).on 'change', '#special_hour_special_type', ->
     $('.library').hide()
     $('.department').show()
   return
-$ ->
+$(document).on "turbolinks:load ready", ->
   if $('#special_hour_special_type').length
     $('#special_hour_special_type').change()
   return
