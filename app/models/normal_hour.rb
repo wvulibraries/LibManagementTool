@@ -12,23 +12,24 @@ class NormalHour < ApplicationRecord
   end
 
   def hr_open_time
-    if self.open_time != nil
-        return self.open_time.strftime("%l : %M %P")
-    else
-        return "- -"
-    end
+    return human_readable_time(self.open_time)
   end
 
   def hr_close_time
-    if self.close_time != nil
-        return self.close_time.strftime("%l : %M %P")
-    else
-        return "- -"
-    end
+    return human_readable_time(self.close_time)
   end
 
   def weekday
     day = self.day_of_week.to_i
     return Date::DAYNAMES[day]
   end
+
+  private
+    def human_readable_time(time)
+      if time != nil
+          return time.strftime("%l:%M %p")
+      else
+          return ""
+      end
+    end
 end
