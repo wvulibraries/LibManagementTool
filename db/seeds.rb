@@ -48,14 +48,14 @@ normal_hours = [
   ['department', 1, 4, start_time, end_time],
   ['department', 1, 5, start_time, end_time],
   ['department', 1, 6, start_time, end_time],
-  ['department', 1, 7, nil, nil],
+  ['department', 1, 0, nil, nil],
   ['library', 1, 1, nil, nil],
   ['library', 1, 2, start_time, end_time],
   ['library', 1, 3, start_time, end_time],
   ['library', 1, 4, start_time, end_time],
   ['library', 1, 5, start_time, end_time],
   ['library', 1, 6, start_time, end_time],
-  ['library', 1, 7, nil, nil]
+  ['library', 1, 0, nil, nil]
 ]
 
 normal_hours.each do | rtype, rid, day, open_time, close_time |
