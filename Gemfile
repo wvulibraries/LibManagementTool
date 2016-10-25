@@ -14,9 +14,11 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
 # Authentication Sys
-gem 'devise'
-gem 'devise_cas_authenticatable'
-gem 'rubycas-client'
+# gem 'devise'
+# gem 'devise_cas_authenticatable'
+# gem 'rubycas-client'
+
+gem 'omniauth-cas'
 
 # SASS GEMS
 gem 'bourbon'
