@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SpecialHoursControllerTest < ActionDispatch::IntegrationTest
+class Admin::SpecialHoursControllerTest < ActionDispatch::IntegrationTest
   setup do
     @special_hour = special_hours(:one)
   end

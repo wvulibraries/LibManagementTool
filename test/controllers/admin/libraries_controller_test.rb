@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class LibrariesControllerTest < ActionDispatch::IntegrationTest
+class Admin::LibrariesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @library = libraries(:one)
   end
