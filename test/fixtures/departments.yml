@@ -1,0 +1,17 @@
+access_services:
+    id: 1
+    name: "Access Services"
+    description: "A department of the downtown campus lib."
+    library_id: 1
+
+research_services:
+    id: 2
+    name: "Research Services"
+    description: "Researching Stuff"
+    library_id: 1
+    
+other_data:
+    id: 3
+    name: "Other Data"
+    description: "Suitable another department at different library"
+    library_id: 2

@@ -1,0 +1,12 @@
+dcl:
+    id: 1
+    name: "Downtown Campus Library"
+    description: "Main campus located in downtown Morgantown."
+edl:
+    id: 2
+    name: "Evansdale Library"
+    description: "Evansdale library more suited to majors on the Evandale campus."
+hsl:
+    id: 3
+    name: "Health Sciences Library"
+    description: "Library associated with the health sciences and focusing on medical care."

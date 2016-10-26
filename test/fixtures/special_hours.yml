@@ -1,0 +1,27 @@
+special_hour1:
+  id: 1
+  start_date: <%= Time.now %>
+  end_date: <%= Time.now + 10.days %>
+  name: "Test open 24 hours"
+  open_time:
+  close_time:
+  open_24: true
+  no_close_time: false
+  no_open_time: false
+  special: dcl (Library)
+  created_at: 2013-09-25 16:00:00 +0800
+  created_at: 2013-09-25 16:00:00 +0800
+
+  special_hour1:
+    id: 2
+    start_date: <%= Time.now + 10.days %>
+    end_date: <%= Time.now + 12.days %>
+    name: "Changed hours"
+    open_time: 2013-09-25 4:00:00 +0800
+    close_time: 2013-09-25 16:00:00 +0800
+    open_24: true
+    no_close_time: false
+    no_open_time: false
+    special: dcl (Library)
+    created_at: 2013-09-25 16:00:00 +0800
+    created_at: 2013-09-25 16:00:00 +0800
