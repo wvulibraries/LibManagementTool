@@ -4,53 +4,53 @@ test_hour1:
   day_of_week: 0
   open_time:
   close_time:
-  created_at: 2013-09-25 16:00:00 +0800
-  created_at: 2013-09-25 16:00:00 +0800
+  created_at: 2013-09-25 16:00:00
+  created_at: 2013-09-25 16:00:00
 
 test_hour2:
   id: 2
   resource: dcl (Library)
   day_of_week: 1
-  open_time: 2016-09-25 8:00:00 +0800
-  close_time: 2016-09-25 16:00:00 +0800
-  created_at: 2013-09-25 16:00:00 +0800
-  created_at: 2013-09-25 16:00:00 +0800
+  open_time: 2016-10-25 12:00:54
+  close_time: 2016-10-25 22:00:54
+  created_at: 2013-09-25 16:00:00
+  created_at: 2013-09-25 16:00:00
 
 test_hour3:
   id: 3
   resource: dcl (Library)
   day_of_week: 2
-  open_time: 2016-09-25 8:00:00 +0800
-  close_time: 2016-09-25 16:00:00 +0800
-  created_at: 2013-09-25 16:00:00 +0800
-  created_at: 2013-09-25 16:00:00 +0800
+  open_time: 2016-09-25 8:00:00
+  close_time: 2016-09-25 16:00:00
+  created_at: 2013-09-25 16:00:00
+  created_at: 2013-09-25 16:00:00
 
 test_hour4:
   id: 4
   resource: dcl (Library)
   day_of_week: 3
-  open_time: 2016-09-25 8:00:00 +0800
-  close_time: 2016-09-25 16:00:00 +0800
-  created_at: 2013-09-25 16:00:00 +0800
-  created_at: 2013-09-25 16:00:00 +0800
+  open_time: 2016-09-25 8:00:00
+  close_time: 2016-09-25 16:00:00
+  created_at: 2013-09-25 16:00:00
+  created_at: 2013-09-25 16:00:00
 
 test_hour5:
   id: 5
   resource: dcl (Library)
   day_of_week: 4
-  open_time: 2016-09-25 8:00:00 +0800
-  close_time: 2016-09-25 16:00:00 +0800
-  created_at: 2013-09-25 16:00:00 +0800
-  created_at: 2013-09-25 16:00:00 +0800
+  open_time: 2016-09-25 8:00:00
+  close_time: 2016-09-25 16:00:00
+  created_at: 2013-09-25 16:00:00
+  created_at: 2013-09-25 16:00:00
 
 test_hour6:
   id: 6
   resource: dcl (Library)
   day_of_week: 5
-  open_time: 2016-09-25 8:00:00 +0800
-  close_time: 2016-09-25 16:00:00 +0800
-  created_at: 2013-09-25 16:00:00 +0800
-  created_at: 2013-09-25 16:00:00 +0800
+  open_time: 2016-09-25 8:00:00
+  close_time: 2016-09-25 16:00:00
+  created_at: 2013-09-25 16:00:00
+  created_at: 2013-09-25 16:00:00
 
 test_hour7:
   id: 7
@@ -58,8 +58,8 @@ test_hour7:
   day_of_week: 6
   open_time:
   close_time:
-  created_at: 2013-09-25 16:00:00 +0800
-  created_at: 2013-09-25 16:00:00 +0800
+  created_at: 2013-09-25 16:00:00
+  created_at: 2013-09-25 16:00:00
 
 test_hour8:
   id: 8
@@ -67,8 +67,8 @@ test_hour8:
   day_of_week: 0
   open_time:
   close_time:
-  created_at: 2013-09-25 16:00:00 +0800
-  created_at: 2013-09-25 16:00:00 +0800
+  created_at: 2013-09-25 16:00:00
+  created_at: 2013-09-25 16:00:00
 
 
 test_hour9:
@@ -77,5 +77,5 @@ test_hour9:
   day_of_week: 1
   open_time:
   close_time:
-  created_at: 2013-09-25 16:00:00 +0800
-  created_at: 2013-09-25 16:00:00 +0800
+  created_at: 2013-09-25 16:00:00
+  created_at: 2013-09-25 16:00:00
