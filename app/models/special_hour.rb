@@ -1,5 +1,6 @@
 class SpecialHour < ApplicationRecord
   belongs_to :special, polymorphic: true
+  validates :id,  numericality: { only_integer: true, allow_nil: true }
 
   def hr_start_date
     return hr_date(self.start_date)
