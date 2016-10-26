@@ -1,6 +1,9 @@
 class NormalHour < ApplicationRecord
   belongs_to :resource, polymorphic: true
 
+  validates :id,  numericality: { only_integer: true, allow_nil: true }
+  validates :day_of_week, numericality: { only_integer: true, :greater_than => -1, :less_than_or_equal_to => 6 }
+
   def get_resource
     if self.resource_type == "department"
         resource = Department.find(self.resource_id)
@@ -27,7 +30,7 @@ class NormalHour < ApplicationRecord
   private
     def human_readable_time(time)
       if time != nil
-          return time.strftime("%l:%M %p")
+          return time.strftime("%l:%M %p").strip
       else
           return ""
       end
