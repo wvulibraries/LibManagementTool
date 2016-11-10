@@ -10,11 +10,6 @@ The goal of this application is to create an application using a standard web fr
   - available computers (enhancement)
   - directory (enhancement)
 
-## Current Build Status
-[![Build Status](https://travis-ci.org/wvulibraries/LibManagementTool.svg?branch=master)](https://travis-ci.org/wvulibraries/LibManagementTool) 
-
-Testing integration with Travis CI and build statuses. 
-
 ## Dependencies
   - CentOS 7.2
   - Vagrant / Virtual Box (For development)
