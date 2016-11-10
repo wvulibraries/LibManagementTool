@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'mysql2', '>= 0.3.18', '< 0.5'
 gem 'puma', '~> 3.0'
+gem 'rake'
 
 # Rails Dependencies
 gem 'sass-rails', '~> 5.0'
@@ -17,8 +18,10 @@ gem 'jbuilder', '~> 2.5'
 # gem 'devise'
 # gem 'devise_cas_authenticatable'
 # gem 'rubycas-client'
+# gem 'omniauth-cas'
 
-gem 'omniauth-cas'
+gem 'rack-cas'
+gem 'rack-cas-rails'
 
 # SASS GEMS
 gem 'bourbon'

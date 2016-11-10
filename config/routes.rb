@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
+
   # root
   root 'public#index'
 
   # admin
   get  '/admin', to: 'admin#index'
+
+  # vagrant only
+  get '/vagrantlogin', to:"public#set_vagrant_user"
+  get '/vlogout', to:"public#logout"
+  get '/vfail', to: "public#fail_vagrant_user"
 
   # forces the controllers to use the admin name space
   # this is going to allow for the addition of a function to restrict access

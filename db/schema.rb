@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927141303) do
+ActiveRecord::Schema.define(version: 20161102180830) do
 
   create_table "departments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -44,6 +44,17 @@ ActiveRecord::Schema.define(version: 20160927141303) do
     t.index ["resource_type", "resource_id"], name: "index_normal_hours_on_resource_type_and_resource_id", using: :btree
   end
 
+  create_table "sessions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "session_id",               null: false
+    t.string   "cas_ticket"
+    t.text     "data",       limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["cas_ticket"], name: "index_sessions_on_cas_ticket", using: :btree
+    t.index ["session_id"], name: "index_sessions_on_session_id", using: :btree
+    t.index ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
+  end
+
   create_table "special_hours", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "special_type"
     t.integer  "special_id"
@@ -60,8 +71,13 @@ ActiveRecord::Schema.define(version: 20160927141303) do
     t.index ["special_type", "special_id"], name: "index_special_hours_on_special_type_and_special_id", using: :btree
   end
 
+  create_table "user_permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "username"
+    t.string   "username",   null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
