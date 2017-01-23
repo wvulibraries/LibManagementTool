@@ -21,6 +21,14 @@
       <% end %>
     </div>
 
+    <% flash.each do |key, value| %>
+      <div class="alert <%= key %>">
+        <div class="content"> <%= value %> </div>
+        <span class="exit-alert"> <i class="fa fa-times-circle-o" aria-hidden="true"></i> </span>
+      </div>
+    <% end %>
+
+
     <main>
       <%= yield %>
     </main>
