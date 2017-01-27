@@ -1,1 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+<% 10.times do |n| %>
+  user_<%= n %>:
+    id: <%= n %>
+    username: <%= "username#{n}" %>
+    created_at: <%= Date.today %>
+    updated_at: <%= 10.days.from_now %>
+<% end %>

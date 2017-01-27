@@ -15,21 +15,15 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
 # Authentication Sys
-# gem 'devise'
-# gem 'devise_cas_authenticatable'
-# gem 'rubycas-client'
-# gem 'omniauth-cas'
+gem 'rubycas-client', :git => 'https://github.com/rubycas/rubycas-client.git'
 
-gem 'rack-cas'
-gem 'rack-cas-rails'
-
-# SASS GEMS
+# frontend
 gem 'bourbon'
 gem 'neat'
+gem 'bitters'
 gem 'normalize-scss'
 gem 'font-awesome-sass'
 gem 'pickadate-rails'
-
 
 
 # Use Redis adapter to run Action Cable in production
@@ -41,7 +35,6 @@ gem 'pickadate-rails'
 # gem 'capistrano-rails', group: :development
 
 
-
 ## Coverage Testing
 # gem 'rcov'
 ## Security Testing
@@ -51,17 +44,16 @@ gem 'pickadate-rails'
 
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'rails-controller-testing'
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console'
   gem 'listen', '~> 3.0.5'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'brakeman', :require => false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

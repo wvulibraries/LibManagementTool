@@ -111,7 +111,7 @@ end
 ## DOCKER
  - Download Docker for your OS
  - Clone the repo
- - cd into the repo and run `docker-composer up -d --build`
+ - cd into the repo and run `docker-compose up -d --build`
  - run the following command to open the container for interactive mode `bash -c "clear && docker exec -it LibraryManagementTool sh"`
 
 ### Changing the databases for Docker

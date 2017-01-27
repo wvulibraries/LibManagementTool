@@ -61,3 +61,7 @@ normal_hours = [
 normal_hours.each do | rtype, rid, day, open_time, close_time |
   NormalHour.create(resource_type: rtype, resource_id: rid, day_of_week: day, open_time: open_time, close_time: close_time)
 end
+
+# Create Users
+User.create(username: 'djdavis')
+User.create(username: 'tam0013')
