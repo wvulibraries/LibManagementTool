@@ -7,8 +7,9 @@ branches:
   only:
     - master
 script:
-  - bundle install
-  - RAILS_ENV=test bundle exec rake db:migrate --trace
-  - bundle exec rake db:test:prepare
+- bundle install
+- RAILS_ENV=test bundle exec rake db:reset
+- RAILS_ENV=test bundle exec rake db:migrate --trace
+- bundle exec rake db:test:prepare test
 before_script:
   - mysql -e 'create database LibraryManagementTool_test'
