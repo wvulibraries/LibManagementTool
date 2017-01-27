@@ -6,10 +6,12 @@ services:
       - "3306:3306"
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    volumes:
+      - ./mysql:/var/lib/mysql
   libtool:
     build: .
     container_name: LibraryManagementTool
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    command:  bash -c "bundle install && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/home/libtool
     ports:

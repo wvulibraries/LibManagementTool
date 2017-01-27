@@ -15,7 +15,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
 # Authentication Sys
-gem 'rubycas-client', :git => 'git://github.com/rubycas/rubycas-client.git'
+gem 'rubycas-client', :git => 'https://github.com/rubycas/rubycas-client.git'
 
 # frontend
 gem 'bourbon'
@@ -45,6 +45,7 @@ gem 'pickadate-rails'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'rails-controller-testing'
 end
 
 group :development do
