@@ -8,14 +8,17 @@
   </head>
 
   <body>
+    <!-- Header -->
     <header>
       <h1> Library Management Tool </h1>
+      <nav>
+        <a href="" class="button js-menu-trigger sliding-panel-button">
+          <i class="fa fa-bars" aria-hidden="true"></i> Menu
+        </a>
+      </nav>
     </header>
 
-    <div class="userManagement">
-
-    </div>
-
+    <!-- Flash Messages / Alerts -->
     <% flash.each do |key, value| %>
       <div class="alert <%= key %>">
         <div class="content"> <%= value %> </div>
@@ -23,11 +26,19 @@
       </div>
     <% end %>
 
+    <!-- Navigation / Menu -->
+    <nav class="js-menu sliding-panel-content">
+      <%= admin_links %>
+    </nav>
 
+    <div class="js-menu-screen sliding-panel-fade-screen"></div>
+
+    <!-- Main Content Yeiled by Views -->
     <main>
       <%= yield %>
     </main>
 
+    <!-- Footers -->
     <footer>
         <div class="builtBy">
             <span class="built">Built</span>
