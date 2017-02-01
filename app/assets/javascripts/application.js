@@ -30,3 +30,8 @@
 //= require admin/normal_hours
 //= require admin/special_hours
 //= require admin/time_picker
+
+
+//  Navigation
+// --------------------------------
+//= require admin/sliding_panel

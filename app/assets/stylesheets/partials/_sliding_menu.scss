@@ -32,9 +32,9 @@ $sliding-panel-background-focus: lighten($sliding-panel-background, 5%);
     border-bottom: $sliding-panel-border;
     color: $sliding-panel-color;
     display: block;
-    font-weight: bold;
-    padding: 1em;
+    padding: $padding;
     text-decoration: none;
+    letter-spacing:1px;
 
     &:focus {
       background-color: $sliding-panel-background-focus;
@@ -56,7 +56,7 @@ $sliding-panel-background-focus: lighten($sliding-panel-background, 5%);
   @include position(fixed, 0);
   background: black;
   opacity: 0;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.4s ease-in-out;
   visibility: hidden;
   z-index: 999998;
 
@@ -67,7 +67,7 @@ $sliding-panel-background-focus: lighten($sliding-panel-background, 5%);
 }
 
 
-// Button 
+// Button
 .sliding-panel-button {
   cursor: pointer;
   display: inline-block;
