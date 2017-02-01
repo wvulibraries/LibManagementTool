@@ -13,13 +13,19 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
+
+//  Responsive Table JS
+// --------------------------------
+//= require stacktable
+
+//  Date and Time Picker JS
+// --------------------------------
 //= require pickadate/picker
 //= require pickadate/picker.date
 //= require pickadate/picker.time
 
 
-//  Special and Normal Hours Forms 
+//  Special and Normal Hours Forms
 // --------------------------------
 //= require admin/normal_hours
 //= require admin/special_hours
