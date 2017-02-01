@@ -7,7 +7,10 @@ class AdminController < ApplicationController
     @username = session[:cas_user]
     @email = session[:cas_extra_attributes][:mail]
     @last_name = session[:cas_extra_attributes][:sn]
-    flash.now[:success] = "Welcome #{@username}!  You have been sucessfully logged in!"
+    if !session[:welcome]
+      flash[:success] = "Welcome #{@username}!  You have been sucessfully logged in!"
+      session[:welcome] = true;
+    end
   end
 
   private
