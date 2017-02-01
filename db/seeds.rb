@@ -63,5 +63,5 @@ normal_hours.each do | rtype, rid, day, open_time, close_time |
 end
 
 # Create Users
-User.create(username: 'djdavis')
-User.create(username: 'tam0013')
+User.create(username: 'djdavis', firstname: 'David', lastname: 'Davis', admin: true)
+User.create(username: 'tam0013', firstname: 'Tracy', lastname: 'McCormick', admin: true)
