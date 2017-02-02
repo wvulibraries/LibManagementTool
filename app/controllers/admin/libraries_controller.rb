@@ -1,5 +1,6 @@
 class Admin::LibrariesController < AdminController
   before_action :set_library, only: [:show, :edit, :update, :destroy]
+  before_action :allow_admin_only, only:[:create, :new, :destroy]
 
   # GET /libraries
   # GET /libraries.json
@@ -65,6 +66,14 @@ class Admin::LibrariesController < AdminController
     # Use callbacks to share common setup or constraints between actions.
     def set_library
       @library = Library.find(params[:id])
+    end
+
+    def allow_admin_only
+      if !check_is_admin
+        redirect_to libraries_url, error: 'You do not have admin access to create or delete libraries.'
+      else
+        true
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
