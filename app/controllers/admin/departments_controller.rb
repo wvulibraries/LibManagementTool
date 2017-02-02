@@ -30,7 +30,7 @@ class Admin::DepartmentsController < AdminController
 
     respond_to do |format|
       if @department.save
-        format.html { redirect_to @department, notice: 'Department was successfully created.' }
+        format.html { redirect_to @department, success: 'Department was successfully created.' }
         format.json { render :show, status: :created, location: @department }
       else
         format.html { render :new }
@@ -44,7 +44,7 @@ class Admin::DepartmentsController < AdminController
   def update
     respond_to do |format|
       if @department.update(department_params)
-        format.html { redirect_to @department, notice: 'Department was successfully updated.' }
+        format.html { redirect_to @department, success: 'Department was successfully updated.' }
         format.json { render :show, status: :ok, location: @department }
       else
         format.html { render :edit }
@@ -58,7 +58,7 @@ class Admin::DepartmentsController < AdminController
   def destroy
     @department.destroy
     respond_to do |format|
-      format.html { redirect_to departments_url, notice: 'Department was successfully destroyed.' }
+      format.html { redirect_to departments_url, success: 'Department was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
