@@ -21,8 +21,13 @@ class AdminController < ApplicationController
     elsif session[:cas_user].nil? && session[:cas_last_valid_ticket]
       redirect_to root_path, error: 'Something went wrong or a faulty login was detected.'
     else
-      return true
+      true
     end
   end
 
+  def check_is_admin
+    user = User.find_by(username: session[:cas_user])
+    user.admin = false
+    user.admin
+  end
 end
