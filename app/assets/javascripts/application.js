@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require select2
 
 //  Responsive Table JS
 // --------------------------------
@@ -31,6 +32,9 @@
 //= require admin/special_hours
 //= require admin/time_picker
 
+// Select 2 Menu for User Permissions
+// --------------------------------
+//= require admin/user_permissions
 
 //  Navigation
 // --------------------------------
