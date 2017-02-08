@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170202201452) do
+ActiveRecord::Schema.define(version: 20170203201345) do
 
   create_table "departments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -72,11 +72,11 @@ ActiveRecord::Schema.define(version: 20170202201452) do
   end
 
   create_table "user_permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "building_type"
-    t.integer  "building_id",   limit: 2
+    t.text     "departments", limit: 65535
+    t.text     "libraries",   limit: 65535
     t.string   "username"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

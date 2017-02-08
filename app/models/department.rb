@@ -10,6 +10,6 @@ class Department < ApplicationRecord
 
 
   def reformat_name
-    return self.name + " - " + self.library.name
+    self.name + " - " + self.library.name
   end
 end

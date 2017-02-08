@@ -1,0 +1,32 @@
+<%= form_for(admin_user_permission) do |f| %>
+  <% if admin_user_permission.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(admin_user_permission.errors.count, "error") %> prohibited this admin_user_permission from being saved:</h2>
+
+      <ul>
+      <% admin_user_permission.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </div>
+
+  <div class="field">
+    <%= f.label :libraries %>
+    <%= f.collection_select(:libraries, Library.all, :id, :name, {}, {:multiple => true, :class => 'libraries_select'}) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :departments %>
+    <%= f.grouped_collection_select :departments, @libraries, :departments, :name, :id, :name, {}, {:multiple => true, :class => 'departments_select'} %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

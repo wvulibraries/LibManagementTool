@@ -1,0 +1,80 @@
+class Admin::UserPermissionsController < AdminController
+  before_action :set_admin_user_permission, only: [:show, :edit, :update, :destroy]
+  before_action :set_option_groups, only:[:edit, :create, :new]
+
+  # GET /admin/user_permissions
+  # GET /admin/user_permissions.json
+  def index
+    @admin_user_permissions = UserPermission.all
+  end
+
+  # GET /admin/user_permissions/1
+  # GET /admin/user_permissions/1.json
+  def show
+  end
+
+  # GET /admin/user_permissions/new
+  def new
+    @admin_user_permission = UserPermission.new
+  end
+
+  # GET /admin/user_permissions/1/edit
+  def edit
+    @users = User.all
+  end
+
+  # POST /admin/user_permissions
+  # POST /admin/user_permissions.json
+  def create
+    @admin_user_permission = UserPermission.new(admin_user_permission_params)
+
+    respond_to do |format|
+      if @admin_user_permission.save
+        format.html { redirect_to @admin_user_permission, success: 'User permission was successfully created.' }
+        format.json { render :show, status: :created, location: @admin_user_permission }
+      else
+        format.html { render :new, error: 'User permissions has errors, please correct them.' }
+        format.json { render json: @admin_user_permission.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /admin/user_permissions/1
+  # PATCH/PUT /admin/user_permissions/1.json
+  def update
+    respond_to do |format|
+      if @admin_user_permission.update(admin_user_permission_params)
+        format.html { redirect_to @admin_user_permission, notice: 'User permission was successfully updated.' }
+        format.json { render :show, status: :ok, location: @admin_user_permission }
+      else
+        format.html { render :edit, error: 'User permission form has errors, please correc them.' }
+        format.json { render json: @admin_user_permission.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /admin/user_permissions/1
+  # DELETE /admin/user_permissions/1.json
+  def destroy
+    @admin_user_permission.destroy
+    respond_to do |format|
+      format.html { redirect_to user_permissions_url, success: 'User permission was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_admin_user_permission
+      @admin_user_permission = UserPermission.find(params[:id])
+    end
+
+    def set_option_groups
+      @libraries = Library.joins(:departments).group('libraries.id').having( 'count( library_id ) >= 1')
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def admin_user_permission_params
+      params.require(:user_permission).permit(:username, libraries: [], departments: [])
+    end
+end
