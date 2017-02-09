@@ -2,6 +2,7 @@ class AdminController < ApplicationController
   # perform filter before action
   before_action CASClient::Frameworks::Rails::Filter
   before_action :check_permissions
+  before_action :get_user_permission
 
   def index
     @username = session[:cas_user]
@@ -29,5 +30,15 @@ class AdminController < ApplicationController
     user = User.find_by(username: session[:cas_user])
     user.admin = false
     user.admin
+  end
+
+  def get_user_permission
+    session.delete(:libraries)
+    session.delete(:departments)
+    if !session[:libraries] && !session[:departments] && session[:cas_user]
+      user_permissions = UserPermission.find_by(username: session[:cas_user])
+      session[:libraries] = clean_array user_permissions.libraries
+      session[:departments] = clean_array user_permissions.departments
+    end
   end
 end
