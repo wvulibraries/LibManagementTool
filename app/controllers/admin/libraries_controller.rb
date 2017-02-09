@@ -1,6 +1,7 @@
 class Admin::LibrariesController < AdminController
   before_action :set_library, only: [:show, :edit, :update, :destroy]
   before_action :allow_admin_only, only:[:create, :new, :destroy]
+  before_action :users_can_edit_library, only:[:show,:edit,:update]
 
   # GET /libraries
   # GET /libraries.json
@@ -73,6 +74,14 @@ class Admin::LibrariesController < AdminController
         redirect_to libraries_url, error: 'You do not have admin access to create or delete libraries.'
       else
         true
+      end
+    end
+
+    def users_can_edit_library
+      if session[:libraries].to_a.include? params[:id].to_s || check_is_admin
+        true
+      else
+        redirect_to libraries_url, error: 'You do not have permissiont access this library.'
       end
     end
 
