@@ -1,5 +1,5 @@
 class UserPermission < ApplicationRecord
   belongs_to :user
-  serialize :libraries
-  serialize :departments
+  serialize :libraries, Array
+  serialize :departments, Array
 end
