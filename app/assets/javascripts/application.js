@@ -1,7 +1,7 @@
 //  JavaScript :: Pulls in all the files dependencies for making
 //  a fun interactive page.
 // ----------------------------------------------------------------
-// Authors: David J. Davis 
+// Authors: David J. Davis
 
 
 //  Responsive Table JS
@@ -14,6 +14,7 @@
 //  Responsive Table JS
 // ----------------------------------------------------------------
 //= require stacktable
+//= require plugins/table.js
 
 //  Date and Time Picker JS
 // ----------------------------------------------------------------
