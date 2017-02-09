@@ -1,6 +1,8 @@
 class Admin::UserPermissionsController < AdminController
   before_action :set_admin_user_permission, only: [:show, :edit, :update, :destroy]
   before_action :set_option_groups, only:[:edit, :create, :new]
+  before_action :allow_admin_only, only: [:create, :new, :show, :edit, :update, :destroy]
+
 
   # GET /admin/user_permissions
   # GET /admin/user_permissions.json
@@ -71,6 +73,14 @@ class Admin::UserPermissionsController < AdminController
 
     def set_option_groups
       @libraries = Library.joins(:departments).group('libraries.id').having( 'count( library_id ) >= 1')
+    end
+
+    def allow_admin_only
+      if !check_is_admin
+        redirect_to users_path, error: 'You do not have admin access to edit, create, or delete user permissions in this application.'
+      else
+        true
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
