@@ -1,6 +1,6 @@
 module NavigationHelper
   def admin_links
-    items = [home_link, admin_home_link, libraries_link, departments_link, users_link, normal_hours_link, special_hours_link]
+    items = [ home_link, admin_home_link, libraries_link, departments_link, users_link, normal_hours_link, special_hours_link, user_permissions_link ]
     content_tag :ul, :class => 'menu' do
        items.collect {|item| concat(content_tag(:li, item))}
     end
@@ -32,5 +32,9 @@ module NavigationHelper
 
   def special_hours_link
     link_to 'Special Hours', special_hours_path
+  end
+
+  def user_permissions_link
+    link_to 'User Permissions', user_permissions_path
   end
 end
