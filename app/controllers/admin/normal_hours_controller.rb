@@ -1,3 +1,9 @@
+# Department Controller
+# ==================================================
+# AUTHORS : David J. Davis
+# Description:
+# All interactions of controllers and permissions per page view
+
 class Admin::NormalHoursController < AdminController
   before_action :set_normal_hour, only: [:show, :edit, :update, :destroy]
 

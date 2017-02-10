@@ -1,4 +1,13 @@
+# Library Controller
+# ==================================================
+# AUTHORS : David J. Davis
+# Description:
+# All interactions of controllers and permissions per page view
+
 class Admin::LibrariesController < AdminController
+  # Before action fires the method assigned to it before
+  # other methods are called acting as a filter in some cases
+  # or to apply data in a dry aspect in other cases
   before_action :set_library, only: [:show, :edit, :update, :destroy]
   before_action :allow_admin_only, only:[:create, :new, :destroy]
   before_action :users_can_edit_library, only:[:show,:edit,:update]
@@ -69,6 +78,15 @@ class Admin::LibrariesController < AdminController
       @library = Library.find(params[:id])
     end
 
+    # allow_admin_only
+    # ==================================================
+    # Name : David J. Davis
+    # Date : 2/10/2017
+    #
+    # Description:
+    # Users the admin controller to check if the user is an admin.
+    # if not a flash message is added to the UI and the user is re-directed.
+
     def allow_admin_only
       if !check_is_admin
         redirect_to libraries_url, error: 'You do not have admin access to create or delete libraries.'
@@ -77,6 +95,14 @@ class Admin::LibrariesController < AdminController
       end
     end
 
+    # users_can_edit_library
+    # ==================================================
+    # Name : David J. Davis
+    # Date : 2/10/2017
+    #
+    # Description:
+    # If the user is not an admin, the next check sees if they have been given
+    # permission to edit the details of the library.
     def users_can_edit_library
       if session[:libraries].to_a.include? params[:id].to_s || check_is_admin
         true
