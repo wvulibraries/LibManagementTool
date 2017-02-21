@@ -1,0 +1,28 @@
+.stacktable {
+  &.small-only{
+    display:table;
+    margin:0;
+    @include breakpoint(tablet){
+      display:none;
+    }
+    &:nth-of-type(even){
+      background:lighten($light-gray,4%);
+    }
+    .st-key { padding-left:20px; font-weight:bold;}
+  }
+
+  &.large-only{
+    display:none;
+    @include breakpoint(tablet){
+      display:table;
+    }
+  }
+}
+
+tr {
+  @include breakpoint(tablet){
+    &:nth-of-type(even){
+      background:lighten($light-gray,4%);
+    }
+  }
+}

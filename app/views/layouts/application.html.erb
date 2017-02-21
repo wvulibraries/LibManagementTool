@@ -9,14 +9,15 @@
   </head>
 
   <body>
+    <!-- Header -->
     <header>
       <h1> Library Management Tool </h1>
+      <nav>
+         <%= link_to "Login", "/admin", :class=>"button admin-button" %>
+      </nav>
     </header>
 
-    <div class="userManagement">
-
-    </div>
-
+    <!-- Flash Messages / Alerts -->
     <% flash.each do |key, value| %>
       <div class="alert <%= key %>">
         <div class="content"> <%= value %> </div>
@@ -24,11 +25,12 @@
       </div>
     <% end %>
 
-
+    <!-- Main Content Yeiled by Views -->
     <main>
       <%= yield %>
     </main>
 
+    <!-- Footers -->
     <footer>
         <div class="builtBy">
             <span class="built">Built</span>

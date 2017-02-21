@@ -1,0 +1,33 @@
+.show-button {
+  @include button_maker($success, 'ghost');
+}
+
+.edit-button {
+  @include button_maker($warning, 'ghost');
+}
+
+.delete-button {
+  @include button_maker($error, 'ghost');
+}
+
+.submit-button {
+  @include button_maker($success, 'ghost');
+}
+
+.cancel-button {
+  @include button_maker(darken($default,20%), 'ghost');
+}
+
+.button {
+  @include button_maker($action-color, 'ghost');
+}
+
+.button-hero {
+  @include button_maker(#fff, 'ghost');
+}
+
+.show-button, .edit-button, .delete-button {
+  i { font-size:1.25em; }
+  padding:5px;
+  padding-top:10px;
+}

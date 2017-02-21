@@ -1,0 +1,10 @@
+html, body {
+  @include span-columns(12);
+  margin:0;
+  padding:0;
+}
+
+main {
+  @include span-columns(12);
+  padding:$padding;
+}

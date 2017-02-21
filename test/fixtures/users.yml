@@ -4,6 +4,9 @@
   user_<%= n %>:
     id: <%= n %>
     username: <%= "username#{n}" %>
+    admin: true
+    firstname: <%= "firstname#{n}" %>
+    lastname: <%= "firstname#{n}" %>
     created_at: <%= Date.today %>
     updated_at: <%= 10.days.from_now %>
 <% end %>

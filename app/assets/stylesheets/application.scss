@@ -10,35 +10,28 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
  *= require_self
+ *= require select2
  */
 
 @import "normalize/import-now";
 @import "bourbon";
+@import "base/base";
 @import "neat";
 @import "neat-helpers";
 
+// Font Awesome
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+// import mixins so that all partials can use them.
+@import "mixins/*";
+@import "custom_objects/*";
+
+// application wide
+@import "partials/*";
+
+// library for pick date for time and date stuff
 @import "pickadate/default";
 @import "pickadate/default.date";
 @import "pickadate/default.time";
-
-html, body {
-  @include span-columns(12);
-  height:100%;
-  background-color: #fff;
-  color: #333;
-  display: block;
-  padding:0;
-  margin:0;
-  font-family: "Helvetica Neue", "Helvetica","Roboto", Arial, sans-serif;
-}
-
-main {
-  height:100%;
-  padding:20px;
-  margin-bottom:-35px; // equals footer height
-  &:after {
-    height:35px; // equals footer height
-  }
-}

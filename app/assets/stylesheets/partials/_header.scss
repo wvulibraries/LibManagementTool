@@ -1,0 +1,35 @@
+header{
+  width:100%;
+  background: $header-background;
+  padding: 10px;
+  border-bottom: $border;
+  color: $gray-text;
+
+  h1 {
+    font-size:14px;
+    margin:0;
+    padding:9px;
+    @include span-columns(8);
+
+    @include breakpoint(tablet){
+      @include span-columns(6);
+    }
+  }
+
+  nav {
+    @include span-columns(4);
+    @include omega();
+    text-align:right;
+
+    @include breakpoint(tablet){
+      @include span-columns(6);
+      @include omega();
+    }
+  }
+}
+
+
+nav > .button {
+  padding:5px 12px;
+  font-size:14px;
+}

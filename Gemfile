@@ -24,6 +24,7 @@ gem 'bitters'
 gem 'normalize-scss'
 gem 'font-awesome-sass'
 gem 'pickadate-rails'
+gem "select2-rails"
 
 
 # Use Redis adapter to run Action Cable in production

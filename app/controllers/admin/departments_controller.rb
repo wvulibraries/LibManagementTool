@@ -1,5 +1,12 @@
+# Department Controller
+# ==================================================
+# AUTHORS : David J. Davis
+# Description:
+# All interactions of controllers and permissions per page view
 class Admin::DepartmentsController < AdminController
   before_action :set_department, only: [:show, :edit, :update, :destroy]
+  before_action :allow_admin_only, only:[:create, :new, :destroy]
+
 
   # GET /departments
   # GET /departments.json
@@ -28,7 +35,7 @@ class Admin::DepartmentsController < AdminController
 
     respond_to do |format|
       if @department.save
-        format.html { redirect_to @department, notice: 'Department was successfully created.' }
+        format.html { redirect_to @department, success: 'Department was successfully created.' }
         format.json { render :show, status: :created, location: @department }
       else
         format.html { render :new }
@@ -42,7 +49,7 @@ class Admin::DepartmentsController < AdminController
   def update
     respond_to do |format|
       if @department.update(department_params)
-        format.html { redirect_to @department, notice: 'Department was successfully updated.' }
+        format.html { redirect_to @department, success: 'Department was successfully updated.' }
         format.json { render :show, status: :ok, location: @department }
       else
         format.html { render :edit }
@@ -56,7 +63,7 @@ class Admin::DepartmentsController < AdminController
   def destroy
     @department.destroy
     respond_to do |format|
-      format.html { redirect_to departments_url, notice: 'Department was successfully destroyed.' }
+      format.html { redirect_to departments_url, success: 'Department was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -65,6 +72,40 @@ class Admin::DepartmentsController < AdminController
     # Use callbacks to share common setup or constraints between actions.
     def set_department
       @department = Department.find(params[:id])
+    end
+
+    # allow_admin_only
+    # ==================================================
+    # Name : David J. Davis
+    # Date : 2/10/2017
+    #
+    # Description:
+    # Users the admin controller to check if the user is an admin.
+    # if not a flash message is added to the UI and the user is re-directed.
+
+    def allow_admin_only
+      if !check_is_admin
+        redirect_to libraries_url, error: 'You do not have admin access to create or delete libraries.'
+      else
+        true
+      end
+    end
+
+    # users_can_edit_dept
+    # ==================================================
+    # Name : David J. Davis
+    # Date : 2/10/2017
+    #
+    # Description:
+    # If the user is not an admin, the next check sees if they have been given
+    # permission to edit the details of the department.
+
+    def users_can_edit_dept
+      if session[:departments].to_a.include? params[:id].to_s || check_is_admin
+        true
+      else
+        redirect_to departments_url, error: 'You do not have permission to access this department.'
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
