@@ -6,8 +6,7 @@
 class AdminController < ApplicationController
   # perform filter before action
   before_action CASClient::Frameworks::Rails::Filter
-  before_action :check_permissions
-  before_action :get_user_permission
+  before_action :get_user_permission, :check_permissions
 
   def index
     @username = session[:cas_user]
@@ -53,21 +52,23 @@ class AdminController < ApplicationController
     user.admin
   end
 
-
   # get_user_permission
   # ==================================================
   # Name : David J. Davis
   # Date : 2/10/2017
+  #
+  # Modified : Tracy A. McCormick
+  # Date : 2/21/2017
   #
   # Description:
   # Sets the users libraries and department permissions in the session.
   # This will be used in other controllers in the admin section to be sure that
   # the user has the granualr permissions and is only used if the user is not an admin.
   def get_user_permission
-    if !session[:libraries] && !session[:departments] && session[:cas_user]
+    if session[:cas_user]
       user_permissions = UserPermission.find_by(username: session[:cas_user])
-      session[:libraries] = clean_array user_permissions.libraries
-      session[:departments] = clean_array user_permissions.departments
+      @user_libs = (clean_array user_permissions.libraries)
+      @user_depts = (clean_array user_permissions.departments)
     end
   end
 end

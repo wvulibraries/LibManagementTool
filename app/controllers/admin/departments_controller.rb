@@ -6,7 +6,7 @@
 class Admin::DepartmentsController < AdminController
   before_action :set_department, only: [:show, :edit, :update, :destroy]
   before_action :allow_admin_only, only:[:create, :new, :destroy]
-
+  before_action :users_can_edit_dept, only:[:show, :edit, :update]
 
   # GET /departments
   # GET /departments.json
@@ -96,12 +96,15 @@ class Admin::DepartmentsController < AdminController
     # Name : David J. Davis
     # Date : 2/10/2017
     #
+    # Modified : Tracy A. McCormick
+    # Date : 2/22/2017
+    #
     # Description:
     # If the user is not an admin, the next check sees if they have been given
     # permission to edit the details of the department.
 
     def users_can_edit_dept
-      if session[:departments].to_a.include? params[:id].to_s || check_is_admin
+      if @user_depts.include? params[:id].to_s || check_is_admin
         true
       else
         redirect_to departments_url, error: 'You do not have permission to access this department.'

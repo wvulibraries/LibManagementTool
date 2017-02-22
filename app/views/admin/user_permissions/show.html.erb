@@ -7,12 +7,12 @@
 
 <p>
   <strong>Libraries:</strong>
-  <%= @admin_user_permission.libraries %>
+  <%= @admin_user_permission.libraries.drop(1) %>
 </p>
 
 <p>
   <strong>Departments:</strong>
-  <%= @admin_user_permission.departments %>
+  <%= @admin_user_permission.departments.drop(1) %>
 </p>
 
 <%= link_to 'Edit', edit_user_permission_path(@admin_user_permission) %> |
