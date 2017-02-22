@@ -22,6 +22,7 @@ class NormalHour < ApplicationRecord
      human_readable_time(self.close_time)
   end
 
+
   def weekday
     day = self.day_of_week.to_i
      Date::DAYNAMES[day]
@@ -35,4 +36,5 @@ class NormalHour < ApplicationRecord
            ""
       end
     end
+
 end
