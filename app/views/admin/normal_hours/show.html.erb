@@ -1,4 +1,24 @@
 <p id="notice"><%= notice %></p>
 
+<p>
+  <strong> Department / Library:</strong>
+  <%= @normal_hour.get_resource %>
+</p>
+
+<p>
+  <strong> Open: </strong>
+  <%= @normal_hour.hr_open_time %>
+</p>
+
+<p>
+  <strong> Close: </strong>
+  <%= @normal_hour.hr_close_time %>
+</p>
+
+<p>
+  <strong> Weekday: </strong>
+  <%= @normal_hour.weekday %>
+</p>
+
 <%= link_to 'Edit', edit_normal_hour_path(@normal_hour) %> |
 <%= link_to 'Back', normal_hours_path %>

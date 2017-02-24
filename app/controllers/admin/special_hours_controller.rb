@@ -1,5 +1,6 @@
 class Admin::SpecialHoursController < AdminController
   before_action :set_special_hour, only: [:show, :edit, :update, :destroy]
+  before_action :users_can_edit_hours, only: [:show, :edit, :update, :destroy]
 
   # GET /special_hours
   # GET /special_hours.json
@@ -65,6 +66,24 @@ class Admin::SpecialHoursController < AdminController
     # Use callbacks to share common setup or constraints between actions.
     def set_special_hour
       @special_hour = SpecialHour.find(params[:id])
+    end
+
+    def user_has_access
+      if (@special_hour.special_type === 'library') && (@user_libs.include? @special_hour.special_id.to_s)
+        true
+      elsif (@special_hour.special_type === 'department') && (@user_depts.include? @special_hour.special_id.to_s)
+        true
+      else
+        false
+      end
+    end
+
+    def users_can_edit_hours
+      if user_has_access || check_is_admin
+        true
+      else
+        redirect_to special_hours_url, error: 'You do not have permission to access this resource.'
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -3,11 +3,12 @@ class NormalHour < ApplicationRecord
 
   validates :id,  numericality: { only_integer: true, allow_nil: true }
   validates :day_of_week, numericality: { only_integer: true, :greater_than => -1, :less_than_or_equal_to => 6 }
+  validates :resource_type, inclusion: { in: ['library', 'department'] }
 
   def get_resource
     if self.resource_type == "department"
-      resource = Department.find(self.resource_id)
-      resource.name + " - " + resource.library.name
+        resource = Department.find(self.resource_id)
+        resource.name + " - " + resource.library.name
     else
         resource = Library.find(self.resource_id)
         resource.name
@@ -22,7 +23,6 @@ class NormalHour < ApplicationRecord
      human_readable_time(self.close_time)
   end
 
-
   def weekday
     day = self.day_of_week.to_i
      Date::DAYNAMES[day]
@@ -36,5 +36,4 @@ class NormalHour < ApplicationRecord
            ""
       end
     end
-
 end

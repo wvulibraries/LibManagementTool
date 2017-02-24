@@ -1,11 +1,15 @@
 # Department Controller
 # ==================================================
-# AUTHORS : David J. Davis
+# AUTHORS : David J. Davis, Tracy A. McCormick
 # Description:
 # All interactions of controllers and permissions per page view
 
 class Admin::NormalHoursController < AdminController
+
+  include ActiveModel::Validations
+
   before_action :set_normal_hour, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_rights, only: [:show, :edit, :update, :destroy]
 
   # GET /admin/normal_hours
   # GET /admin/normal_hours.json
@@ -71,6 +75,50 @@ class Admin::NormalHoursController < AdminController
     # Use callbacks to share common setup or constraints between actions.
     def set_normal_hour
       @normal_hour = NormalHour.find(params[:id])
+    end
+
+
+    # user_has_access
+    # ==================================================
+    # Name : Tracy A. McCormick
+    # Date : 2/22/2017
+    #
+    # Description:
+    # Checks to see if the user has access to the library or department.
+    def user_has_access
+      if !@normal_hour.nil?
+        if (@normal_hour.resource_type === 'library')
+         @user_libs.include? @normal_hour.resource_id.to_s
+        elsif (@normal_hour.resource_type === 'department')
+          @user_depts.include? @normal_hour.resource_id.to_s
+        else
+          false
+        end
+      else
+        if (params[:resource_type] === 'library')
+          @user_libs.include? params[:resource_id].to_s
+        elsif (params[:resource_type] === 'department')
+          @user_depts.include? params[:resource_id].to_s
+        else
+          false
+        end
+      end
+    end
+
+    # authenticate_rights
+    # ==================================================
+    # Name : Tracy A. McCormick
+    # Date : 2/22/2017
+    #
+    # Description:
+    # Calls user_has_access to see if they have access to the library or department. Also checks to see if they are admin.
+    # If neither of these are true it redirects them back to there previous page and shows them an error.
+    def authenticate_rights
+      if user_has_access || check_is_admin
+        true
+      else
+        redirect_back(fallback_location: normal_hours_url, error: "You do not have permission to access this resource.")
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

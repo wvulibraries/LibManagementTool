@@ -2,8 +2,7 @@
 <%= form_for(normal_hour) do |f| %>
   <% if normal_hour.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralizer(normal_hour.errors.count, "error") %> prohibited this normal_hour from being saved:</h2>
-
+      <h2><%= pluralize(normal_hour.errors.count, "error") %> prohibited this normal_hour from being saved:</h2>
       <ul>
       <% normal_hour.errors.full_messages.each do |message| %>
         <li><%= message %></li>

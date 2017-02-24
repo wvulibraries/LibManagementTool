@@ -4,6 +4,7 @@
 # Description:
 # Shared functions for all other admin scoped controllers.
 class AdminController < ApplicationController
+
   # perform filter before action
   before_action CASClient::Frameworks::Rails::Filter
   before_action :get_user_permission, :check_permissions
@@ -67,8 +68,9 @@ class AdminController < ApplicationController
   def get_user_permission
     if session[:cas_user]
       user_permissions = UserPermission.find_by(username: session[:cas_user])
-      @user_libs = (clean_array user_permissions.libraries)
-      @user_depts = (clean_array user_permissions.departments)
+      session[:user_libs] = clean_array user_permissions.libraries
+      @user_libs = clean_array user_permissions.libraries
+      @user_depts = clean_array user_permissions.departments
     end
   end
 end
