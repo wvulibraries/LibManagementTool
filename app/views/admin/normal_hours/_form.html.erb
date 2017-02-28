@@ -11,12 +11,10 @@
     </div>
   <% end %>
 
-  <% if @normal_hour.resource_type == nil %>
-    <div class="field">
-      <%= f.label :resource_type, "Select A Location Type" %>
-      <%= f.select :resource_type, ['library', 'department']%>
-    </div>
-  <% end %>
+  <div class="field">
+    <%= f.label :resource_type, "Select A Location Type" %>
+    <%= f.select :resource_type, ['library', 'department']%>
+  </div>
 
   <div class="department field">
     <%= f.label :resource_id, 'Location' %>

@@ -68,9 +68,11 @@ class AdminController < ApplicationController
   def get_user_permission
     if session[:cas_user]
       user_permissions = UserPermission.find_by(username: session[:cas_user])
-      session[:user_libs] = clean_array user_permissions.libraries
-      @user_libs = clean_array user_permissions.libraries
-      @user_depts = clean_array user_permissions.departments
+      # set @user_libs and @user_depts if they are not an admin
+      if !check_is_admin
+        @user_libs = clean_array user_permissions.libraries
+        @user_depts = clean_array user_permissions.departments
+      end
     end
   end
 end
