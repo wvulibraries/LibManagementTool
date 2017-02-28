@@ -1,11 +1,13 @@
 # Department Controller
 # ==================================================
-# AUTHORS : David J. Davis
+# AUTHORS : David J. Davis, Tracy A. McCormick
 # Description:
 # All interactions of controllers and permissions per page view
 
 class Admin::NormalHoursController < AdminController
+
   before_action :set_normal_hour, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_rights, only: [:show, :edit, :update, :destroy]
 
   # GET /admin/normal_hours
   # GET /admin/normal_hours.json
@@ -47,12 +49,17 @@ class Admin::NormalHoursController < AdminController
   # PATCH/PUT /admin/normal_hours/1.json
   def update
     respond_to do |format|
-      if @normal_hour.update(normal_hour_params)
-        format.html { redirect_to @normal_hour, notice: 'Normal hour was successfully updated.' }
-        format.json { render :show, status: :ok, location: @normal_hour }
+      if check_params
+        if @normal_hour.update(normal_hour_params)
+          format.html { redirect_to @normal_hour, notice: 'Normal hour was successfully updated.' }
+          format.json { render :show, status: :ok, location: @normal_hour }
+        else
+          format.html { render :edit }
+          format.json { render json: @normal_hour.errors, status: :unprocessable_entity }
+        end
       else
-        format.html { render :edit }
-        format.json { render json: @normal_hour.errors, status: :unprocessable_entity }
+         format.html { redirect_back(fallback_location: normal_hours_url, error: "Error: Access to this department or library has been denied.") }
+         format.json { render json: @normal_hour.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -73,8 +80,74 @@ class Admin::NormalHoursController < AdminController
       @normal_hour = NormalHour.find(params[:id])
     end
 
+    # user_has_access
+    # ==================================================
+    # Name : Tracy A. McCormick
+    # Date : 2/22/2017
+    #
+    # Description:
+    # Checks to see if the user has access to the library or department.
+    def user_has_access
+      if !check_is_admin && !@normal_hour.nil?
+          check_type_access @normal_hour.resource_type
+      else
+        true
+      end
+    end
+
+    def check_type_access(type)
+      if (type === 'library')
+        user_departments
+      elsif (type === 'department')
+        user_libraries
+      else
+        false
+      end
+    end
+
+    def user_departments
+      @user_depts.include? @normal_hour.resource_id.to_s
+    end
+
+    def user_libraries
+      @user_libs.include? @normal_hour.resource_id.to_s
+    end
+
+    # check_params
+    # ==================================================
+    # Name : Tracy A. McCormick
+    # Date : 2/28/2017
+    #
+    # Description:
+    # Checks params to see if user has access to the library or department they are trying to set
+    def check_params
+      if (params[:resource_type] === 'library')
+        @user_libs.include? params[:resource_id].to_s
+      elsif (params[:resource_type] === 'department')
+        @user_depts.include? params[:resource_id].to_s
+      else
+        false
+      end
+    end
+
+    # authenticate_rights
+    # ==================================================
+    # Name : Tracy A. McCormick
+    # Date : 2/22/2017
+    #
+    # Description:
+    # Calls user_has_access to see if they have access to the library or department. Also checks to see if they are admin.
+    # If neither of these are true it redirects them back to there previous page and shows them an error.
+    def authenticate_rights
+      if user_has_access
+        true
+      else
+        redirect_back(fallback_location: normal_hours_url, error: "You do not have permission to access this resource.")
+      end
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def normal_hour_params
-      params.require(:normal_hour).permit(:resource_type, :resource_id, :day_of_week, :open_time, :close_time)
+       params.require(:normal_hour).permit(:resource_type, :resource_id, :day_of_week, :open_time, :close_time)
     end
 end
