@@ -6,11 +6,8 @@
 
 class Admin::NormalHoursController < AdminController
 
-  #include ActiveModel::Validations
-
   before_action :set_normal_hour, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_rights, only: [:show, :edit, :update, :destroy]
-  #validate :validate_params, on: :save
 
   # GET /admin/normal_hours
   # GET /admin/normal_hours.json
