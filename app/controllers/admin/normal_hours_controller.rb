@@ -58,7 +58,7 @@ class Admin::NormalHoursController < AdminController
           format.json { render json: @normal_hour.errors, status: :unprocessable_entity }
         end
       else
-         format.html { redirect_back(fallback_location: normal_hours_url, error: "Error: Acccess to this department or library has been denied.") }
+         format.html { redirect_back(fallback_location: normal_hours_url, error: "Error: Access to this department or library has been denied.") }
          format.json { render json: @normal_hour.errors, status: :unprocessable_entity }
       end
     end
@@ -88,19 +88,29 @@ class Admin::NormalHoursController < AdminController
     # Description:
     # Checks to see if the user has access to the library or department.
     def user_has_access
-      if !check_is_admin
-        if !@normal_hour.nil?
-          if (@normal_hour.resource_type === 'library')
-           @user_libs.include? @normal_hour.resource_id.to_s
-          elsif (@normal_hour.resource_type === 'department')
-            @user_depts.include? @normal_hour.resource_id.to_s
-          else
-            false
-          end
-        end
+      if !check_is_admin && !@normal_hour.nil?
+          check_type_access @normal_hour.resource_type
       else
         true
       end
+    end
+
+    def check_type_access(type)
+      if (type === 'library')
+        user_departments
+      elsif (type === 'department')
+        user_libraries
+      else
+        false
+      end
+    end
+
+    def user_departments
+      @user_depts.include? @normal_hour.resource_id.to_s
+    end
+
+    def user_libraries
+      @user_libs.include? @normal_hour.resource_id.to_s
     end
 
     # check_params
