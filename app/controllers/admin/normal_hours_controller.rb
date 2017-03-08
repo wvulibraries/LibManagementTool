@@ -58,8 +58,8 @@ class Admin::NormalHoursController < AdminController
           format.json { render json: @normal_hour.errors, status: :unprocessable_entity }
         end
       else
-         format.html { redirect_back(fallback_location: normal_hours_url, error: "Error: Access to this department or library has been denied.") }
-         format.json { render json: @normal_hour.errors, status: :unprocessable_entity }
+        format.html { redirect_back(fallback_location: normal_hours_url, error: "Error: Access to this department or library has been denied.") }
+        format.json { render json: @normal_hour.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -89,28 +89,11 @@ class Admin::NormalHoursController < AdminController
     # Checks to see if the user has access to the library or department.
     def user_has_access
       if !check_is_admin && !@normal_hour.nil?
-          check_type_access @normal_hour.resource_type
+        CheckAccess.initialize(@user_depts, @user_libs)
+        CheckAccess.check(@normal_hour.resource_type.to_s, @normal_hour.resource_id.to_s)
       else
         true
       end
-    end
-
-    def check_type_access(type)
-      if (type === 'library')
-        user_departments
-      elsif (type === 'department')
-        user_libraries
-      else
-        false
-      end
-    end
-
-    def user_departments
-      @user_depts.include? @normal_hour.resource_id.to_s
-    end
-
-    def user_libraries
-      @user_libs.include? @normal_hour.resource_id.to_s
     end
 
     # check_params
@@ -121,12 +104,11 @@ class Admin::NormalHoursController < AdminController
     # Description:
     # Checks params to see if user has access to the library or department they are trying to set
     def check_params
-      if (params[:resource_type] === 'library')
-        @user_libs.include? params[:resource_id].to_s
-      elsif (params[:resource_type] === 'department')
-        @user_depts.include? params[:resource_id].to_s
+      if !check_is_admin
+        CheckAccess.initialize(@user_depts, @user_libs)
+        CheckAccess.check(params[:normal_hour][:resource_type], params[:normal_hour][:resource_id])
       else
-        false
+        true
       end
     end
 
