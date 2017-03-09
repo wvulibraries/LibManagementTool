@@ -45,12 +45,17 @@ class AdminController < ApplicationController
   # Name : David J. Davis
   # Date : 2/10/2017
   #
+  # Modified By : Tracy A. McCormick
+  # Date : 3/9/2017
   # Description:
   # Gets the suer by the session and checks returns the boolean value in the database
   def check_is_admin
     user = User.find_by(username: session[:cas_user])
-    user.admin = false
-    user.admin
+    if user != nil
+     user.admin
+    else
+     false
+    end
   end
 
   # get_user_permission
@@ -59,7 +64,7 @@ class AdminController < ApplicationController
   # Date : 2/10/2017
   #
   # Modified : Tracy A. McCormick
-  # Date : 2/21/2017
+  # Date : 3/9/2017
   #
   # Description:
   # Sets the users libraries and department permissions in the session.
@@ -69,7 +74,7 @@ class AdminController < ApplicationController
     if session[:cas_user]
       user_permissions = UserPermission.find_by(username: session[:cas_user])
       # set @user_libs and @user_depts if they are not an admin
-      if !check_is_admin
+      if !check_is_admin && user_permissions != nil
         @user_libs = clean_array user_permissions.libraries
         @user_depts = clean_array user_permissions.departments
       end

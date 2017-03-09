@@ -101,13 +101,13 @@ class Admin::LibrariesController < AdminController
     # Date : 2/10/2017
     #
     # Modified : Tracy A. McCormick
-    # Date : 2/22/2017
+    # Date : 3/09/2017
     #
     # Description:
     # If the user is not an admin, the next check sees if they have been given
     # permission to edit the details of the library.
     def users_can_edit_library
-      if @user_libs.to_a.include? params[:id].to_s || check_is_admin
+      if (@user_depts != nil && (@user_libs.to_a.include? params[:id].to_s)) || check_is_admin
         true
       else
         redirect_to libraries_url, error: 'You do not have permission to access this library.'

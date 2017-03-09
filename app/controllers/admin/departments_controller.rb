@@ -97,14 +97,14 @@ class Admin::DepartmentsController < AdminController
     # Date : 2/10/2017
     #
     # Modified : Tracy A. McCormick
-    # Date : 2/22/2017
+    # Date : 3/09/2017
     #
     # Description:
     # If the user is not an admin, the next check sees if they have been given
     # permission to edit the details of the department.
 
     def users_can_edit_dept
-      if @user_depts.include? params[:id].to_s || check_is_admin
+      if (@user_depts != nil && (@user_depts.include? params[:id].to_s)) || check_is_admin
         true
       else
         redirect_to departments_url, error: 'You do not have permission to access this department.'

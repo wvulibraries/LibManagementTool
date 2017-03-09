@@ -4,12 +4,14 @@ class NormalHour < ApplicationRecord
   validates :id,  numericality: { only_integer: true, allow_nil: true }
   validates :day_of_week, numericality: { only_integer: true, :greater_than => -1, :less_than_or_equal_to => 6 }
   validates :resource_type, inclusion: { in: ['library', 'department'] }
+  validates :open_time, presence: true, allow_blank: false
+  validates :close_time, presence: true, allow_blank: false
 
   def get_resource
     if self.resource_type == "department"
         resource = Department.find(self.resource_id)
         resource.name + " - " + resource.library.name
-    else
+    elsif
         resource = Library.find(self.resource_id)
         resource.name
     end
