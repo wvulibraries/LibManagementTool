@@ -2,47 +2,55 @@ require 'test_helper'
 
 class Admin::UserPermissionsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @admin_user_permission = admin_user_permissions(:one)
+    @admin_user_permission = UserPermission.find(1)
+    @user = User.find(1)
+    CASClient::Frameworks::Rails::Filter.fake(@user.username, {:sn => "Admin", :mail => "username1@nowhere.com"})
+  end
+
+  # called after every single test
+  teardown do
+    # when controller is using cache it may be a good idea to reset it afterwards
+    Rails.cache.clear
   end
 
   test "should get index" do
-    get admin_user_permissions_url
+    get user_permissions_url
     assert_response :success
   end
 
   test "should get new" do
-    get new_admin_user_permission_url
-    assert_response :success
-  end
-
-  test "should create admin_user_permission" do
-    assert_difference('Admin::UserPermission.count') do
-      post admin_user_permissions_url, params: { admin_user_permission: { departments: @admin_user_permission.departments, libraries: @admin_user_permission.libraries, username: @admin_user_permission.username } }
-    end
-
-    assert_redirected_to admin_user_permission_url(Admin::UserPermission.last)
-  end
-
-  test "should show admin_user_permission" do
-    get admin_user_permission_url(@admin_user_permission)
+    get new_user_permission_url
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_admin_user_permission_url(@admin_user_permission)
+    get edit_user_permission_url(@admin_user_permission)
     assert_response :success
   end
 
-  test "should update admin_user_permission" do
-    patch admin_user_permission_url(@admin_user_permission), params: { admin_user_permission: { departments: @admin_user_permission.departments, libraries: @admin_user_permission.libraries, username: @admin_user_permission.username } }
-    assert_redirected_to admin_user_permission_url(@admin_user_permission)
-  end
-
-  test "should destroy admin_user_permission" do
-    assert_difference('Admin::UserPermission.count', -1) do
-      delete admin_user_permission_url(@admin_user_permission)
+  test "should create user_permission" do
+    assert_difference('UserPermission.count') do
+      post user_permissions_url, params: { user_permission: { departments: @admin_user_permission.departments, libraries: @admin_user_permission.libraries, username: @admin_user_permission.username } }
     end
 
-    assert_redirected_to admin_user_permissions_url
+    assert_redirected_to user_permission_url(UserPermission.last)
+  end
+
+  test "should show user_permission" do
+    get user_permission_url(@admin_user_permission)
+    assert_response :success
+  end
+
+  test "should update user_permission" do
+    patch user_permission_url(@admin_user_permission), params: { user_permission: { departments: @admin_user_permission.departments, libraries: @admin_user_permission.libraries, username: @admin_user_permission.username } }
+    assert_redirected_to user_permission_url(@admin_user_permission)
+  end
+
+  test "should destroy user_permission" do
+    assert_difference('UserPermission.count', -1) do
+      delete user_permission_url(@admin_user_permission)
+    end
+
+    assert_redirected_to user_permissions_url
   end
 end

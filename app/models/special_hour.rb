@@ -28,6 +28,10 @@ class SpecialHour < ApplicationRecord
     end
 
     def hr_date(date)
-      return date.strftime("%B %d, %Y")
+      if date != nil
+          return date.strftime("%B %d, %Y")
+      else
+          return ""
+      end
     end
 end
