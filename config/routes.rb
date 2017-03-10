@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   # admin
   get  '/admin', to: 'admin#index'
 
+
+  get 'api/gethours'
+  get 'api/getlibs'
+
   # forces the controllers to use the admin name space
   # this is going to allow for the addition of a function to restrict access
   # resources generates all routes for crud of libraries, departments, users, etc.
