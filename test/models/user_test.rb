@@ -2,9 +2,9 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   test "user should have the necessary required validators" do
-    user = User.new
+    user = User.new(username: nil, firstname:nil, lastname:nil)
     assert_not user.valid?
-    # assert_equal [:username, :firstname, :lastname], post.errors.keys
+    assert_equal [:username, :firstname, :lastname], user.errors.keys
   end
 
   test "user is valid" do
