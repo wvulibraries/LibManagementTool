@@ -1,6 +1,17 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    @user = User.find(1)
+    CASClient::Frameworks::Rails::Filter.fake(@user.username, {:sn => "Admin", :mail => "username1@nowhere.com"})
+  end
+
+  # called after every single test
+  teardown do
+    # when controller is using cache it may be a good idea to reset it afterwards
+    Rails.cache.clear
+  end
+
   test "should get index" do
     get users_url
     assert_response :success

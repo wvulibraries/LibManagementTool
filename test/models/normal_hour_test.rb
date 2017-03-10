@@ -4,16 +4,20 @@ class NormalHourTest < ActiveSupport::TestCase
   def setup
     @nh1 = normal_hours(:test_hour1)
     @nh2 = normal_hours(:test_hour2)
-    @nh3 = normal_hours(:test_hour8)
+    @nh3 = normal_hours(:test_hour3)
   end
 
   test "normal hour is valid" do
-    assert @nh1.valid?, "there was not a valid normal hour"
+    assert @nh3.valid?, "there was not a valid normal hour"
   end
 
   test "normal hour has a valid id that is an integer or nil" do
-    @nh1.id = "asdfklasjhdff2388205kf"
-    assert_not @nh1.save, "normal hour saved with an invalid id"
+    @nh3.id = "asdfklasjhdff2388205kf"
+    assert_not @nh3.save, "normal hour saved with an invalid id"
+  end
+
+  test "normal hour has blank open_time and close_time" do
+    assert_not @nh1.save, "normal hour saved with blank open_time and close_time"
   end
 
   test "weekday must be between 0 and 6 for enumerator to work properly" do
@@ -36,6 +40,6 @@ class NormalHourTest < ActiveSupport::TestCase
   end
 
   test "testing that resource is returning the correct type" do
-    assert_equal "Library", @nh1.resource_type.to_s, "returned the wrong resource type"
+    assert_equal "library", @nh1.resource_type.to_s, "returned the wrong resource type"
   end
 end
