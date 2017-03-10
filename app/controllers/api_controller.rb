@@ -7,8 +7,12 @@ class ApiController < ApplicationController
     @departments = Department.all
   end
 
+  def getdeptsbylib
+    @departments = Department.lib_sorted
+  end
+
   def gethours
-    ##@hours = NormalHours.ads_shown.sorted_priority
+    @normal_hours = NormalHour.all
   end
 
 end

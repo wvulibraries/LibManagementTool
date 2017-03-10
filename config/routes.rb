@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   get 'api/getlibs'
   get 'api/getdepts'
+  get 'api/getdeptsbylib'  
   get 'api/gethours'
 
   # forces the controllers to use the admin name space
