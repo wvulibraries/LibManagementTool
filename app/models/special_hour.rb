@@ -3,35 +3,39 @@ class SpecialHour < ApplicationRecord
   validates :id,  numericality: { only_integer: true, allow_nil: true }
 
   def hr_start_date
-    return hr_date(self.start_date)
+     hr_date(self.start_date)
   end
 
   def hr_end_date
-    return hr_date(self.end_date)
+     hr_date(self.end_date)
   end
 
   def hr_open_time
-    return hr_time(self.open_time)
+     hr_time(self.open_time)
   end
 
   def hr_close_time
-    return hr_time(self.close_time)
+     hr_time(self.close_time)
   end
+
+  # def open_24
+  #    self.open_24
+  # end
 
   private
     def hr_time(time)
       if time != nil
-          return time.strftime("%l:%M %p")
+           time.strftime("%l:%M %p")
       else
-          return ""
+           ""
       end
     end
 
     def hr_date(date)
       if date != nil
-          return date.strftime("%B %d, %Y")
+           date.strftime("%B %d, %Y")
       else
-          return ""
+           ""
       end
     end
 end

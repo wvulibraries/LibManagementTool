@@ -26,7 +26,7 @@ class NormalHour < ApplicationRecord
   end
 
   def weekday
-    day = self.day_of_week.to_i
+     day = self.day_of_week.to_i
      Date::DAYNAMES[day]
   end
 
