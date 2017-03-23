@@ -18,9 +18,15 @@ class SpecialHour < ApplicationRecord
      hr_time(self.close_time)
   end
 
-  # def open_24
-  #    self.open_24
-  # end
+  def get_resource
+    if self.special_type == "department"
+        special = Department.find(self.special_id)
+        special.name + " - " + special.library.name
+    elsif
+        special = Library.find(self.special_id)
+        special.name
+    end
+  end
 
   private
     def hr_time(time)
