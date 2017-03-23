@@ -12,7 +12,26 @@ require 'date'
 class HoursPresenter
 
   def initialize(params = {})
+    # set constants
+    @date_format = '%m-%d-%Y'
+
     @params = params
+
+    # check and set url values
+    # @month = params[:month].present? ? params[:month] : nil
+    # @day = params[:day].present? ? params[:type] : nil
+    # @week = params[:week].present? ? params[:week] : nil
+    # @lib = params[:lib].present? ? params[:lib] : nil
+    # @dept = params[:dept].present? ? params[:dept] : nil
+
+    @id = params[:id].present? ? params[:id] : nil
+    @type = params[:type].present? ? params[:type] : nil
+
+    ## set start and end date if present in params
+    @date_start = params[:date_start].present? ? Date.strptime(params[:date_start], @date_format) : nil
+    @date_end = params[:date_end].present? ? Date.strptime(params[:date_end], @date_format) : nil
+    ## set current_date
+    @current_date = Date.today
   end
 
   def set_params(params)
@@ -23,18 +42,20 @@ class HoursPresenter
     @params
   end
 
+  def format_date(date)
+   Date.strptime(date, @date_format)
+  end
+
   def get_hours
     hours = Array.new
-    if valid_date_start && valid_date_end
-      (Date.strptime(@params['date_start'], '%m-%d-%Y')..Date.strptime(@params['date_end'], '%m-%d-%Y')).each do |day|
-        hours = get_day(day.wday, hours, day.strftime("%m-%d-%Y"))
+    if @date_start && @date_end
+      (@date_start..@date_end).each do |day|
+        hours = get_day(day.wday, hours, day.strftime(@date_format))
       end
-    elsif valid_date_start
-     date_start = Date.strptime(@params['date_start'], '%m-%d-%Y')
-     hours = get_day(date_start.wday, hours, date_start.strftime("%m-%d-%Y"))
+    elsif @date_start
+     hours = get_day(@date_start.wday, hours, @date_start.strftime(@date_format))
     else
-     current_date = Date.today
-     hours = get_day(current_date.wday, hours, current_date.strftime("%m-%d-%Y"))
+     hours = get_day(@current_date.wday, hours, @current_date.strftime(@date_format))
     end
 
     hours
@@ -43,14 +64,14 @@ class HoursPresenter
   private
 
   def hours_query(wday_to_show)
-    if @params['id'].present?
+    if @id
       if valid_library || valid_department
-        hours_list = NormalHour.where(resource_id: @params['id'], resource_type: @params['type'], day_of_week: wday_to_show).where.not(open_time: nil, close_time: nil)
+        hours_list = NormalHour.where(resource_id: @id, resource_type: @type, day_of_week: wday_to_show).where.not(open_time: nil, close_time: nil)
       else
-        hours_list = NormalHour.where(resource_id: @params['id'], resource_type: 'library', day_of_week: wday_to_show).where.not(open_time: nil, close_time: nil)
+        hours_list = NormalHour.where(resource_id: @id, resource_type: 'library', day_of_week: wday_to_show).where.not(open_time: nil, close_time: nil)
       end
     elsif valid_type
-      hours_list = NormalHour.where(resource_type: @params['type'], day_of_week: wday_to_show).where.not(open_time: nil, close_time: nil)
+      hours_list = NormalHour.where(resource_type: @type, day_of_week: wday_to_show).where.not(open_time: nil, close_time: nil)
     else
       hours_list = NormalHour.where(day_of_week: wday_to_show).where.not(open_time: nil, close_time: nil)
     end
@@ -59,7 +80,7 @@ class HoursPresenter
   def special_hour_exists(resource_id, resource_type, date_shown)
     special_list = SpecialHour.where(special_id: resource_id, special_type: resource_type)
     special_list.all.each do |special|
-       if (special.start_date..special.end_date).cover?(Date.strptime(date_shown, '%m-%d-%Y'))
+       if (special.start_date..special.end_date).cover?(format_date(date_shown))
          if special.open_24
            return true, nil, nil, 'Open 24 Hours'
          else
@@ -100,7 +121,7 @@ class HoursPresenter
   def valid_date_start
     if @params['date_start'].present?
       # check for valid date
-      Date.strptime(@params['date_start'], '%m-%d-%Y')
+      format_date(@params['date_start'])
     else
       false
     end
@@ -109,7 +130,7 @@ class HoursPresenter
   def valid_date_end
     if @params['date_end'].present?
       # check for valid date
-      Date.strptime(@params['date_end'], '%m-%d-%Y')
+      format_date(@params['date_end'])
     else
       false
     end
