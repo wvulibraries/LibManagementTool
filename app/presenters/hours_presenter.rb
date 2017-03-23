@@ -11,6 +11,8 @@ require 'date'
 
 class HoursPresenter
 
+  attr_accessor  :id, :type, :date_start, :date_end
+
   def initialize(params = {})
     # set constants
     @date_format = '%m-%d-%Y'
@@ -28,7 +30,7 @@ class HoursPresenter
     @type = params[:type].present? ? params[:type] : nil
 
     ## set start and end date if present in params
-    @date_start = params[:date_start].present? ? Date.strptime(params[:date_start], @date_format) : nil
+    @date_start = params[:date_start].present? ? Date.strptime(params[:date_start], @date_format) : Date.today
     @date_end = params[:date_end].present? ? Date.strptime(params[:date_end], @date_format) : nil
 
     @hours = Array.new
@@ -47,8 +49,6 @@ class HoursPresenter
       get_hours_list
     elsif @date_start
       get_day(@date_start.strftime(@date_format))
-    else
-      get_day(Date.today.strftime(@date_format))
     end
     @hours
   end
@@ -83,9 +83,11 @@ class HoursPresenter
   end
 
   def get_special_hour(resource_id, resource_type, date_shown)
+    found = false
     special_list = SpecialHour.where(special_id: resource_id, special_type: resource_type)
     special_list.all.each do |special|
        if (special.start_date..special.end_date).cover?(format_date(date_shown))
+         found = true
          if special.open_24
            @hours.push({
              name: special.get_resource,
@@ -94,7 +96,6 @@ class HoursPresenter
              close_time: nil,
              comment: "Open 24 Hours"
            })
-           true
          else
            @hours.push({
              name: special.get_resource,
@@ -103,11 +104,10 @@ class HoursPresenter
              close_time: special.hr_close_time,
              comment: "Temporary Special Hours"
            })
-           true
          end
        end
     end
-    false
+    found
   end
 
   def get_day(date_shown)
@@ -179,20 +179,20 @@ class HoursPresenter
     @params['type'].present? && (@params['type'] === "library" || @params['type'] === "department")
   end
 
-  def valid_month
-    if @params['month'].present?
-      (1..12).include?(@params['month'].to_i)
-    else
-      false
-    end
-  end
-
-  def valid_week
-    if @params['week'].present?
-      (1..52).include?(@params['week'].to_i)
-    else
-      false
-    end
-  end
+  # def valid_month
+  #   if @params['month'].present?
+  #     (1..12).include?(@params['month'].to_i)
+  #   else
+  #     false
+  #   end
+  # end
+  #
+  # def valid_week
+  #   if @params['week'].present?
+  #     (1..52).include?(@params['week'].to_i)
+  #   else
+  #     false
+  #   end
+  # end
 
 end
