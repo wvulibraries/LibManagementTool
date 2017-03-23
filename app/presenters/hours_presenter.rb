@@ -56,52 +56,32 @@ class HoursPresenter
     end
   end
 
-  def get_special(resource_id, resource_type, get_resource, date_shown)
+  def special_hour_exists(resource_id, resource_type, date_shown)
     special_list = SpecialHour.where(special_id: resource_id, special_type: resource_type)
     special_list.all.each do |special|
-      if (special.start_date..special.end_date).cover?(Date.strptime(date_shown, '%m-%d-%Y'))
-        if special.open_24
-          # return ({
-          #   name: get_resource,
-          #   date: date_shown,
-          #   open_time: nil,
-          #   close_time: nil,
-          #   comment: 'Open 24 hours today'
-          # })
-
-          hash = {
-            "name" => get_resource,
-            "date" => date_shown,
-            "open_time" => nil,
-            "close_time" => nil,
-            "comment" => 'Open 24 hours today'
-          }
-        else
-          # return ({
-          #   name: get_resource,
-          #   date: date_shown,
-          #   open_time: special.hr_open_time,
-          #   close_time: special.hr_close_time,
-          #   comment: nil
-          # })
-          hash = {
-            "name" => get_resource,
-            "date" => date_shown,
-            "open_time" => special.hr_open_time,
-            "close_time" => special.hr_close_time,
-            "comment" => nil
-          }
-        end
-      end
+       if (special.start_date..special.end_date).cover?(Date.strptime(date_shown, '%m-%d-%Y'))
+         if special.open_24
+           return true, nil, nil, 'Open 24 Hours'
+         else
+           return true, special.hr_open_time, special.hr_close_time, "Temporary Special Hours"
+         end
+       end
     end
+    return false, nil, nil, nil
   end
 
   def get_day(wday_to_show, hours, date_shown)
     hours_list = hours_query(wday_to_show)
     hours_list.all.each do |hour|
-      special = get_special(hour.resource_id, hour.resource_type, hour.get_resource, date_shown)
-      if !special.nil?
-        hours.push(special)
+      special_exists, special_open_time, special_close_time, comment = special_hour_exists(hour.resource_id, hour.resource_type, date_shown)
+      if special_exists
+        hours.push({
+          name: hour.get_resource,
+          date: date_shown,
+          open_time: special_open_time,
+          close_time: special_close_time,
+          comment: comment
+        })
       else
         hours.push({
           name: hour.get_resource,
