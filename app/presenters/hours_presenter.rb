@@ -13,6 +13,15 @@ class HoursPresenter
 
   attr_accessor  :id, :type, :date_start, :date_end
 
+  # initializer
+  # ==================================================
+  # Name : Tracy McCormick
+  # Date : 03/24/2017
+  #
+  # Description:
+  # initialize sets up global variables used by the presenter
+  # most of these are based on the params that are passed
+  # or setting default values.
   def initialize(params = {})
     # set constants
     @date_format = '%m-%d-%Y'
@@ -33,24 +42,48 @@ class HoursPresenter
     @date_start = params[:date_start].present? ? Date.strptime(params[:date_start], @date_format) : Date.today
     @date_end = params[:date_end].present? ? Date.strptime(params[:date_end], @date_format) : nil
 
-    @hours = Array.new
+    @hours_array = Array.new
   end
 
+  # set_params
+  # ==================================================
+  # Name : Tracy McCormick
+  # Date : 03/24/2017
+  #
+  # Description: basic setter for params
   def set_params(params)
     @params = params
   end
 
+  # get_params
+  # ==================================================
+  # Name : Tracy McCormick
+  # Date : 03/24/2017
+  #
+  # Description: basic getter for params
   def get_params
     @params
   end
 
+  # get_hours
+  # ==================================================
+  # Name : Tracy McCormick
+  # Date : 03/24/2017
+  #
+  # Description: get hours verifys the presence of date_start and date_end
+  # call get_hours_list if both are available otherwise it calls get_day.
   def get_hours
+    #check and see if date_start and date end are set_params
     if @date_start && @date_end
+      # call get_hours_list to create the hours_array list
       get_hours_list
     elsif @date_start
+      # if only date_start is present call get_day
+      # to populate the hours_array with items for that day
       get_day(@date_start.strftime(@date_format))
     end
-    @hours
+    # return array back to the calling jbuilder
+    @hours_array
   end
 
   private
@@ -59,7 +92,15 @@ class HoursPresenter
    Date.strptime(date, @date_format)
   end
 
-  def hours_query(wday_to_show)
+
+  # normal_hours_query
+  # ==================================================
+  # Name : Tracy McCormick
+  # Date : 03/24/2017
+  #
+  # Description: hours verifys the presence of date_start and date_end
+  # call get_hours_list if both are available otherwise it calls get_day.
+  def normal_hours_query(wday_to_show)
     # if valid_month
     #
     # elsif valid_day
@@ -82,6 +123,16 @@ class HoursPresenter
     end
   end
 
+
+  # get_special_hour
+  # ==================================================
+  # Name : Tracy McCormick
+  # Date : 03/24/2017
+  #
+  # Description: takes resource_id, resource_type and date
+  # check if a special_hour exists. If exists check if resource is open_24
+  # push a open 24 hours item for the resource to the hours_array
+  # else pushs the special_hour to the hours_array.
   def get_special_hour(resource_id, resource_type, date_shown)
     found = false
     special_list = SpecialHour.where(special_id: resource_id, special_type: resource_type)
@@ -89,7 +140,7 @@ class HoursPresenter
        if (special.start_date..special.end_date).cover?(format_date(date_shown))
          found = true
          if special.open_24
-           @hours.push({
+           @hours_array.push({
              name: special.get_resource,
              date: date_shown,
              open_time: nil,
@@ -97,7 +148,7 @@ class HoursPresenter
              comment: "Open 24 Hours"
            })
          else
-           @hours.push({
+           @hours_array.push({
              name: special.get_resource,
              date: date_shown,
              open_time: special.hr_open_time,
@@ -110,11 +161,19 @@ class HoursPresenter
     found
   end
 
+  # get_day
+  # ==================================================
+  # Name : Tracy McCormick
+  # Date : 03/24/2017
+  #
+  # Description: takes the date string given and calls normal_hours_query
+  # to get the list of available items. It checks each item by first checking to see if
+  # a special_hour exists if not then it pushs the normal_hour to the hours_array.
   def get_day(date_shown)
-    hours_list = hours_query(Date.strptime(date_shown, @date_format).wday)
+    hours_list = normal_hours_query(format_date(date_shown).wday)
     hours_list.all.each do |hour|
       if !get_special_hour(hour.resource_id, hour.resource_type, date_shown)
-        @hours.push({
+        @hours_array.push({
           name: hour.get_resource,
           date: date_shown,
           open_time: hour.hr_open_time,
@@ -125,6 +184,13 @@ class HoursPresenter
     end
   end
 
+  # get_hours_list
+  # ==================================================
+  # Name : Tracy McCormick
+  # Date : 03/24/2017
+  #
+  # Description: loops from @date_start to @date_end calling get_day
+  # for each day.
   def get_hours_list
     (@date_start..@date_end).each do |day|
       get_day(day.strftime(@date_format))
