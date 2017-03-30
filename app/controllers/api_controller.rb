@@ -13,9 +13,6 @@ class ApiController < ApplicationController
 
   def gethours
     @hours = HoursPresenter.new(params).get_hours
-
-    ## default response if no params listed
-    #@normal_hours = NormalHour.all
   end
 
 end

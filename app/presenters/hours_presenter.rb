@@ -25,6 +25,33 @@ class HoursPresenter
     @params
   end
 
+  # get_hours
+  # ==================================================
+  # Name : Tracy McCormick
+  # Date : 03/24/2017
+  #
+  # Description: get hours verify's the presence of date_start and date_end
+  # call get_hours_list if both are available otherwise it calls get_day.
+  # @param - params (object) - params object given from the url and by rails
+  # @return (array) - list of hours
+
+  def get_hours
+   # check and see if date_start and date end are set_params
+   if @params[:date_start] && @params[:date_end]
+     # call get_hours_list to create the hours_array list
+     (Date.strptime(@params[:date_start], @date_format)..Date.strptime(@params[:date_end], @date_format)).each do |day|
+       get_day_list(day)
+     end
+   elsif @params[:date_start]
+    # if only date_start is present call get_day
+    # to populate the hours_array with items for that day
+     get_day_list(Date.strptime(@params[:date_start], @date_format))
+   else
+     get_day_list(Date.today)
+   end
+   # return array back to the calling jbuilder
+   @hours_array
+  end
 
   # format_date
   # ==================================================
@@ -52,33 +79,19 @@ class HoursPresenter
     })
   end
 
-  # get_hours
+  # get_resource_name
   # ==================================================
   # Name : Tracy McCormick
-  # Date : 03/24/2017
+  # Date : 03/28/2017
   #
-  # Description: get hours verifys the presence of date_start and date_end
-  # call get_hours_list if both are available otherwise it calls get_day.
-
-  def get_day_list(date)
-    resources_for_list.each do |resource|
-       resource.each do |item|
-         found = false
-         hash = {id: item.id, type: resource.name.downcase}
-         get_day(date, hash).each do |hour|
-           array_push({name: hour.get_resource, date: date.strftime(@date_format), open_time: hour.hr_open_time, close_time: hour.hr_close_time, comment: ''})
-           found = true
-         end
-         if !found
-           # set name
-           if resource.name === "Library"
-             name = item.name
-           else
-             name = item.name + " - " + Department.find(item.id).library.name
-           end
-           array_push({name: name, date: date.strftime(@date_format), open_time: 'closed', close_time: 'closed', comment: ''})
-         end
-        end
+  # Description: returns either the Library name or combined department name & library name
+  def get_resource_name(hash = {})
+    if hash[:type] == "department"
+        resource = Department.find(hash[:id])
+        resource.name + " - " + resource.library.name
+    elsif
+        resource = Library.find(hash[:id])
+        resource.name
     end
   end
 
@@ -87,25 +100,32 @@ class HoursPresenter
   # Name : Tracy McCormick
   # Date : 03/24/2017
   #
-  # Description: get hours verifys the presence of date_start and date_end
-  # call get_hours_list if both are available otherwise it calls get_day.
+  # Description: gets available resources and checks each one calliing get_day
+  # to see if hours are set for the resource on the date passed in params. If
+  # found calls array_push and sets the hours if no hours are found it pushs
+  # closed for that requested day.
+  # @param - date (date): sets to today by default
 
-  def get_hours
-   # check and see if date_start and date end are set_params
-   if @params[:date_start] && @params[:date_end]
-     # call get_hours_list to create the hours_array list
-     (Date.strptime(@params[:date_start], @date_format)..Date.strptime(@params[:date_end], @date_format)).each do |day|
-       get_day_list(day)
-     end
-   elsif @params[:date_start]
-    # if only date_start is present call get_day
-    # to populate the hours_array with items for that day
-     get_day_list(Date.strptime(@params[:date_start], @date_format))
-   else
-     get_day_list(Date.today)
-   end
-   # return array back to the calling jbuilder
-   @hours_array
+  def get_day_list(date = Date.today)
+    resources_for_list.each do |resource|
+       resource.each do |item|
+         found = false
+         hash = {id: item.id, type: resource.name.downcase}
+         get_day(date, hash).each do |hour|
+           if hour.open_time.present? && hour.close_time.present?
+             array_push({name: get_resource_name(hash), date: date.strftime(@date_format), open_time: hour.hr_open_time, close_time: hour.hr_close_time, comment: ''})
+           elsif hour.open_24
+             array_push({name: get_resource_name(hash), date: date.strftime(@date_format), open_time: nil, close_time: nil, comment: 'Open 24 Hours'})
+           end
+
+           found = true
+         end
+
+         if !found
+           array_push({name: get_resource_name(hash), date: date.strftime(@date_format), open_time: 'closed', close_time: 'closed', comment: ''})
+         end
+       end
+    end
   end
 
   # validated_params
