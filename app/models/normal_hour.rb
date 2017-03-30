@@ -7,6 +7,8 @@ class NormalHour < ApplicationRecord
   validates :open_time, presence: true, allow_blank: false
   validates :close_time, presence: true, allow_blank: false
 
+  validate :day_of_week_set
+
   def get_resource
     if self.resource_type == "department"
         resource = Department.find(self.resource_id)
@@ -36,6 +38,13 @@ class NormalHour < ApplicationRecord
            time.strftime("%l:%M %p").strip
       else
            ""
+      end
+    end
+
+    def day_of_week_set
+      check = NormalHour.where("resource_id = ?", resource_id).where("resource_type = ?", resource_type).where("day_of_week = ?", day_of_week)
+      if check.exists?
+        errors.add(:day_of_week, "already set")
       end
     end
 end
