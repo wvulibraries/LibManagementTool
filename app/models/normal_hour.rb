@@ -42,7 +42,7 @@ class NormalHour < ApplicationRecord
     end
 
     def day_of_week_set
-      check = NormalHour.where("resource_id = ?", resource_id).where("resource_type = ?", resource_type).where("day_of_week = ?", day_of_week)
+      check = NormalHour.where.not(id: id).where("resource_id = ?", resource_id).where("resource_type = ?", resource_type).where("day_of_week = ?", day_of_week)
       if check.exists?
         errors.add(:day_of_week, "already set")
       end
