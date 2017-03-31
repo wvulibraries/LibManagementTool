@@ -1,6 +1,6 @@
 # Lib Management Tool
 
-[![Build Status](https://travis-ci.org/wvulibraries/LibManagementTool.svg?branch=master)](https://travis-ci.org/wvulibraries/LibManagementTool)
+[![Build Status](https://travis-ci.org/wvulibraries/LibManagementTool.svg?branch=master)](https://travis-ci.org/wvulibraries/LibManagementTool)]![Coverage Status](/coverage/coverage.jpg?raw=true)
 
 The goal of this application is to create an application using a standard web framework so that it could be easily adopted by a community of schools and developers.   
 
