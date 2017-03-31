@@ -42,8 +42,12 @@ class Admin::SpecialHoursControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update special_hour" do
-    patch special_hour_url(@special_hour), params: { special_hour: { close_time: @special_hour.close_time, end_date: @special_hour.end_date, name: @special_hour.name, no_close_time: @special_hour.no_close_time, no_open_time: @special_hour.no_open_time, open_24: @special_hour.open_24, open_time: @special_hour.open_time, start_date: @special_hour.start_date } }
-    assert_redirected_to special_hour_url(@special_hour)
+    # increase open_time by 1 hour
+    new_start_date = @special_hour.start_date + 1.day
+    patch special_hour_url(@special_hour), params: { special_hour: { start_date: new_start_date } }
+    assert_redirected_to special_hour_url(@special_hour), "this did not redirect properly"
+    @special_hour.reload
+    assert_equal new_start_date,  @special_hour.start_date, "start_date was not equal for new start_date"
   end
 
   test "should destroy special_hour" do

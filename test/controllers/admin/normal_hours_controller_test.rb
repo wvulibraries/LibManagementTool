@@ -25,7 +25,9 @@ class Admin::NormalHoursControllerTest < ActionDispatch::IntegrationTest
 
   test "should create normal_hour" do
     assert_difference('NormalHour.count') do
-      post normal_hours_url, params: { normal_hour: { resource_type: @normal_hour.resource_type, resource_id: @normal_hour.resource_id, day_of_week: @normal_hour.day_of_week, open_time: @normal_hour.open_time, close_time: @normal_hour.close_time } }
+      # Cannot save an identical record adding 1 to set another resource
+      id = @normal_hour.resource_id + 1
+      post normal_hours_url, params: { normal_hour: { resource_type: @normal_hour.resource_type, resource_id: id, day_of_week: @normal_hour.day_of_week, open_time: @normal_hour.open_time, close_time: @normal_hour.close_time } }
     end
 
     assert_redirected_to normal_hour_url(NormalHour.last)
@@ -42,8 +44,12 @@ class Admin::NormalHoursControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update normal_hour" do
-    patch normal_hour_url(@normal_hour), params: { normal_hour: { open_time: @normal_hour.open_time, close_time: @normal_hour.close_time } }
-    assert_redirected_to normal_hour_url(@normal_hour)
+    # increase open_time by 1 hour
+    new_open_time = @normal_hour.open_time + 60*60
+    patch normal_hour_url(@normal_hour), params: { normal_hour: { open_time: new_open_time } }
+    assert_redirected_to normal_hour_url(@normal_hour), "this did not redirect properly"
+    @normal_hour.reload
+    assert_equal new_open_time,  @normal_hour.open_time, "open_time was not equal for new open_time"
   end
 
   test "should destroy normal_hour" do
