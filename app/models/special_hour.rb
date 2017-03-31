@@ -73,7 +73,7 @@ class SpecialHour < ApplicationRecord
     # Throws and error if the end_date is already set in another special_hour for this resource.
     def check_end_date
       #check if end_date overlaps anything currently set
-      check = SpecialHour.where("special_id = ?", special_id).where("special_type = ?", special_type).where("start_date <= ?", end_date).where("end_date >= ?", end_date)
+      check = SpecialHour.where.not(id: id).where("special_id = ?", special_id).where("special_type = ?", special_type).where("start_date <= ?", end_date).where("end_date >= ?", end_date)
 
       if check.exists?
         errors.add(:end_date, "overlaps currently set special hour.")
