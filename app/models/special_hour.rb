@@ -54,7 +54,7 @@ class SpecialHour < ApplicationRecord
     # Date : 3/30/2017
     #
     # Description:
-    # Throws and error if the start_date is already set in another special_hour for this resource.
+    # Throws an error if the start_date is already set in another special_hour for this resource.
     def check_start_date
       #check if start_date overlaps anything currently set
       check = SpecialHour.where.not(id: id).where("special_id = ?", special_id).where("special_type = ?", special_type).where("start_date <= ?", start_date).where("end_date >= ?", start_date)
@@ -70,7 +70,7 @@ class SpecialHour < ApplicationRecord
     # Date : 3/30/2017
     #
     # Description:
-    # Throws and error if the end_date is already set in another special_hour for this resource.
+    # Throws an error if the end_date is already set in another special_hour for this resource.
     def check_end_date
       #check if end_date overlaps anything currently set
       check = SpecialHour.where.not(id: id).where("special_id = ?", special_id).where("special_type = ?", special_type).where("start_date <= ?", end_date).where("end_date >= ?", end_date)
