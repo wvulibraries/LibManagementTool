@@ -41,7 +41,7 @@ class Admin::SpecialHoursController < AdminController
 
     respond_to do |format|
       if @special_hour.save
-        format.html { redirect_to @special_hour, notice: 'Special hour was successfully created.' }
+        format.html { redirect_to @special_hour, success: 'Special hour was successfully created.' }
         format.json { render :show, status: :created, location: @special_hour }
       else
         format.html { render :new }
@@ -56,7 +56,7 @@ class Admin::SpecialHoursController < AdminController
     respond_to do |format|
       if check_params
         if @special_hour.update(special_hour_params)
-          format.html { redirect_to @special_hour, notice: 'Special hour was successfully updated.' }
+          format.html { redirect_to @special_hour, success: 'Special hour was successfully updated.' }
           format.json { render :show, status: :ok, location: @special_hour }
         else
           format.html { render :edit }
@@ -74,7 +74,7 @@ class Admin::SpecialHoursController < AdminController
   def destroy
     @special_hour.destroy
     respond_to do |format|
-      format.html { redirect_to special_hours_url, notice: 'Special hour was successfully destroyed.' }
+      format.html { redirect_to special_hours_url, success: 'Special hour was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
