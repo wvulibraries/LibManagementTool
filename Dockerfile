@@ -10,6 +10,6 @@ RUN gem install rails
 # make working directory and move files over
 RUN mkdir /home/libtool
 WORKDIR /home/libtool
-ADD Gemfile /home/libtool/Gemfile
-ADD Gemfile.lock /home/libtool/Gemfile.lock
 ADD . /home/libtool
+RUN cd /home/libtool
+RUN bundle install

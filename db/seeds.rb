@@ -17,7 +17,7 @@ libs = [
 ]
 
 libs.each do |name, desc|
-  Library.create(name:name, description: desc)
+  Library.create(name: name, description: desc)
 end
 
 

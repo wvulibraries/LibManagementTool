@@ -5,8 +5,14 @@
 # All interactions of controllers and permissions per page view
 
 class Admin::SpecialHoursController < AdminController
+  require 'time'
   before_action :set_special_hour, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_rights, only: [:show, :edit, :update, :destroy]
+
+  # validate start_date and end_date
+  before_action :check_date_range, only: [:create, :update]
+  before_action :check_start_date, only: [:create, :update]
+  before_action :check_end_date, only: [:create, :update]
 
   # GET /special_hours
   # GET /special_hours.json
@@ -77,6 +83,57 @@ class Admin::SpecialHoursController < AdminController
     # Use callbacks to share common setup or constraints between actions.
     def set_special_hour
       @special_hour = SpecialHour.find(params[:id])
+    end
+
+    # check_date_range
+    # ==================================================
+    # Name : Tracy A. McCormick
+    # Date : 4/4/2017
+    #
+    # Description:
+    # Throws an error if the end_date is before start_date.
+    def check_date_range
+      if !(Time.parse(params[:special_hour][:start_date]) <= Time.parse(params[:special_hour][:end_date]))
+        redirect_back(fallback_location: special_hours_url, error: "End Date Cannot be before Start Date")
+      end
+    end
+
+    # check_date_range
+    # ==================================================
+    # Name : Tracy A. McCormick
+    # Date : 4/4/2017
+    #
+    # Description:
+    # returns true if date_to_check is found in any set special_hour
+    def check_date(date_to_check)
+      start_date = Time.parse(date_to_check)
+      SpecialHour.where('special_id = ?', params[:special_hour][:special_id]).where('special_type = ?', params[:special_hour][:special_type]).where('start_date <= ?', start_date).where('end_date >= ?', start_date).exists?
+    end
+
+    # check_end_date
+    # ==================================================
+    # Name : Tracy A. McCormick
+    # Date : 3/30/2017
+    #
+    # Description:
+    # Throws an error if the end_date is already set in another special_hour for this resource.
+    def check_start_date
+      if check_date(params[:special_hour][:start_date])
+        redirect_back(fallback_location: special_hours_url, error: "Start Date overlaps currently set special hour.")
+      end
+    end
+
+    # check_end_date
+    # ==================================================
+    # Name : Tracy A. McCormick
+    # Date : 3/30/2017
+    #
+    # Description:
+    # Throws an error if the end_date is already set in another special_hour for this resource.
+    def check_end_date
+      if check_date(params[:special_hour][:end_date])
+        redirect_back(fallback_location: special_hours_url, error: "End Date overlaps currently set special hour.")
+      end
     end
 
     # user_has_access
