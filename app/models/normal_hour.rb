@@ -3,12 +3,17 @@ class NormalHour < ApplicationRecord
 
   validates :id,  numericality: { only_integer: true, allow_nil: true }
   validates :day_of_week, numericality: { only_integer: true, :greater_than => -1, :less_than_or_equal_to => 6 }
+  validates :resource_type, inclusion: { in: ['library', 'department'] }
+  validates :open_time, presence: true, allow_blank: false
+  validates :close_time, presence: true, allow_blank: false
+
+  validate :day_of_week_set
 
   def get_resource
     if self.resource_type == "department"
-      resource = Department.find(self.resource_id)
-      resource.name + " - " + resource.library.name
-    else
+        resource = Department.find(self.resource_id)
+        resource.name + " - " + resource.library.name
+    elsif
         resource = Library.find(self.resource_id)
         resource.name
     end
@@ -23,7 +28,7 @@ class NormalHour < ApplicationRecord
   end
 
   def weekday
-    day = self.day_of_week.to_i
+     day = self.day_of_week.to_i
      Date::DAYNAMES[day]
   end
 
@@ -33,6 +38,13 @@ class NormalHour < ApplicationRecord
            time.strftime("%l:%M %p").strip
       else
            ""
+      end
+    end
+
+    def day_of_week_set
+      check = NormalHour.where.not(id: id).where("resource_id = ?", resource_id).where("resource_type = ?", resource_type).where("day_of_week = ?", day_of_week)
+      if check.exists?
+        errors.add(:day_of_week, "already set")
       end
     end
 end

@@ -43,6 +43,11 @@ gem "select2-rails"
 ## Dry Code Analyzer
 # gem 'rubocop'
 
+# TEST ONLY GEMS
+group :test  do
+  gem 'simplecov'
+  gem 'simplecov-shield'
+end
 
 group :development, :test do
   gem 'byebug', platform: :mri

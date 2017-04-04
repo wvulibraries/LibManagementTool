@@ -5,7 +5,7 @@ class UserPermissionTest < ActiveSupport::TestCase
   test "permission should have the necessary required validators" do
     permission = UserPermission.new
     assert_not permission.valid?
-    assert_equal [:username], post.errors.keys
+    assert_equal [:username], permission.errors.keys
   end
 
   test "user permission is valid" do
@@ -24,6 +24,6 @@ class UserPermissionTest < ActiveSupport::TestCase
 
     new_user = UserPermission.last
     test_array = []
-    assert_equal new_user.departments.class test_array.class, "arrays are not the same type"
+    assert_equal new_user.departments.class, test_array.class, "arrays are not the same type"
   end
 end

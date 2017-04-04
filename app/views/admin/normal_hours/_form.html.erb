@@ -2,8 +2,7 @@
 <%= form_for(normal_hour) do |f| %>
   <% if normal_hour.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralizer(normal_hour.errors.count, "error") %> prohibited this normal_hour from being saved:</h2>
-
+      <h2><%= pluralize(normal_hour.errors.count, "error") %> prohibited this normal_hour from being saved:</h2>
       <ul>
       <% normal_hour.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -12,12 +11,10 @@
     </div>
   <% end %>
 
-  <% if @normal_hour.resource_type == nil %>
-    <div class="field">
-      <%= f.label :resource_type, "Select A Location Type" %>
-      <%= f.select :resource_type, ['library', 'department']%>
-    </div>
-  <% end %>
+  <div class="field">
+    <%= f.label :resource_type, "Select A Location Type" %>
+    <%= f.select :resource_type, ['library', 'department']%>
+  </div>
 
   <div class="department field">
     <%= f.label :resource_id, 'Location' %>
@@ -36,13 +33,12 @@
 
   <div class="field">
     <%= f.label :open_time %>
-    <%= f.time_field :open_time, :value => normal_hour.hr_open_time, id: "timepicker", :class => "timepicker" %>
-
+    <%= f.text_field :open_time, :value => normal_hour.hr_open_time, id: "timepicker", :class => "timepicker" %>
   </div>
 
   <div class="field">
     <%= f.label :close_time %>
-    <%= f.time_field :close_time, :value => normal_hour.hr_close_time, id: "timepicker", :class => "timepicker" %>
+    <%= f.text_field :close_time, :value => normal_hour.hr_close_time, id: "timepicker", :class => "timepicker" %>
   </div>
 
   <div class="actions">

@@ -3,31 +3,46 @@ class SpecialHour < ApplicationRecord
   validates :id,  numericality: { only_integer: true, allow_nil: true }
 
   def hr_start_date
-    return hr_date(self.start_date)
+     hr_date(self.start_date)
   end
 
   def hr_end_date
-    return hr_date(self.end_date)
+     hr_date(self.end_date)
   end
 
   def hr_open_time
-    return hr_time(self.open_time)
+     hr_time(self.open_time)
   end
 
   def hr_close_time
-    return hr_time(self.close_time)
+     hr_time(self.close_time)
+  end
+
+  def get_resource
+    if self.special_type == "department"
+        special = Department.find(self.special_id)
+        special.name + " - " + special.library.name
+    elsif
+        special = Library.find(self.special_id)
+        special.name
+    end
   end
 
   private
     def hr_time(time)
       if time != nil
-          return time.strftime("%l:%M %p")
+           time.strftime("%l:%M %p")
       else
-          return ""
+           ""
       end
     end
 
     def hr_date(date)
-      return date.strftime("%B %d, %Y")
+      if date != nil
+           date.strftime("%B %d, %Y")
+      else
+           ""
+      end
     end
+
 end
