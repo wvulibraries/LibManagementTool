@@ -24,4 +24,4 @@
 
 # Ignore Mysql Volume from Docker Stuff
 /mysql
-mysql 
+mysql
