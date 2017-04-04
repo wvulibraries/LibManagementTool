@@ -7,8 +7,14 @@ Rails.application.routes.draw do
 
   get 'api/getlibs'
   get 'api/getdepts'
-  get 'api/getdeptsbylib'  
+  get 'api/getdeptsbylib'
   get 'api/gethours'
+
+  # get 'api/:month/gethours' => 'api#gethours'
+  # get 'api/:day/gethours' => 'api#gethours'
+  # get 'api/:week/gethours' => 'api#gethours'
+  # get 'api/:lib/gethours' => 'api#gethours'
+  # get 'api/:dept/gethours' => 'api#gethours'
 
   # forces the controllers to use the admin name space
   # this is going to allow for the addition of a function to restrict access

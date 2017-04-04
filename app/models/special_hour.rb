@@ -44,4 +44,5 @@ class SpecialHour < ApplicationRecord
            ""
       end
     end
+
 end
