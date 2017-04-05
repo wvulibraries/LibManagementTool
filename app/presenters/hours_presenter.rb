@@ -39,13 +39,13 @@ class HoursPresenter
    # check and see if date_start and date end are set_params
    if @params[:date_start] && @params[:date_end]
      # call get_hours_list to create the hours_array list
-     (Date.strptime(@params[:date_start], @date_format)..Date.strptime(@params[:date_end], @date_format)).each do |day|
+     (format_date(@params[:date_start])..format_date(@params[:date_end])).each do |day|
        get_day_list(day)
      end
    elsif @params[:date_start]
     # if only date_start is present call get_day
     # to populate the hours_array with items for that day
-     get_day_list(Date.strptime(@params[:date_start], @date_format))
+     get_day_list(format_date(@params[:date_start]))
    else
      get_day_list(Date.today)
    end
@@ -110,22 +110,34 @@ class HoursPresenter
     resources_for_list.each do |resource|
        resource.each do |item|
          found = false
-         hash = {id: item.id, type: resource.name.downcase}
-         get_day(date, hash).each do |hour|
-           if hour.open_time.present? && hour.close_time.present?
-             array_push({name: get_resource_name(hash), date: date.strftime(@date_format), open_time: hour.hr_open_time, close_time: hour.hr_close_time, comment: ''})
-           elsif hour.open_24
-             array_push({name: get_resource_name(hash), date: date.strftime(@date_format), open_time: nil, close_time: nil, comment: 'Open 24 Hours'})
-           end
-
-           found = true
-         end
-
-         if !found
-           array_push({name: get_resource_name(hash), date: date.strftime(@date_format), open_time: 'closed', close_time: 'closed', comment: ''})
-         end
+         hash = {id: item.id, type: resource.name.downcase, date: date.strftime('%Y-%m-%d')}
+         day = get_date(hash)
+         array_push({name: get_resource_name(hash), date: date.strftime(@date_format), open_time: day[:open_time], close_time: day[:close_time], comment: day[:comment]})
        end
     end
+  end
+
+  def get_date(resource)
+    date = Date.parse(resource[:date])
+    found = false
+    get_day(date, resource).each do |hour|
+      if hour.open_time.present? && hour.close_time.present?
+        return {open_time: hour.hr_open_time, close_time: hour.hr_close_time, comment: ''}
+      elsif hour.close_time.present? && hour.no_open_time
+        return {open_time: '', close_time: hour.hr_close_time, comment: 'No Open Time'}
+      elsif hour.open_time.present? && hour.no_close_time
+        return {open_time: hour.hr_open_time, close_time: '', comment: 'No Close Time'}
+      elsif hour.open_24
+        return {open_time: '', close_time: '', comment: 'Open 24 Hours'}
+      end
+
+      found = true
+    end
+
+    if !found
+      return {open_time: '', close_time: '', comment: 'Closed'}
+    end
+
   end
 
   # validated_params
@@ -158,10 +170,11 @@ class HoursPresenter
   # @return (boolean) - true or false of existance
 
   def special_hour_exists?(date = Date.today, resource = {})
+    date = date.beginning_of_day
     if resource[:type].present? && resource[:id].present?
-      SpecialHour.where(special_type: resource[:type]).where(special_id: resource[:id]).where('start_date <= ?', date).where('end_date >= ?', date).exists?
+      SpecialHour.where(special_type: resource[:type]).where(special_id: resource[:id]).where("start_date <= ? AND end_date >= ?", date, date).exists?
     else
-      SpecialHour.where('start_date <= ?', date).where('end_date >= ?', date).exists?
+      SpecialHour.where("start_date <= ? AND end_date >= ?", date, date).exists?
     end
   end
 
@@ -179,10 +192,11 @@ class HoursPresenter
   # @return (boolean) - the record from database
 
   def get_special_hours(date = Date.today, resource = {})
+    date = date.beginning_of_day
     if resource[:type].present? && resource[:id].present?
-      SpecialHour.where(special_type: resource[:type]).where(special_id: resource[:id]).where('start_date <= ?', date).where('end_date >= ?', date)
+      SpecialHour.where(special_type: resource[:type]).where(special_id: resource[:id]).where("start_date <= ? AND end_date >= ?", date, date)
     else
-      SpecialHour.where('start_date <= ?', date).where('end_date >= ?', date)
+      SpecialHour.where("start_date <= ? AND end_date >= ?", date, date)
     end
   end
 
@@ -201,6 +215,7 @@ class HoursPresenter
   # @return var (type) - description
 
   def get_normal_hours(date = Date.today, resource = {})
+    date = date.beginning_of_day
     if resource[:type].present? && resource[:id].present?
       NormalHour.where(resource_type: resource[:type]).where(resource_id: resource[:id]).where(day_of_week: date.wday)
     else

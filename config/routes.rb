@@ -23,5 +23,9 @@ Rails.application.routes.draw do
     resources :libraries, :departments, :users, :normal_hours, :special_hours, :user_permissions, module: 'admin'
   end
 
+  scope '/' do
+    resources :hours, module: 'public'
+  end
+
   get '/admin/departments/list', to: 'departments#index'
 end

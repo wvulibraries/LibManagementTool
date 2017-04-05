@@ -5,7 +5,7 @@
 # All interactions of controllers and permissions per page view
 
 class Admin::SpecialHoursController < AdminController
-  require 'time'
+  #require 'time'
   before_action :set_special_hour, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_rights, only: [:show, :edit, :update, :destroy]
 
@@ -93,7 +93,7 @@ class Admin::SpecialHoursController < AdminController
     # Description:
     # Throws an error if the end_date is before start_date.
     def check_date_range
-      if !(Time.parse(params[:special_hour][:start_date]) <= Time.parse(params[:special_hour][:end_date]))
+      if !(Date.parse(params[:special_hour][:start_date]) <= Date.parse(params[:special_hour][:end_date]))
         redirect_back(fallback_location: special_hours_url, error: "End Date Cannot be before Start Date")
       end
     end
@@ -106,8 +106,8 @@ class Admin::SpecialHoursController < AdminController
     # Description:
     # returns true if date_to_check is found in any set special_hour
     def check_date(date_to_check)
-      check = Time.parse(date_to_check)
-      SpecialHour.where('special_id = ?', params[:special_hour][:special_id]).where('special_type = ?', params[:special_hour][:special_type]).where('start_date <= ?', check).where('end_date >= ?', check).exists?
+      check = Date.parse(date_to_check)
+      SpecialHour.where.not(id: params[:id]).where('special_id = ?', params[:special_hour][:special_id]).where('special_type = ?', params[:special_hour][:special_type]).where('start_date <= ?', check).where('end_date >= ?', check).exists?
     end
 
     # check_end_date

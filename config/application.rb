@@ -7,5 +7,6 @@ module LibraryManagementTool
   class Application < Rails::Application
     config.time_zone = 'Eastern Time (US & Canada)'
     config.active_record.default_timezone = :local
+    config.beginning_of_week = :sunday
   end
 end
