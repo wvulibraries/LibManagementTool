@@ -1,22 +1,32 @@
-  <ul class="left-nav">
-    <% @presenter.resources_for_list.each do |resource| %>
-        <% resource.each do |item| %>
-          <% name = @presenter.get_resource_name({id: item.id, type: resource.name.downcase}) %>
-          <li><%= link_to name, hours_path(:id => item.id, :type => resource.name.downcase) %></li>
-        <% end %>
-    <% end %>
-  </ul>
-
-  <div class="calendar">
-    <br></br>
-    <h1> <%= @presenter.get_resource_name({id: params[:id], type: params[:type]}) %> Hours </h1>
-    <%= month_calendar do |date| %>
-      <%= date.strftime('%d') %>
-      <% hours = @presenter.get_date({id: params[:id], type: params[:type], date: date.to_s}) %>
-      <p>
-        Open: <%= hours[:open_time] %><br>
-        Close: <%= hours[:close_time] %><br>
-        Comment: <%= hours[:comment] %>
-      </p>
-    <% end %>
-  </div>
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <% @presenter.resources_for_list.each do |resource| %>
+                <% resource.each do |item| %>
+                  <% name = @presenter.get_resource_name({id: item.id, type: resource.name.downcase}) %>
+                  <li><%= link_to name, hours_path(:id => item.id, :type => resource.name.downcase) %></li>
+                <% end %>
+            <% end %>
+        </ul>
+    </div>
+    <div id="page-content-wrapper">
+        <div class="page-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                      <h1> <%= @presenter.get_resource_name({id: params[:id], type: params[:type]}) %> Hours </h1>
+                      <%= month_calendar do |date| %>
+                        <%= date.strftime('%d') %>
+                        <% hours = @presenter.get_date({id: params[:id], type: params[:type], date: date.to_s}) %>
+                        <p>
+                          Open: <%= hours[:open_time] %><br>
+                          Close: <%= hours[:close_time] %><br>
+                          Comment: <%= hours[:comment] %>
+                        </p>
+                      <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

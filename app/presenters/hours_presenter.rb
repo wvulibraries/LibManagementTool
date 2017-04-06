@@ -95,15 +95,13 @@ class HoursPresenter
     end
   end
 
-  # get_hours
+  # get_day_list
   # ==================================================
   # Name : Tracy McCormick
   # Date : 03/24/2017
   #
-  # Description: gets available resources and checks each one calliing get_day
-  # to see if hours are set for the resource on the date passed in params. If
-  # found calls array_push and sets the hours if no hours are found it pushs
-  # closed for that requested day.
+  # Description: gets available resources and checks each one calliing get_date
+  # then it calls array_push to save the result.
   # @param - date (date): sets to today by default
 
   def get_day_list(date = Date.today)
@@ -117,6 +115,13 @@ class HoursPresenter
     end
   end
 
+  # get_date
+  # ==================================================
+  # Name : Tracy McCormick
+  # Date : 04/05/2017
+  #
+  # Description: Calls get_day and returns a hash formatted for the date and resource requested.
+  # if no results are returned from get_day a Closed message is returned in the hash.
   def get_date(resource)
     date = Date.parse(resource[:date])
     found = false
@@ -138,6 +143,21 @@ class HoursPresenter
       return {open_time: '', close_time: '', comment: 'Closed'}
     end
 
+  end
+
+  # get_day
+  # ==================================================
+  # Name : Tracy McCormick
+  # Date : 03/24/2017
+  #
+  # Checks for special_hour exists for the date and resource if none are found
+  # returns normal hours for the date and resource supplied.
+  def get_day(date = Date.today, resource = {})
+    if self.special_hour_exists?(date, resource)
+      self.get_special_hours(date, resource)
+    else
+      self.get_normal_hours(date, resource)
+    end
   end
 
   # validated_params
@@ -259,14 +279,6 @@ class HoursPresenter
       Department.select('id, name')
     else
       Department.where('id = ?', id).select('id,name')
-    end
-  end
-
-  def get_day(date = Date.today, resource = {})
-    if self.special_hour_exists?(date, resource)
-      self.get_special_hours(date, resource)
-    else
-      self.get_normal_hours(date, resource)
     end
   end
 
