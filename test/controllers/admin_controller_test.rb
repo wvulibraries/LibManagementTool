@@ -13,10 +13,12 @@ class AdminControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "assert user has been logged in and assigned to the @username variable" do
+  test "assert user has been logged in and assigned to the @username variable then also logout" do
     CASClient::Frameworks::Rails::Filter.fake('username1', {:role => 'username', :email => "username1@mail.wvu.edu"})
     get admin_url
     assert_not_nil assigns(:username)
+    get admin_logout_url
+    assert_nil assigns(:username)
   end
 
   test "assume that user does not exist, no credentials" do
@@ -30,4 +32,5 @@ class AdminControllerTest < ActionDispatch::IntegrationTest
      get admin_url
      assert_redirected_to root_path
   end
+
 end

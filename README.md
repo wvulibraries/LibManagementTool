@@ -56,6 +56,28 @@ Can be done using vagrant or docker.
 - Use the terminal to change directory into the cloned repo and do the command `vagrant up`
 - This will provision the box, but will not do everything you need to completed the setup so you will need to be inside of the box to continue.
 
+- The following code may need to be added to the public_controller.rb
+
+  def set_vagrant_user
+      session['cas'] = {
+        'user' => 'vagrant',
+        'extra_attributes' => {},
+        'secret' => Digest::MD5.hexdigest("Library")
+      }
+
+      redirect_to root_path, notice: 'Logged In!'
+  end
+
+  def fail_vagrant_user
+      session['cas'] = {
+        'user' => 'vagrant',
+        'extra_attributes' => {},
+        'secret' => Digest::MD5.hexdigest("asdkfja")
+      }
+
+      redirect_to root_path, notice: 'Purposeful failed Log In!'
+  end
+
 ### Vagrant SSH
 
 The following commands need to be done after entering `vagrant ssh` be sure that you are inside of your vagrant box.  

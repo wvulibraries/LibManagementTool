@@ -1,10 +1,11 @@
+require 'simplecov'
+SimpleCov.start
+
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
-require 'simplecov'
-require 'simplecov-shield'
 
-SimpleCov.start
+require 'simplecov-shield'
 SimpleCov.formatter = SimpleCov::Formatter::ShieldFormatter
 
 class ActiveSupport::TestCase

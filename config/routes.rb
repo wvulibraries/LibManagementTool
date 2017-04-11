@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   # admin
   get  '/admin', to: 'admin#index'
+  get  '/admin/logout', to: 'admin#logout'
 
   get 'api/getlibs'
   get 'api/getdepts'

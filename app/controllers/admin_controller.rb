@@ -19,6 +19,11 @@ class AdminController < ApplicationController
     end
   end
 
+  def logout
+    session.delete('cas')
+    redirect_to root_path, notice: 'Logged Out!'
+  end
+
   private
 
   # check_permissions
@@ -48,7 +53,7 @@ class AdminController < ApplicationController
   # Modified By : Tracy A. McCormick
   # Date : 3/9/2017
   # Description:
-  # Gets the suer by the session and checks returns the boolean value in the database
+  # Gets the user by the session and checks returns the boolean value in the database
   def check_is_admin
     user = User.find_by(username: session[:cas_user])
     if user != nil

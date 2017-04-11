@@ -12,12 +12,13 @@ require 'date'
 class HoursPresenter
 
   def initialize(params = {})
-    @params = self.set_params params
+    self.set_params params
     @date_format = '%m-%d-%Y'
     @hours_array = Array.new
   end
 
   def set_params(params)
+    #puts params.inspect
     @params = self.validated_params params
   end
 
@@ -124,7 +125,6 @@ class HoursPresenter
   # if no results are returned from get_day a Closed message is returned in the hash.
   def get_date(resource)
     date = Date.parse(resource[:date])
-    found = false
     get_day(date, resource).each do |hour|
       if hour.open_time.present? && hour.close_time.present?
         return {open_time: hour.hr_open_time, close_time: hour.hr_close_time, comment: ''}
@@ -132,16 +132,12 @@ class HoursPresenter
         return {open_time: '', close_time: hour.hr_close_time, comment: 'No Open Time'}
       elsif hour.open_time.present? && hour.no_close_time
         return {open_time: hour.hr_open_time, close_time: '', comment: 'No Close Time'}
-      elsif hour.open_24
+      elsif hour.class.to_s === 'SpecialHour' && hour.open_24
         return {open_time: '', close_time: '', comment: 'Open 24 Hours'}
       end
-
-      found = true
     end
 
-    if !found
-      return {open_time: '', close_time: '', comment: 'Closed'}
-    end
+    return {open_time: '', close_time: '', comment: 'Closed'}
 
   end
 
@@ -164,6 +160,8 @@ class HoursPresenter
   # ==================================================
   # Name : David J. Davis
   # Date :  3.22.2017
+  # Modified : Tracy A. McCormick
+  # Date : 4.7.2017
   #
   # Description: Removes all parameters that are not in the whitelist
   # of allowed parameters.
@@ -171,8 +169,8 @@ class HoursPresenter
   # @return (object) - cleaned object of params that are allowed removes - not allowed params
 
   def validated_params(params)
-    allowed_keys = ['id', 'type', 'date_start', 'date_end']
-    clean_params = params.select {|key,value| allowed_keys.include?(key)}
+    allowed_keys = [:id, :type, :date_start, :date_end]
+    params.select {|key,value| allowed_keys.include?(key)}
   end
 
 

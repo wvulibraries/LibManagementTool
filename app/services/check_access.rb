@@ -1,35 +1,37 @@
 # app/services/check_access.rb
 class CheckAccess
 
-  def self.initialize (user_depts, user_libs)
-    @user_depts = user_depts
-    @user_libs = user_libs
+  def initialize (user_depts, user_libs)
+    # puts user_depts.inspect
+    # puts user_libs.inspect
+    self.set_depts(user_depts)
+    self.set_libs(user_libs)
   end
 
-  def self.set_depts(depts)
+  def set_depts(depts)
     @user_depts = depts
   end
 
-  def self.get_depts
+  def get_depts
     @user_depts
   end
 
-  def self.set_libs(libs)
+  def set_libs(libs)
     @user_libs = libs
   end
 
-  def self.get_libs
+  def get_libs
     @user_libs
   end
 
-  def self.check(type, resource_id)
-    @type = type
+  def check(type, resource_id)
+    @type = type.to_s.downcase
     @resource_id = resource_id
     check_type_access
   end
 
   private
-    def self.check_type_access
+    def check_type_access
       if (@type === 'library')
         user_libraries
       elsif (@type === 'department')
@@ -39,11 +41,11 @@ class CheckAccess
       end
     end
 
-    def self.user_departments
+    def user_departments
       @user_depts.include? @resource_id
     end
 
-    def self.user_libraries
+    def user_libraries
       @user_libs.include? @resource_id
     end
 end

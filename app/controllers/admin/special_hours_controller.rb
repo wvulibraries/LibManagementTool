@@ -1,4 +1,4 @@
-# Department Controller
+# Special Hours Controller
 # ==================================================
 # AUTHORS : David J. Davis, Tracy A. McCormick
 # Description:
@@ -8,6 +8,7 @@ class Admin::SpecialHoursController < AdminController
   #require 'time'
   before_action :set_special_hour, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_rights, only: [:show, :edit, :update, :destroy]
+  before_action :check_param_resource_access, only: [:create]
 
   # validate start_date and end_date
   before_action :check_date_range, only: [:create, :update]
@@ -54,7 +55,7 @@ class Admin::SpecialHoursController < AdminController
   # PATCH/PUT /special_hours/1.json
   def update
     respond_to do |format|
-      if check_params
+      if check_param_resource_access
         if @special_hour.update(special_hour_params)
           format.html { redirect_to @special_hour, success: 'Special hour was successfully updated.' }
           format.json { render :show, status: :ok, location: @special_hour }
@@ -93,8 +94,12 @@ class Admin::SpecialHoursController < AdminController
     # Description:
     # Throws an error if the end_date is before start_date.
     def check_date_range
-      if !(Date.parse(params[:special_hour][:start_date]) <= Date.parse(params[:special_hour][:end_date]))
-        redirect_back(fallback_location: special_hours_url, error: "End Date Cannot be before Start Date")
+      if params[:special_hour][:start_date].present? && params[:special_hour][:end_date].present?
+        if !(Date.parse(params[:special_hour][:start_date]) <= Date.parse(params[:special_hour][:end_date]))
+          redirect_back(fallback_location: special_hours_url, error: "End Date Cannot be before Start Date")
+        end
+      else
+        false
       end
     end
 
@@ -106,8 +111,12 @@ class Admin::SpecialHoursController < AdminController
     # Description:
     # returns true if date_to_check is found in any set special_hour
     def check_date(date_to_check)
-      check = Date.parse(date_to_check)
-      SpecialHour.where.not(id: params[:id]).where('special_id = ?', params[:special_hour][:special_id]).where('special_type = ?', params[:special_hour][:special_type]).where('start_date <= ?', check).where('end_date >= ?', check).exists?
+      if !date_to_check.nil?
+        check = Date.parse(date_to_check)
+        SpecialHour.where.not(id: params[:id]).where('special_id = ?', params[:special_hour][:special_id]).where('special_type = ?', params[:special_hour][:special_type]).where('start_date <= ?', check).where('end_date >= ?', check).exists?
+      else
+        false
+      end
     end
 
     # check_end_date
@@ -120,6 +129,8 @@ class Admin::SpecialHoursController < AdminController
     def check_start_date
       if check_date(params[:special_hour][:start_date])
         redirect_back(fallback_location: special_hours_url, error: "Start Date overlaps currently set special hour.")
+      else
+        false
       end
     end
 
@@ -143,12 +154,12 @@ class Admin::SpecialHoursController < AdminController
     #
     # Description:
     # Checks to see if the user has access to the library or department.
-    def user_has_access
-      if !check_is_admin && !@special_hour.nil?
-        CheckAccess.initialize(@user_depts, @user_libs)
-        CheckAccess.check(@special_hour.special_type.to_s, @special_hour.special_id.to_s)
-      else
+    def check_resource_access
+      if check_is_admin
         true
+      elsif !@special_hour.special_id.nil?
+        check_access = CheckAccess.new(@user_depts, @user_libs)
+        check_access.check(@special_hour.special_type.to_s, @special_hour.special_id.to_i)
       end
     end
 
@@ -159,12 +170,12 @@ class Admin::SpecialHoursController < AdminController
     #
     # Description:
     # Checks params to see if user has access to the library or department they are trying to set
-    def check_params
-      if !check_is_admin && params[:special_hour].present?
-        CheckAccess.initialize(@user_depts, @user_libs)
-        CheckAccess.check(params[:special_hour][:special_type], params[:special_hour][:special_id])
-      else
+    def check_param_resource_access
+      if check_is_admin
         true
+      elsif !params[:special_hour][:special_id].nil?
+        check_access = CheckAccess.new(@user_depts, @user_libs)
+        check_access.check(params[:special_hour][:special_type], params[:special_hour][:special_id])
       end
     end
 
@@ -177,7 +188,7 @@ class Admin::SpecialHoursController < AdminController
     # Calls user_has_access to see if they have access to the library or department. Also checks to see if they are admin.
     # If neither of these are true it redirects them back to there previous page and shows them an error.
     def authenticate_rights
-      if user_has_access
+      if check_resource_access
         true
       else
         redirect_back(fallback_location: special_hours_url, error: "You do not have permission to access this resource.")

@@ -2,8 +2,8 @@ require 'test_helper'
 
 class SpecialHourTest < ActiveSupport::TestCase
   def setup
-    @spec_hour = special_hours(:special_hour1)
-    @spec_hour2 = special_hours(:special_hour2)
+    @spec_hour = SpecialHour.find(1)
+    @spec_hour2 = SpecialHour.find(2)
   end
 
   test "special hours are valid" do
@@ -27,6 +27,16 @@ class SpecialHourTest < ActiveSupport::TestCase
 
   test "human readable time for a nil object should return as an empty string" do
     assert_empty @spec_hour.hr_open_time,  "error with the human readable time, it should have come back to with an empty string"
+  end
+
+  test "should get resource name for library" do
+    name = @spec_hour.get_resource
+    assert_not_predicate name, :empty?
+  end
+
+  test "should get resource name for department" do
+    name = @spec_hour2.get_resource
+    assert_not_predicate name, :empty?
   end
 
   test "open time should return null for this item and be allowed to save" do

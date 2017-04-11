@@ -1,5 +1,8 @@
 class SpecialHour < ApplicationRecord
   belongs_to :special, polymorphic: true
+
+  validates :special_id, numericality: { only_integer: true, allow_nil: false }
+  validates :special_type, inclusion: { in: ['library', 'department'] }
   validates :id,  numericality: { only_integer: true, allow_nil: true }
 
   def hr_start_date

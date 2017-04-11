@@ -53,4 +53,11 @@ class Admin::UserPermissionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to user_permissions_url
   end
+
+  test "should not allow non-admin users" do
+    @user = User.find(10)
+    CASClient::Frameworks::Rails::Filter.fake(@user.username, {:sn => "not_admin", :mail => "username10@nowhere.com"})
+    get user_permission_url(@admin_user_permission)
+    assert_redirected_to users_url
+  end
 end

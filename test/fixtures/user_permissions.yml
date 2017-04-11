@@ -1,6 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-<% 10.times do |n| %>
+<% 9.times do |n| %>
   user_<%= n %>:
     id: <%= n %>
     departments: <%= [1, 2, 3].to_yaml.inspect %>
@@ -9,3 +9,11 @@
     created_at: <%= Date.today %>
     updated_at: <%= 10.days.from_now %>
 <% end %>
+
+  user_10:
+    id: 10
+    departments: <%= [1, 2].to_yaml.inspect %>
+    libraries: <%= [1, 2].to_yaml.inspect %>
+    username: "username10"
+    created_at: <%= Date.today %>
+    updated_at: <%= 10.days.from_now %>

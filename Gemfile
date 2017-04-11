@@ -46,7 +46,7 @@ gem "simple_calendar", "~> 2.0"
 
 # TEST ONLY GEMS
 group :test  do
-  gem 'simplecov'
+  gem 'simplecov', :require => false
   gem 'simplecov-shield'
 end
 
