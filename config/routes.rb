@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   # admin
   get  '/admin', to: 'admin#index'
+  get  '/admin/logout', to: 'admin#logout'
 
   get 'api/getlibs'
   get 'api/getdepts'
@@ -23,5 +24,6 @@ Rails.application.routes.draw do
     resources :libraries, :departments, :users, :normal_hours, :special_hours, :user_permissions, module: 'admin'
   end
 
+  get '/hours', to: 'public/hours#index'
   get '/admin/departments/list', to: 'departments#index'
 end

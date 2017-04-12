@@ -25,3 +25,6 @@
 # Ignore Mysql Volume from Docker Stuff
 /mysql
 mysql
+
+# Ignore coverage/assets
+/coverage/assets

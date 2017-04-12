@@ -2,11 +2,12 @@ class NormalHour < ApplicationRecord
   belongs_to :resource, polymorphic: true
 
   validates :id,  numericality: { only_integer: true, allow_nil: true }
-  validates :day_of_week, numericality: { only_integer: true, :greater_than => -1, :less_than_or_equal_to => 6 }
   validates :resource_type, inclusion: { in: ['library', 'department'] }
+
   validates :open_time, presence: true, allow_blank: false
   validates :close_time, presence: true, allow_blank: false
 
+  validates :day_of_week, numericality: { only_integer: true, :greater_than => -1, :less_than_or_equal_to => 6 }
   validate :day_of_week_set
 
   def get_resource

@@ -49,7 +49,7 @@ class Admin::UserPermissionsController < AdminController
         format.html { redirect_to @admin_user_permission, notice: 'User permission was successfully updated.' }
         format.json { render :show, status: :ok, location: @admin_user_permission }
       else
-        format.html { render :edit, error: 'User permission form has errors, please correc them.' }
+        format.html { render :edit, error: 'User permission form has errors, please correct them.' }
         format.json { render json: @admin_user_permission.errors, status: :unprocessable_entity }
       end
     end

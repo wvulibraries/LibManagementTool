@@ -26,6 +26,7 @@ gem 'font-awesome-sass'
 gem 'pickadate-rails'
 gem "select2-rails"
 
+gem "simple_calendar", "~> 2.0"
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
@@ -45,7 +46,7 @@ gem "select2-rails"
 
 # TEST ONLY GEMS
 group :test  do
-  gem 'simplecov'
+  gem 'simplecov', :require => false
   gem 'simplecov-shield'
 end
 

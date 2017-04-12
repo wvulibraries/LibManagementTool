@@ -31,6 +31,15 @@ class Admin::LibrariesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to library_url(Library.last)
   end
 
+  test "should not create library for user without admin access" do
+    # set user that doesn't have admin access
+    @user = User.find(10)
+    CASClient::Frameworks::Rails::Filter.fake(@user.username, {:sn => "not_admin", :mail => "username10@nowhere.com"})
+    assert_no_difference('Library.count') do
+      post libraries_url, params: { library: { description: @library.description, name: @library.name } }
+    end
+  end
+
   test "should show library" do
     get libraries_url, params: { id: @library.id }
     assert_response :success

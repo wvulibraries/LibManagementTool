@@ -18,6 +18,12 @@ class Admin::NormalHoursControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should fail get index" do
+    CASClient::Frameworks::Rails::Filter.fake("username")
+    get normal_hours_url
+    assert_redirected_to root_path
+  end
+
   test "should get new" do
     get new_normal_hour_url
     assert_response :success
@@ -26,11 +32,68 @@ class Admin::NormalHoursControllerTest < ActionDispatch::IntegrationTest
   test "should create normal_hour" do
     assert_difference('NormalHour.count') do
       # Cannot save an identical record adding 1 to set another resource
-      id = @normal_hour.resource_id + 1
-      post normal_hours_url, params: { normal_hour: { resource_type: @normal_hour.resource_type, resource_id: id, day_of_week: @normal_hour.day_of_week, open_time: @normal_hour.open_time, close_time: @normal_hour.close_time } }
+      post normal_hours_url, params: {
+        normal_hour: {
+          resource_type: @normal_hour.resource_type,
+          resource_id: @normal_hour.resource_id + 1,
+          day_of_week: @normal_hour.day_of_week,
+          open_time: @normal_hour.open_time,
+          close_time: @normal_hour.close_time
+        }
+      }
     end
 
     assert_redirected_to normal_hour_url(NormalHour.last)
+  end
+
+  test "should not create normal_hour day_of_week should overlap" do
+    assert_no_difference('NormalHour.count') do
+      post normal_hours_url, params: {
+        normal_hour: {
+          resource_type: @normal_hour.resource_type,
+          resource_id: @normal_hour.resource_id,
+          day_of_week: @normal_hour.day_of_week,
+          open_time: @normal_hour.open_time,
+          close_time: @normal_hour.close_time
+        }
+      }
+    end
+  end
+
+  test "should create normal_hour user has access" do
+    # set user that has access and is not a admin
+    @user = User.find(10)
+    CASClient::Frameworks::Rails::Filter.fake(@user.username, {:sn => "not_admin", :mail => "username10@nowhere.com"})
+    assert_difference('NormalHour.count') do
+      post normal_hours_url, params: {
+        normal_hour: {
+          resource_type: @normal_hour.resource_type,
+          resource_id: 2,
+          day_of_week: @normal_hour.day_of_week,
+          open_time: @normal_hour.open_time,
+          close_time: @normal_hour.close_time
+        }
+      }
+    end
+
+    assert_redirected_to normal_hour_url(NormalHour.last)
+  end
+
+  test "should not create normal_hour user doesn't have access" do
+    # set user that doesn't have access and is not an admin
+    @user = User.find(10)
+    CASClient::Frameworks::Rails::Filter.fake(@user.username, {:sn => "not_admin", :mail => "username10@nowhere.com"})
+    assert_difference('NormalHour.count') do
+      post normal_hours_url, params: {
+        normal_hour: {
+          resource_type: 'department',
+          resource_id: 3,
+          day_of_week: @normal_hour.day_of_week,
+          open_time: @normal_hour.open_time,
+          close_time: @normal_hour.close_time
+        }
+      }
+    end
   end
 
   test "should show normal_hour" do
@@ -46,10 +109,22 @@ class Admin::NormalHoursControllerTest < ActionDispatch::IntegrationTest
   test "should update normal_hour" do
     # increase open_time by 1 hour
     new_open_time = @normal_hour.open_time + 60*60
-    patch normal_hour_url(@normal_hour), params: { normal_hour: { open_time: new_open_time } }
-    assert_redirected_to normal_hour_url(@normal_hour), "this did not redirect properly"
+    patch normal_hour_url(@normal_hour), params: { normal_hour: { open_time: new_open_time }}
     @normal_hour.reload
-    assert_equal new_open_time,  @normal_hour.open_time, "open_time was not equal for new open_time"
+    assert new_open_time == @normal_hour.open_time
+  end
+
+  test "should not update normal_hour" do
+    # set user that doesn't have admin access
+    @user = User.find(10)
+    #puts user.username.inspect
+    CASClient::Frameworks::Rails::Filter.fake(@user.username, {:sn => "not_admin", :mail => "username10@nowhere.com"})
+
+    # increase open_time by 1 hour
+    new_open_time = @normal_hour.open_time + 60*60
+    patch normal_hour_url(@normal_hour), params: { normal_hour: { open_time: new_open_time }}
+    @normal_hour.reload
+    assert new_open_time != @normal_hour.open_time
   end
 
   test "should destroy normal_hour" do
@@ -59,4 +134,5 @@ class Admin::NormalHoursControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to normal_hours_url
   end
+
 end
