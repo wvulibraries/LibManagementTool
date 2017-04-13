@@ -25,24 +25,7 @@ gem 'normalize-scss'
 gem 'font-awesome-sass'
 gem 'pickadate-rails'
 gem "select2-rails"
-
 gem "simple_calendar", "~> 2.0"
-
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
-
-## Coverage Testing
-# gem 'rcov'
-## Security Testing
-# gem 'brakeman'
-## Dry Code Analyzer
-# gem 'rubocop'
 
 # TEST ONLY GEMS
 group :test  do
@@ -55,11 +38,14 @@ group :development, :test do
   gem 'rails-controller-testing'
 end
 
+# DEVELOPMENT ONLY GEMS
 group :development do
   gem 'web-console'
   gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'byebug', platform: :mri
+  gem 'rubocop', require: false
   gem 'brakeman', :require => false
 end
 
