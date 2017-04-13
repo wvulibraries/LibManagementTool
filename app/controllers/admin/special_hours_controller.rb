@@ -158,7 +158,9 @@ class Admin::SpecialHoursController < AdminController
       if check_is_admin
         true
       elsif !@special_hour.special_id.nil?
-        check_access = CheckAccess.new(@user_depts, @user_libs)
+        check_access = CheckAccess.new
+        check_access.depts = @user_depts
+        check_access.libs = @user_libs 
         check_access.check(@special_hour.special_type.to_s, @special_hour.special_id.to_i)
       end
     end
@@ -174,7 +176,9 @@ class Admin::SpecialHoursController < AdminController
       if check_is_admin
         true
       elsif !params[:special_hour][:special_id].nil?
-        check_access = CheckAccess.new(@user_depts, @user_libs)
+        check_access = CheckAccess.new
+        check_access.depts = @user_depts
+        check_access.libs = @user_libs
         check_access.check(params[:special_hour][:special_type], params[:special_hour][:special_id])
       end
     end

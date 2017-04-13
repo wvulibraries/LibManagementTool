@@ -3,31 +3,8 @@
 # @author Tracy A. McCormick 
 # gets departments libraries and preforms access level checks 
 class CheckAccess
-  # @todo 
-  # all of this can be re-written using attr_accessors 
-  # att_accessors replace the get and set methods
-  # start todo 
-  def initialize (user_depts, user_libs)
-    set_depts(user_depts)
-    set_libs(user_libs)
-  end
-
-  def set_depts(depts)
-    @user_depts = depts
-  end
-
-  def get_depts
-    @user_depts
-  end
-
-  def set_libs(libs)
-    @user_libs = libs
-  end
-
-  def get_libs
-    @user_libs
-  end
-  #end todo 
+  attr_accessor :depts
+  attr_accessor :libs
 
   def check(type, resource_id)
     @type = type.to_s.downcase
@@ -39,19 +16,11 @@ class CheckAccess
 
   def check_type_access
     if @type == 'library'
-      user_libraries
+      @depts.include? @resource_id
     elsif @type == 'department'
-      user_departments
+      libs.include? @resource_id
     else
       false
     end
-  end
-
-  def user_departments
-    @user_depts.include? @resource_id
-  end
-
-  def user_libraries
-    @user_libs.include? @resource_id
   end
 end

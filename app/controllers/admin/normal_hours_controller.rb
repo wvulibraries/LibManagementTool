@@ -92,7 +92,9 @@ class Admin::NormalHoursController < AdminController
       if check_is_admin
         true
       elsif !@normal_hour.resource_id.nil?
-        check_access = CheckAccess.new(@user_depts, @user_libs)
+        check_access = CheckAccess.new
+        check_access.depts = @user_depts
+        check_access.libs = @user_libs 
         check_access.check(@normal_hour.resource_type.to_s, @normal_hour.resource_id.to_i)
       end
     end
@@ -108,7 +110,9 @@ class Admin::NormalHoursController < AdminController
       if check_is_admin
         true
       elsif !params[:normal_hour][:resource_id].nil?
-        check_access = CheckAccess.new(@user_depts, @user_libs)
+        check_access = CheckAccess.new
+        check_access.depts = @user_depts
+        check_access.libs = @user_libs 
         check_access.check(params[:normal_hour][:resource_type], params[:normal_hour][:resource_id])
       end
     end
