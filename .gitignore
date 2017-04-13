@@ -28,3 +28,6 @@ mysql
 
 # Ignore coverage/assets
 /coverage/assets
+
+# Ignore database config 
+/config/database.yml
