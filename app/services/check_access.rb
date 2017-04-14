@@ -4,8 +4,7 @@
 # gets departments libraries and preforms access level checks 
 class CheckAccess
   # getters / setters in ruby
-  attr_accessor :depts
-  attr_accessor :libs
+  attr_accessor :depts, :libs
 
   #check 
   # @param type [string] expecting department or library in lower case 
