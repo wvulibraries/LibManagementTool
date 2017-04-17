@@ -9,6 +9,7 @@ class Public::HoursController < ApplicationController
     end
 
     @presenter = HoursPresenter.new({})
+    @libraries = Library.all
   end
 
 end
