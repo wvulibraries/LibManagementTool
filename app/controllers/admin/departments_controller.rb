@@ -1,8 +1,8 @@
 # Department Controller
-# ==================================================
-# AUTHORS : David J. Davis
-# Description:
-# All interactions of controllers and permissions per page view
+# @author David J. Davis
+# @author Tracy McCormick
+# @description Sets data for views, sets redirects, sets errors
+
 class Admin::DepartmentsController < AdminController
   before_action :set_department, only: [:show, :edit, :update, :destroy]
   before_action :allow_admin_only, only:[:create, :new, :destroy]
@@ -69,50 +69,48 @@ class Admin::DepartmentsController < AdminController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_department
-      @department = Department.find(params[:id])
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_department
+    @department = Department.find(params[:id])
+  end
+
+  # allow_admin_only
+  # @author: David J. Davis
+  # Date : 2/10/2017
+  #
+  # @description:
+  # Users the admin controller to check if the user is an admin.
+  # if not a flash message is added to the UI and the user is re-directed.
+
+  def allow_admin_only
+    if !check_is_admin
+      redirect_to libraries_url, error: 'You do not have admin access to create or delete libraries.'
+    else
+      true
     end
+  end
 
-    # allow_admin_only
-    # ==================================================
-    # Name : David J. Davis
-    # Date : 2/10/2017
-    #
-    # Description:
-    # Users the admin controller to check if the user is an admin.
-    # if not a flash message is added to the UI and the user is re-directed.
+  # users_can_edit_dept
+  # @author David J. Davis
+  # @author Tracy A. McCormick
+  # @date 2/10/2017
+  # @updated 3/09/2017
+  #
+  # @description:
+  # If the user is not an admin, the next check sees if they have been given
+  # permission to edit the details of the department.
 
-    def allow_admin_only
-      if !check_is_admin
-        redirect_to libraries_url, error: 'You do not have admin access to create or delete libraries.'
-      else
-        true
-      end
+  def users_can_edit_dept
+    if (@user_depts != nil && (@user_depts.include? params[:id].to_s)) || check_is_admin
+      true
+    else
+      redirect_to departments_url, error: 'You do not have permission to access this department.'
     end
+  end
 
-    # users_can_edit_dept
-    # ==================================================
-    # Name : David J. Davis
-    # Date : 2/10/2017
-    #
-    # Modified : Tracy A. McCormick
-    # Date : 3/09/2017
-    #
-    # Description:
-    # If the user is not an admin, the next check sees if they have been given
-    # permission to edit the details of the department.
-
-    def users_can_edit_dept
-      if (@user_depts != nil && (@user_depts.include? params[:id].to_s)) || check_is_admin
-        true
-      else
-        redirect_to departments_url, error: 'You do not have permission to access this department.'
-      end
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def department_params
-      params.require(:department).permit(:name, :description, :library_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def department_params
+    params.require(:department).permit(:name, :description, :library_id)
+  end
 end

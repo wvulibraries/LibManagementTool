@@ -1,8 +1,7 @@
-# Library Controller
-# ==================================================
-# AUTHORS : David J. Davis
-# Description:
-# All interactions of controllers and permissions per page view
+# Libraries Controller
+# @author David J. Davis
+# @author Tracy McCormick
+# Sets data for views, sets redirects, sets errors
 
 class Admin::LibrariesController < AdminController
   # Before action fires the method assigned to it before
@@ -79,11 +78,9 @@ class Admin::LibrariesController < AdminController
     end
 
     # allow_admin_only
-    # ==================================================
-    # Name : David J. Davis
-    # Date : 2/10/2017
-    #
-    # Description:
+    # @author David J. Davis
+    # @date 2/10/2017
+    # @description
     # Users the admin controller to check if the user is an admin.
     # if not a flash message is added to the UI and the user is re-directed.
 
@@ -96,14 +93,11 @@ class Admin::LibrariesController < AdminController
     end
 
     # users_can_edit_library
-    # ==================================================
-    # Name : David J. Davis
-    # Date : 2/10/2017
-    #
-    # Modified : Tracy A. McCormick
-    # Date : 3/09/2017
-    #
-    # Description:
+    # @author David J. Davis
+    # @author Tracy A. McCormick
+    # @date 2/10/2017
+    # @updated: 3/09/2017
+    # @description
     # If the user is not an admin, the next check sees if they have been given
     # permission to edit the details of the library.
     def users_can_edit_library

@@ -1,3 +1,6 @@
+# Users
+# @author David J. Davis
+# Sets data for views, sets redirects, sets errors
 class Admin::UsersController < AdminController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :allow_admin_only, only: [:create, :new, :show, :edit, :update, :destroy]
@@ -10,8 +13,7 @@ class Admin::UsersController < AdminController
 
   # GET /users/1
   # GET /users/1.json
-  def show
-  end
+  def show; end
 
   # GET /users/new
   def new
@@ -19,8 +21,7 @@ class Admin::UsersController < AdminController
   end
 
   # GET /users/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /users
   # POST /users.json
@@ -29,7 +30,7 @@ class Admin::UsersController < AdminController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, success: 'User was successfully created.' }
+        format.html { redirect_to @user, success: 'User was successfully created.'}
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -63,21 +64,22 @@ class Admin::UsersController < AdminController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    def allow_admin_only
-      if !check_is_admin
-        redirect_to users_path, error: 'You do not have admin access to edit, create, or delete users of this application.'
-      else
-        true
-      end
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(:username, :firstname, :lastname, :admin)
+  def allow_admin_only
+    if !check_is_admin
+      redirect_to users_path, error: 'You do not have admin access to edit, create, or delete users of this application.'
+    else
+      true
     end
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_params
+    params.require(:user).permit(:username, :firstname, :lastname, :admin)
+  end
 end
