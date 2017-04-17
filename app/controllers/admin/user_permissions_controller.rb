@@ -1,3 +1,6 @@
+# User Permissions
+# @author David J. Davis
+# Sets data for views, sets redirects, sets errors
 class Admin::UserPermissionsController < AdminController
   before_action :set_admin_user_permission, only: [:show, :edit, :update, :destroy]
   before_action :set_option_groups, only:[:edit, :create, :new]
@@ -66,25 +69,34 @@ class Admin::UserPermissionsController < AdminController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_admin_user_permission
-      @admin_user_permission = UserPermission.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_admin_user_permission
+    @admin_user_permission = UserPermission.find(params[:id])
+  end
 
-    def set_option_groups
-      @libraries = Library.joins(:departments).group('libraries.id').having( 'count( library_id ) >= 1')
-    end
+  # set_option_groups
+  # @author David J. Davis
+  # @return hash of libraries from by library id
+  # @description used to create option groups in lists or multi-selects
+  def set_option_groups
+    @libraries = Library.joins(:departments).group('libraries.id').having( 'count( library_id ) >= 1')
+  end
 
-    def allow_admin_only
-      if !check_is_admin
-        redirect_to users_path, error: 'You do not have admin access to edit, create, or delete user permissions in this application.'
-      else
-        true
-      end
+  # allow_admin_only 
+  # @author David J. Davis
+  # @return boolean
+  def allow_admin_only
+    if !check_is_admin
+      redirect_to users_path, error: 'You do not have admin access to edit, create, or delete user permissions in this application.'
+    else
+      true
     end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def admin_user_permission_params
-      params.require(:user_permission).permit(:username, libraries: [], departments: [])
-    end
+  # set_option_groups
+  # @author David J. Davis
+  # @description only allows certain permaters in the controller for security stuff
+  def admin_user_permission_params
+    params.require(:user_permission).permit(:username, libraries: [], departments: [])
+  end
 end

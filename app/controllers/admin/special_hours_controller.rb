@@ -1,8 +1,7 @@
-# Special Hours Controller
-# ==================================================
-# AUTHORS : David J. Davis, Tracy A. McCormick
-# Description:
-# All interactions of controllers and permissions per page view
+# Special Hours
+# @author David J. Davis
+# @author Tracy McCormick
+# Sets data for views, sets redirects, sets errors
 
 class Admin::SpecialHoursController < AdminController
   #require 'time'
@@ -87,11 +86,10 @@ class Admin::SpecialHoursController < AdminController
     end
 
     # check_date_range
-    # ==================================================
-    # Name : Tracy A. McCormick
-    # Date : 4/4/2017
+    # @author : Tracy A. McCormick
+    # @date 4/4/2017
     #
-    # Description:
+    # @description
     # Throws an error if the end_date is before start_date.
     def check_date_range
       if params[:special_hour][:start_date].present? && params[:special_hour][:end_date].present?
@@ -104,11 +102,10 @@ class Admin::SpecialHoursController < AdminController
     end
 
     # check_date_range
-    # ==================================================
-    # Name : Tracy A. McCormick
-    # Date : 4/4/2017
+    # @author : Tracy A. McCormick
+    # @date 4/4/2017
     #
-    # Description:
+    # @description
     # returns true if date_to_check is found in any set special_hour
     def check_date(date_to_check)
       if !date_to_check.nil?
@@ -120,11 +117,10 @@ class Admin::SpecialHoursController < AdminController
     end
 
     # check_end_date
-    # ==================================================
-    # Name : Tracy A. McCormick
-    # Date : 3/30/2017
+    # @author : Tracy A. McCormick
+    # @date 3/30/2017
     #
-    # Description:
+    # @description
     # Throws an error if the end_date is already set in another special_hour for this resource.
     def check_start_date
       if check_date(params[:special_hour][:start_date])
@@ -135,11 +131,10 @@ class Admin::SpecialHoursController < AdminController
     end
 
     # check_end_date
-    # ==================================================
-    # Name : Tracy A. McCormick
-    # Date : 3/30/2017
+    # @author : Tracy A. McCormick
+    # @date 3/30/2017
     #
-    # Description:
+    # @description
     # Throws an error if the end_date is already set in another special_hour for this resource.
     def check_end_date
       if check_date(params[:special_hour][:end_date])
@@ -148,43 +143,44 @@ class Admin::SpecialHoursController < AdminController
     end
 
     # user_has_access
-    # ==================================================
-    # Name : Tracy A. McCormick
-    # Date : 2/22/2017
+    # @author : Tracy A. McCormick
+    # @date 2/22/2017
     #
-    # Description:
+    # @description
     # Checks to see if the user has access to the library or department.
     def check_resource_access
       if check_is_admin
         true
       elsif !@special_hour.special_id.nil?
-        check_access = CheckAccess.new(@user_depts, @user_libs)
+        check_access = CheckAccess.new
+        check_access.depts = @user_depts
+        check_access.libs = @user_libs 
         check_access.check(@special_hour.special_type.to_s, @special_hour.special_id.to_i)
       end
     end
 
     # check_params
-    # ==================================================
-    # Name : Tracy A. McCormick
-    # Date : 2/28/2017
+    # @author : Tracy A. McCormick
+    # @date 2/28/2017
     #
-    # Description:
+    # @description
     # Checks params to see if user has access to the library or department they are trying to set
     def check_param_resource_access
       if check_is_admin
         true
       elsif !params[:special_hour][:special_id].nil?
-        check_access = CheckAccess.new(@user_depts, @user_libs)
+        check_access = CheckAccess.new
+        check_access.depts = @user_depts
+        check_access.libs = @user_libs
         check_access.check(params[:special_hour][:special_type], params[:special_hour][:special_id])
       end
     end
 
     # authenticate_rights
-    # ==================================================
-    # Name : Tracy A. McCormick
-    # Date : 2/22/2017
+    # @author : Tracy A. McCormick
+    # @date 2/22/2017
     #
-    # Description:
+    # @description
     # Calls user_has_access to see if they have access to the library or department. Also checks to see if they are admin.
     # If neither of these are true it redirects them back to there previous page and shows them an error.
     def authenticate_rights

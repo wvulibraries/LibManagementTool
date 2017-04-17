@@ -1,8 +1,7 @@
-# Normal Hours Controller
-# ==================================================
-# AUTHORS : David J. Davis, Tracy A. McCormick
-# Description:
-# All interactions of controllers and permissions per page view
+# Normal Hours
+# @author David J. Davis
+# @author Tracy McCormick
+# Sets data for views, sets redirects, sets errors
 
 class Admin::NormalHoursController < AdminController
 
@@ -82,43 +81,44 @@ class Admin::NormalHoursController < AdminController
     end
 
     # user_has_access
-    # ==================================================
-    # Name : Tracy A. McCormick
-    # Date : 2/22/2017
+    # @author Tracy A. McCormick
+    # @date 2/22/2017
     #
-    # Description:
+    # @description
     # Checks to see if the user has access to the library or department.
     def check_resource_access
       if check_is_admin
         true
       elsif !@normal_hour.resource_id.nil?
-        check_access = CheckAccess.new(@user_depts, @user_libs)
+        check_access = CheckAccess.new
+        check_access.depts = @user_depts
+        check_access.libs = @user_libs 
         check_access.check(@normal_hour.resource_type.to_s, @normal_hour.resource_id.to_i)
       end
     end
 
     # check_params
-    # ==================================================
-    # Name : Tracy A. McCormick
-    # Date : 2/28/2017
+    # @author Tracy A. McCormick
+    # @date 2/28/2017
     #
-    # Description:
+    # @description
     # Checks params to see if user has access to the library or department they are trying to set
     def check_param_resource_access
       if check_is_admin
         true
       elsif !params[:normal_hour][:resource_id].nil?
-        check_access = CheckAccess.new(@user_depts, @user_libs)
+        check_access = CheckAccess.new
+        check_access.depts = @user_depts
+        check_access.libs = @user_libs 
         check_access.check(params[:normal_hour][:resource_type], params[:normal_hour][:resource_id])
       end
     end
 
     # authenticate_rights
-    # ==================================================
-    # Name : Tracy A. McCormick
-    # Date : 2/22/2017
+    # @author Tracy A. McCormick
+    # @date 2/22/2017
     #
-    # Description:
+    # @description
     # Calls user_has_access to see if they have access to the library or department. Also checks to see if they are admin.
     # If neither of these are true it redirects them back to there previous page and shows them an error.
     def authenticate_rights

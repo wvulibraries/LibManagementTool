@@ -21,11 +21,6 @@ ActiveRecord::Schema.define(version: 20170203201345) do
     t.index ["library_id"], name: "index_departments_on_library_id", using: :btree
   end
 
-  create_table "departments_library", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "library_id",    null: false
-    t.integer "department_id", null: false
-  end
-
   create_table "libraries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.text     "description", limit: 65535
@@ -42,17 +37,6 @@ ActiveRecord::Schema.define(version: 20170203201345) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.index ["resource_type", "resource_id"], name: "index_normal_hours_on_resource_type_and_resource_id", using: :btree
-  end
-
-  create_table "sessions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "session_id",               null: false
-    t.string   "cas_ticket"
-    t.text     "data",       limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["cas_ticket"], name: "index_sessions_on_cas_ticket", using: :btree
-    t.index ["session_id"], name: "index_sessions_on_session_id", using: :btree
-    t.index ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
   end
 
   create_table "special_hours", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

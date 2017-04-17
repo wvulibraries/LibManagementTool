@@ -1,21 +1,28 @@
-# app/presenters/hours_presenter.rb
-
-# Hours Presenter
-# ==================================================
-# AUTHORS : Tracy A. McCormick && David J. Davis
-# Description:
-# Compiles the hours list using data from NormalHour and SpecialHour
-# used by the api_controller for use by the gethours.json.jbuilder
-
 require 'date'
 
+# HoursPresenter
+# @author David J. Davis
+# @author Tracy A. McCormick 
+# Compiles the hours list using data from NormalHour and SpecialHour
+# used by the api_controller for use by the gethours.json.jbuilder
 class HoursPresenter
+  # @todo 
+  #  convention says that this class is too long.  Ruby insists that classes are kept under
+  #  a certain length. Rubo cop says that this class needs reduced.  Maybe RSS Presenter will ahve to be the next class made 
 
   def initialize(params = {})
     self.set_params params
     @date_format = '%m-%d-%Y'
     @hours_array = Array.new
   end
+
+
+  # @todo 
+  # @see https://blog.metova.com/a-beginners-guide-to-ruby-getters-and-setters/
+  #  this needs to go away in favor of 
+  #  attr_accessor :parameters
+  #  attribute accessor creates getter setter and lets you use them as global variables, 
+  # however this will change the way that the presenter works.  
 
   def set_params(params)
     #puts params.inspect
@@ -27,30 +34,22 @@ class HoursPresenter
   end
 
   # get_hours
-  # ==================================================
-  # Name : Tracy McCormick
-  # Date : 03/24/2017
-  #
-  # Description: get hours verify's the presence of date_start and date_end
+  # @author Tracy McCormick 
+  # get hours verify's the presence of date_start and date_end
   # call get_hours_list if both are available otherwise it calls get_day.
   # @param - params (object) - params object given from the url and by rails
   # @return (array) - list of hours
 
   def get_hours
-   # check and see if date_start and date end are set_params
    if @params[:date_start] && @params[:date_end]
-     # call get_hours_list to create the hours_array list
      (format_date(@params[:date_start])..format_date(@params[:date_end])).each do |day|
        get_day_list(day)
      end
    elsif @params[:date_start]
-    # if only date_start is present call get_day
-    # to populate the hours_array with items for that day
      get_day_list(format_date(@params[:date_start]))
    else
      get_day_list(Date.today)
    end
-   # return array back to the calling jbuilder
    @hours_array
   end
 
@@ -60,6 +59,10 @@ class HoursPresenter
   # Date : 03/27/2017
   #
   # Description: converts date string to a Ruby date object
+
+  # @todo this is three lines, the line to do the conversion is 1 line.  
+  # not needed, just convert on the fly
+  # if you feel you absolutely need a bunch of date conversions make a new service class for dates
   def format_date(date)
    Date.strptime(date, @date_format)
   end
