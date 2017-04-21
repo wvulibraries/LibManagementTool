@@ -17,6 +17,11 @@ Rails.application.routes.draw do
   # get 'api/:lib/gethours' => 'api#gethours'
   # get 'api/:dept/gethours' => 'api#gethours'
 
+  get 'rss', to: 'feeds#index', :format => 'rss'
+
+  get 'feed.rss', to: 'feeds#rss', :format => 'rss'
+  get 'feed', to: 'feeds#rss', :format => 'rss'
+
   # forces the controllers to use the admin name space
   # this is going to allow for the addition of a function to restrict access
   # resources generates all routes for crud of libraries, departments, users, etc.
@@ -25,5 +30,6 @@ Rails.application.routes.draw do
   end
 
   get '/hours', to: 'public/hours#index'
+  get '/test', to: 'public#test'
   get '/admin/departments/list', to: 'departments#index'
 end
