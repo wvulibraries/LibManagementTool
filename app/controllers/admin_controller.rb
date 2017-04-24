@@ -4,7 +4,6 @@
 # Description:
 # Shared functions for all other admin scoped controllers.
 class AdminController < ApplicationController
-
   # perform filter before action
   before_action CASClient::Frameworks::Rails::Filter
   before_action :get_user_permission, :check_permissions
