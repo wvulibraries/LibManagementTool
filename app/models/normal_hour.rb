@@ -19,7 +19,7 @@ class NormalHour < ApplicationRecord
 
   validate :day_of_week_set
 
-  # get_resource 
+  # get_resource
   # @author David J. Davis
   # determines if library or department and returns the name of the resource
   def get_resource
@@ -34,32 +34,40 @@ class NormalHour < ApplicationRecord
 
   # hr_start_time
   # @author David J. Davis
-  # @return a human readable time string 
+  # @return a human readable time string
   def hr_open_time
     human_readable_time(open_time)
   end
 
   # hr_close_time
   # @author David J. Davis
-  # @return a human readable time string 
+  # @return a human readable time string
   def hr_close_time
     human_readable_time(close_time)
   end
 
   # weekday
   # @author David J. Davis
-  # @returns the day of the week Monday, Tuesday, Wed etc. 
+  # @returns the day of the week Monday, Tuesday, Wed etc.
   def weekday
     day = day_of_week.to_i
     Date::DAYNAMES[day]
   end
 
+  # comment
+  # @author Tracy A. McCormick
+  # @param time a time string from the database
+  # @return string containing both the hr_open_time and hr_end_time
+  def comment
+    hr_open_time + ' - ' + hr_close_time if !open_time.nil? && !close_time.nil?
+  end
+
   private
 
-  # human_readable_time 
+  # human_readable_time
   # @author David J. Davis
   # @param time a time string from the database
-  # @return a human readable time string 
+  # @return a human readable time string
   def human_readable_time(time)
     if !time.nil?
       time.strftime('%l:%M %p').strip
@@ -68,11 +76,11 @@ class NormalHour < ApplicationRecord
     end
   end
 
-  # day_of_week_set 
+  # day_of_week_set
   # @author Tracy McCormick
   # @author David J. Davis (Modified)
   # checks to see if the nromal hour exists for that day
-  # throws an error in the form if exists 
+  # throws an error in the form if exists
   def day_of_week_set
     check = NormalHour.where.not(id: id).where('resource_id = ?', resource_id).where('resource_type = ?', resource_type).where('day_of_week = ?', day_of_week)
     errors.add(:day_of_week, 'already set') if check.exists?

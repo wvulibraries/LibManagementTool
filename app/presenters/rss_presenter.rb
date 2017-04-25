@@ -6,7 +6,7 @@ require 'time'
 # @author Tracy A. McCormick
 # Compiles the hours list using data from NormalHour and SpecialHour
 # used by the feeds_controller for use by the index.rss.builder
-class RssPresenter < BasePresenter
+class RssPresenter < HoursPresenter
   attr_accessor :date, :p
   attr_reader :rss_array
 
@@ -45,36 +45,37 @@ class RssPresenter < BasePresenter
       next unless hour.day_of_week == Date.strptime(@date, DATE_FORMAT).wday
       open_time = hour.hr_open_time unless hour.open_time.nil?
       close_time = hour.hr_close_time unless hour.close_time.nil?
-      if !hour.open_time.nil? && !hour.close_time.nil?
-        comment = open_time + ' - ' + close_time
-      end
+      comment = hour.comment
     end
     { open_time: open_time, close_time: close_time, comment: comment }
+  end
+
+  def date_in_range(first, second)
+    Date.strptime(@date, DATE_FORMAT).between?(Date.parse(first), Date.parse(second))
   end
 
   def special_hours_exists?(resource)
     return false unless resource.special_hours.count > 0
     resource.special_hours.each do |hour|
-      next unless Date.strptime(@date, DATE_FORMAT).between?(Date.parse(hour.start_date.to_s), Date.parse(hour.end_date.to_s))
+      next unless date_in_range(hour.start_date.to_s, hour.end_date.to_s)
       return true
     end
     false
   end
 
   def find_special_hours(resource)
+    # Set Default values
+    open_time = nil
+    close_time = nil
+    comment = nil
+
     resource.special_hours.each do |hour|
-      next unless Date.strptime(@date, DATE_FORMAT).between?(Date.parse(hour.start_date.to_s), Date.parse(hour.end_date.to_s))
+      next unless date_in_range(hour.start_date.to_s, hour.end_date.to_s)
       open_time = hour.hr_open_time unless hour.open_time.nil?
       close_time = hour.hr_close_time unless hour.close_time.nil?
-      comment = case hour
-                when hour.open_24 then 'Open 24 Hours'
-                when hour.no_open_time then 'Opens at ' + open_time
-                when hour.no_close_time then 'Closes at ' + close_time
-                else open_time + ' - ' + close_time
-                end
-      return { open_time: open_time, close_time: close_time, comment: comment }
+      comment = hour.comment
     end
-    false
+    { open_time: open_time, close_time: close_time, comment: comment }
   end
 
   def create_time_stamp(time_str)
@@ -88,7 +89,7 @@ class RssPresenter < BasePresenter
   def make_timestamps(hash = {})
     open_time_stamp = create_time_stamp(hash[:open_time])
     close_time_stamp = create_time_stamp(hash[:close_time])
-    if open_time_stamp > 0 || close_time_stamp > 0
+    if open_time_stamp > 0 && close_time_stamp > 0
       close_time_stamp += 1.day if close_time_stamp < open_time_stamp
     end
     { open_time_stamp: open_time_stamp, close_time_stamp: close_time_stamp }
@@ -99,30 +100,22 @@ class RssPresenter < BasePresenter
     find_special_hours(item)
   end
 
-  # rss_array_push
+  # push_item
   # ==================================================
   # Name : Tracy McCormick
   # Date : 04/12/2017
   #
   # Description: takes the passed hash and pushs the values to the hours_array
   # for use with the rss feed
+
   def push_item(item)
-    return unless item
-    puts item[:name]
+    item_hash =
+      {
+        id: item[:id],
+        name: item[:name]
+      }
     time_hash = find_hours(item)
-    timestamps = make_timestamps(time_hash)
-    puts 'Inspect Time Stamps ' + timestamps.inspect
-    puts ' '
-    @rss_array.push(
-      id: item[:id],
-      name: item[:name],
-      type: item[:type],
-      date: @date,
-      open_time: time_hash[:open_time],
-      close_time: time_hash[:close_time],
-      open_time_stamp: timestamps[:open_time],
-      close_time_stamp: timestamps[:close_time],
-      comment: time_hash[:comment]
-    )
+    item_hash = item_hash.merge(time_hash).merge(make_timestamps(time_hash))
+    @rss_array.push(item_hash)
   end
 end

@@ -11,35 +11,46 @@ class SpecialHour < ApplicationRecord
 
   # hr_start_date
   # @author David J. Davis
-  # @return a human readable date string 
+  # @return a human readable date string
   def hr_start_date
     hr_date(start_date)
   end
 
   # hr_end_date
   # @author David J. Davis
-  # @return a human readable date string 
+  # @return a human readable date string
   def hr_end_date
     hr_date(end_date)
   end
 
   # hr_start_time
   # @author David J. Davis
-  # @return a human readable time string 
+  # @return a human readable time string
   def hr_open_time
     hr_time(open_time)
   end
 
   # hr_close_time
   # @author David J. Davis
-  # @return a human readable time string 
+  # @return a human readable time string
   def hr_close_time
     hr_time(close_time)
   end
 
-  # get resource 
+  # comment
+  # @author Tracy A. McCormick
+  # @return a comment string
+  def comment
+    if open_24 then 'Open 24 Hours'
+    elsif no_open_time then 'Opens at ' + hr_open_time
+    elsif no_close_time then 'Closes at ' + hr_close_time
+    else hr_open_time + ' - ' + hr_close_time
+    end
+  end
+
+  # get resource
   # @author David J. Davis
-  # @return a human readable time string 
+  # @return a human readable time string
   def get_resource
     if special_type == 'department'
       special = Department.find(special_id)
@@ -67,7 +78,7 @@ class SpecialHour < ApplicationRecord
   # hr_time
   # @param date : a datetime string from db
   # @author David J. Davis
-  # @return a human readable date as full month day, year.  
+  # @return a human readable date as full month day, year.
   def hr_date(date)
     if !date.nil?
       date.strftime('%B %d, %Y')
@@ -75,5 +86,4 @@ class SpecialHour < ApplicationRecord
       ''
     end
   end
-
 end

@@ -8,7 +8,7 @@ class Public::HoursController < ApplicationController
       params[:type] = 'library'
     end
 
-    @presenter = HoursPresenter.new({})
+    @presenter = CalendarPresenter.new
   end
 
 end

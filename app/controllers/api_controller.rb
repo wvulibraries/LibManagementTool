@@ -12,7 +12,8 @@ class ApiController < ApplicationController
   end
 
   def gethours
-    @hours = HoursPresenter.new(params).get_hours
+    @presenter = ApiPresenter.new(params)
+    @presenter.generate_list
+    @hours = @presenter.api_array
   end
-
 end

@@ -55,10 +55,10 @@ class AdminController < ApplicationController
   # Gets the user by the session and checks returns the boolean value in the database
   def check_is_admin
     user = User.find_by(username: session[:cas_user])
-    if user != nil
-     user.admin
+    if !user.nil?
+      user.admin
     else
-     false
+      false
     end
   end
 
@@ -75,13 +75,12 @@ class AdminController < ApplicationController
   # This will be used in other controllers in the admin section to be sure that
   # the user has the granualr permissions and is only used if the user is not an admin.
   def get_user_permission
-    if session[:cas_user]
-      user_permissions = UserPermission.find_by(username: session[:cas_user])
-      # set @user_libs and @user_depts if they are not an admin
-      if !check_is_admin && user_permissions != nil
-        @user_libs = clean_array user_permissions.libraries
-        @user_depts = clean_array user_permissions.departments
-      end
+    return unless session[:cas_user]
+    user_permissions = UserPermission.find_by(username: session[:cas_user])
+    # set @user_libs and @user_depts if they are not an admin
+    if !check_is_admin && !user_permissions.nil?
+      @user_libs = clean_array user_permissions.libraries
+      @user_depts = clean_array user_permissions.departments
     end
   end
 end
