@@ -6,10 +6,10 @@ class FeedsController < ApplicationController
 
   def index
     @presenter = RssPresenter.new
-    @presenter.p = params
+    @presenter.parameters = params
     @presenter.date = params[:date] || Time.now.strftime('%m-%d-%Y')
 
-    @presenter.generate_list
+    @presenter.create_day
     @resources = @presenter.rss_array
   end
 end
