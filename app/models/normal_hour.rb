@@ -79,7 +79,7 @@ class NormalHour < ApplicationRecord
   # day_of_week_set
   # @author Tracy McCormick
   # @author David J. Davis (Modified)
-  # checks to see if the nromal hour exists for that day
+  # checks to see if the normal hour exists for that day
   # throws an error in the form if exists
   def day_of_week_set
     check = NormalHour.where.not(id: id).where('resource_id = ?', resource_id).where('resource_type = ?', resource_type).where('day_of_week = ?', day_of_week)

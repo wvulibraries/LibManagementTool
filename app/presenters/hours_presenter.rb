@@ -1,23 +1,18 @@
+require 'date'
+
 class HoursPresenter
   DATE_FORMAT = '%m-%d-%Y'.freeze
   API_DATE_FORMAT = '%Y-%m-%d'.freeze
 
-  def initialize
-    @rss_array = []
-  end
+  attr_accessor :date
 
   # libraries
-  # ==================================================
-  # Name : David J. Davis
-  # Date :
-  # Modified : Tracy A. McCormick
-  # Date : 3.27.2017
-  #
-  # Description: retrieves database record
-  #
+  # @author David J. Davis
+  # @author Tracy A. McCormick
+  # @date : 3.27.2017
+  # retrieves database record
   # @param - id (int) : nil or int that is the id of the record wanting to be retrieved
   # @return Library database record
-
   def libraries(id = nil)
     if id.nil?
       Library.includes(:normal_hours).includes(:special_hours).select('id, name')
@@ -27,15 +22,10 @@ class HoursPresenter
   end
 
   # departments
-  # ==================================================
-  # Name : David J. Davis
-  # Date :
-  #
-  # Description: retrieves database record
-  #
+  # @author David J. Davis
+  # retrieves database record
   # @param - id (int) : nil or int that is the id of the record wanting to be retrieved
   # @return Library database record
-
   def departments(id = nil)
     if id.nil?
       Department.includes(:normal_hours).includes(:special_hours).select('id, name')
@@ -45,16 +35,12 @@ class HoursPresenter
   end
 
   # resources_for_list
-  # ==================================================
-  # Name : David J. Davis
-  # Date : 3.23.2017
-  #
-  # Description: Generates an array of DB Objects and returns that for iteration later.
-  #
+  # @author David J. Davis
+  # @date 3.23.2017
   # @return resources - id and name of a library or department, or both.
-  # @todo needs work, right now the list isn't catecatenated togather, access
+  # @todo needs work, right now the list isn't catecatenated together, access
   # with resource[0] and resource[1] if no type provided
-
+  # Generates an array of DB Objects and returns that for iteration later.
   def resources_for_list(id = nil, type = nil)
     resources = []
     if id.present? && type == 'library'
@@ -72,125 +58,73 @@ class HoursPresenter
     resources
   end
 
-  # get_resource_name
-  # ==================================================
-  # Name : Tracy McCormick
-  # Date : 03/28/2017
-  #
-  # Description: returns either the Library name or combined department name &
-  # library name
-  def get_resource_name(hash = {})
-    if hash[:type] == 'department'
-      resource = Department.find(hash[:id])
-      resource.name + ' - ' + resource.library.name
-    else
-      resource = Library.find(hash[:id])
-      resource.name
-    end
-  end
-
-  # get_special hours
-  # ==================================================
-  # Name : David J. Davis
-  # Date : 3.23.2017
-  # Modified : Tracy A. McCormick
-  # Date : 3.27.2017
-  #
-  # Description: gets the special hours from the database
-  #
-  # @param - date (date): sets to today by default
-  # @param - resource (hash): sets type and id, doesn't have to exist
-  # @return (boolean) - the record from database
-
-  def get_special_hours(date = Date.today, resource = {})
-    date = date.beginning_of_day
-    if resource[:type].present? && resource[:id].present?
-      SpecialHour.where(special_type: resource[:type]).where(special_id: resource[:id]).where("start_date <= ? AND end_date >= ?", date, date)
-    else
-      SpecialHour.where('start_date <= ? AND end_date >= ?', date, date)
-    end
-  end
-
-  # get_normal_hours
-  # ==================================================
-  # Name : David J. Davis
-  # Date :
-  # Modified : Tracy A. McCormick
-  # Date : 3.24.2017
-  #
-  # Description: gets the normal hours from the database
-  #
+  # find_normal_hours
+  # @author David J. Davis
+  # @author Tracy A. McCormick
+  # @date 3.24.2017
   # @param - date (date): sets to today by default
   # @param - resource (hash): sets type and id, doesn't have to exist
   # @return var (type) - description
-
-  def get_normal_hours(date = Date.today, resource = {})
-    date = date.beginning_of_day
-    if resource[:type].present? && resource[:id].present?
-      NormalHour.where(resource_type: resource[:type]).where(resource_id: resource[:id]).where(day_of_week: date.wday)
-    else
-      NormalHour.where(day_of_week: date.wday)
+  # gets the normal hours from the database
+  def find_normal_hours(resource)
+    resource.normal_hours.each do |hour|
+      next unless hour.day_of_week == Date.strptime(@date, DATE_FORMAT).wday
+      return { open_time: hour.hr_open_time, close_time: hour.hr_close_time, comment: hour.comment }
     end
+    { open_time: nil, close_time: nil, comment: 'Closed' }
   end
 
-  # get_day
-  # ==================================================
-  # Name : Tracy McCormick
-  # Date : 03/24/2017
-  #
-  # Checks for special_hour exists for the date and resource if none are found
-  # returns normal hours for the date and resource supplied.
-  def get_day(date = Date.today, resource = {})
-    if special_hour_exists?(date, resource)
-      get_special_hours(date, resource)
-    else
-      get_normal_hours(date, resource)
-    end
+  # @author Tracy A. McCormick
+  # @date 4.26.2017
+  # @param - start_date (string), end_date (string)
+  # @return boolean
+  # converts date string to date object and checks if current date set in @date
+  # is in that range.
+  def date_in_range(start_date, end_date)
+    Date.strptime(@date, DATE_FORMAT).between?(Date.parse(start_date), Date.parse(end_date))
   end
 
-  # get_date
-  # ==================================================
-  # Name : Tracy McCormick
-  # Date : 04/05/2017
-  #
-  # Description: Calls get_day and returns a hash formatted for the date and resource requested.
-  # if no results are returned from get_day a Closed message is returned in the hash.
-  def get_date(resource)
-    date = Date.parse(resource[:date])
-    get_day(date, resource).each do |hour|
-      if hour.open_time.present? && hour.close_time.present?
-        return { open_time: hour.hr_open_time, close_time: hour.hr_close_time, comment: '' }
-      elsif hour.close_time.present? && hour.no_open_time
-        return { open_time: '', close_time: hour.hr_close_time, comment: 'No Open Time' }
-      elsif hour.open_time.present? && hour.no_close_time
-        return { open_time: hour.hr_open_time, close_time: '', comment: 'No Close Time' }
-      elsif hour.class.to_s == 'SpecialHour' && hour.open_24
-        return { open_time: '', close_time: '', comment: 'Open 24 Hours' }
-      end
+  # special_hour_exists
+  # @author David J. Davis
+  # @date 3.23.2017
+  # @author Tracy A. McCormick
+  # @param date (date): sets to today by default
+  # @param resource (hash): sets type and id, doesn't have to exist
+  # @return (boolean) - true or false of existance
+  # checks if a record exists
+  def special_hours_exists?(resource)
+    return false unless resource.special_hours.count > 0
+    resource.special_hours.each do |hour|
+      next unless date_in_range(hour.start_date.to_s, hour.end_date.to_s)
+      return true
     end
-
-    { open_time: '', close_time: '', comment: 'Closed' }
+    false
   end
 
-  #  special_hour_exists
-  # ==================================================
-  # Name : David J. Davis
-  # Date :  3.23.2017
-  # Modified : Tracy A. McCormick
-  # Date : 3.27.2017
-  #
-  # Description: checks if a record exists
-  #
+  # find_special_hours
+  # @author David J. Davis
+  # @author Tracy A. McCormick
+  # @date 3.27.2017
   # @param - date (date): sets to today by default
   # @param - resource (hash): sets type and id, doesn't have to exist
-  # @return (boolean) - true or false of existance
-
-  def special_hour_exists?(date = Date.today, resource = {})
-    date = date.beginning_of_day
-    if resource[:type].present? && resource[:id].present?
-      SpecialHour.where(special_type: resource[:type]).where(special_id: resource[:id]).where('start_date <= ? AND end_date >= ?', date, date).exists?
-    else
-      SpecialHour.where('start_date <= ? AND end_date >= ?', date, date).exists?
+  # @return (boolean) - the record from database
+  # gets the special hours from the database
+  def find_special_hours(resource)
+    resource.special_hours.each do |hour|
+      next unless date_in_range(hour.start_date.to_s, hour.end_date.to_s)
+      return { open_time: hour.hr_open_time, close_time: hour.hr_close_time, comment: hour.comment }
     end
+    { open_time: nil, close_time: nil, comment: nil }
+  end
+
+  # find_hours
+  # @author Tracy A. McCormick
+  # @date 4.26.2017
+  # @param - item: item is a object of either library or department
+  # @return hash - containing open_time, close_time and a comment
+  # gets the normal hours from the database
+  def find_hours(item)
+    return find_special_hours(item) if special_hours_exists?(item)
+    find_normal_hours item
   end
 end
