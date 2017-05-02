@@ -1,1 +1,1 @@
-json.partial! "api/gethours"
+json.partial! 'api/gethours'

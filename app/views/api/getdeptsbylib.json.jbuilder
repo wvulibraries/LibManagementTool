@@ -1,1 +1,1 @@
-json.partial! "api/getdeptsbylib"
+json.partial! 'api/getdeptsbylib'

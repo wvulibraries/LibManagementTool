@@ -15,8 +15,8 @@ class Department < ApplicationRecord
   }
   validates :description, length: {
     maximum: 500,
-    message: "%{value} is too long, \
-    please shorten the description to 500 characters."
+    message: '%{value} is too long, \
+    please shorten the description to 500 characters.'
   }, allow_blank: true
 
   # Scope is used in the view to get only departments of with these items

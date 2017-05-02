@@ -1,1 +1,1 @@
-json.partial! "api/getlibs"
+json.partial! 'api/getlibs'

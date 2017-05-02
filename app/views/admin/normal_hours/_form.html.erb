@@ -18,12 +18,12 @@
 
   <div class="department field">
     <%= f.label :resource_id, 'Location' %>
-    <%= f.collection_select(:resource_id, Department.all, :id, :reformat_name, {}, {:class=>'department'}) %>
+    <%= f.collection_select(:resource_id, Department.all, :id, :reformat_name, {}, { class: 'department' }) %>
   </div>
 
   <div class="library field">
     <%= f.label :resource_id, 'Location' %>
-    <%= f.collection_select(:resource_id, Library.all, :id, :name, {}, {:class=>'library'})  %>
+    <%= f.collection_select(:resource_id, Library.all, :id, :name, {}, { class: 'library' })  %>
   </div>
 
   <div class="field">
@@ -33,12 +33,12 @@
 
   <div class="field">
     <%= f.label :open_time %>
-    <%= f.text_field :open_time, :value => normal_hour.hr_open_time, id: "timepicker", :class => "timepicker" %>
+    <%= f.text_field :open_time, :value => normal_hour.hr_open_time, id: "timepicker", class: 'timepicker' %>
   </div>
 
   <div class="field">
     <%= f.label :close_time %>
-    <%= f.text_field :close_time, :value => normal_hour.hr_close_time, id: "timepicker", :class => "timepicker" %>
+    <%= f.text_field :close_time, :value => normal_hour.hr_close_time, id: 'timepicker', class: 'timepicker' %>
   </div>
 
   <div class="actions">

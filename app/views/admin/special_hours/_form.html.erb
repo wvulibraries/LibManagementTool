@@ -19,7 +19,7 @@
 
   <div class="field department">
     <%= f.label :special_id, 'Location' %>
-    <%= f.collection_select(:special_id, Department.all, :id, :reformat_name, {}, {:class=>'department'}) %>
+    <%= f.collection_select(:special_id, Department.all, :id, :reformat_name, {}, { class: 'department' }) %>
   </div>
 
   <div class="field library">
@@ -29,12 +29,12 @@
 
   <div class="field">
     <%= f.label :start_date %>
-    <%= f.text_field :start_date, :value => special_hour.hr_start_date, id: "datepicker", :class => "datepicker" %>
+    <%= f.text_field :start_date, value: special_hour.hr_start_date, id: 'datepicker', class: 'datepicker' %>
   </div>
 
   <div class="field">
     <%= f.label :end_date %>
-    <%= f.text_field :end_date, :value => special_hour.hr_end_date, id: "datepicker", :class => "datepicker" %>
+    <%= f.text_field :end_date, :value => special_hour.hr_end_date, id: 'datepicker', class: 'datepicker' %>
   </div>
 
   <div class="field">
@@ -44,12 +44,12 @@
 
   <div class="field">
     <%= f.label :open_time %>
-    <%= f.text_field :open_time, :value => special_hour.hr_open_time, id: "timepicker", :class => "timepicker"  %>
+    <%= f.text_field :open_time, value: special_hour.hr_open_time, id: 'timepicker', class: 'timepicker'  %>
   </div>
 
   <div class="field">
     <%= f.label :close_time %>
-    <%= f.text_field :close_time, :value => special_hour.hr_close_time, id: "timepicker", :class => "timepicker" %>
+    <%= f.text_field :close_time, value: special_hour.hr_close_time, id: 'timepicker', class: 'timepicker' %>
   </div>
 
 

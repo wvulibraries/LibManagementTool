@@ -36,9 +36,11 @@ class AdminController < ApplicationController
   def check_permissions
     has_permission = User.where(username: session[:cas_user]).exists?
     if !has_permission
-      redirect_to root_path, error: 'You do not have administrative permissions, please contact the system administrator if you feel that this has been reached in error.'
+      error_str = 'You do not have administrative permissions, please contact the system administrator if you feel that this has been reached in error.'
+      redirect_to root_path, error: error_str
     elsif session[:cas_user].nil? && session[:cas_last_valid_ticket]
-      redirect_to root_path, error: 'Something went wrong or a faulty login was detected.'
+      error_str = 'Something went wrong or a faulty login was detected.'
+      redirect_to root_path, error: error_str
     else
       true
     end
@@ -78,9 +80,8 @@ class AdminController < ApplicationController
     return unless session[:cas_user]
     user_permissions = UserPermission.find_by(username: session[:cas_user])
     # set @user_libs and @user_depts if they are not an admin
-    if !check_is_admin && !user_permissions.nil?
-      @user_libs = clean_array user_permissions.libraries
-      @user_depts = clean_array user_permissions.departments
-    end
+    return unless !check_is_admin && !user_permissions.nil?
+    @user_libs = clean_array user_permissions.libraries
+    @user_depts = clean_array user_permissions.departments
   end
 end
