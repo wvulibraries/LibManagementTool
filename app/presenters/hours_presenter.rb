@@ -69,9 +69,12 @@ class HoursPresenter
   def find_normal_hours(resource)
     resource.normal_hours.each do |hour|
       next unless hour.day_of_week == Date.strptime(@date, DATE_FORMAT).wday
-      return { open_time: hour.hr_open_time, close_time: hour.hr_close_time, comment: hour.comment }
+      return { open_time: hour.hr_open_time,
+               close_time: hour.hr_close_time,
+               open_close_time: hour.open_close_time,
+               comment: hour.comment }
     end
-    { open_time: nil, close_time: nil, comment: 'Closed' }
+    { open_time: nil, close_time: nil, open_close_time: nil, comment: 'Closed' }
   end
 
   # @author Tracy A. McCormick
@@ -112,9 +115,12 @@ class HoursPresenter
   def find_special_hours(resource)
     resource.special_hours.each do |hour|
       next unless date_in_range(hour.start_date.to_s, hour.end_date.to_s)
-      return { open_time: hour.hr_open_time, close_time: hour.hr_close_time, comment: hour.comment }
+      return { open_time: hour.hr_open_time,
+               close_time: hour.hr_close_time,
+               open_close_time: hour.open_close_time,
+               comment: hour.comment }
     end
-    { open_time: nil, close_time: nil, comment: nil }
+    { open_time: nil, close_time: nil, open_close_time: nil, comment: nil }
   end
 
   # find_hours

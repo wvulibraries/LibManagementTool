@@ -15,13 +15,21 @@ xml.rss :version => '2.0', 'xmlns:atom' => 'http://www.w3.org/2005/Atom' do
         xml.guid hours_url('id' => resource[:id].to_s, 'type' => resource[:type])
         xml.url hours_url('id' => resource[:id].to_s, 'type' => resource[:type])
         xml.description do
-          xml.cdata!(h(resource[:comment]))
+          if resource[:open_close_time].nil?
+            xml.cdata!(h(resource[:comment]))
+          else
+            xml.cdata!(h(resource[:open_close_time]))
+          end
         end
         xml.library do
           xml.cdata! resource[:name]
         end
         xml.hours do
-          xml.cdata! resource[:comment]
+          if resource[:open_close_time].nil?
+            xml.cdata!(h(resource[:comment]))
+          else
+            xml.cdata!(h(resource[:open_close_time]))
+          end
         end
         xml.opentimestamp resource[:open_time_stamp]
         xml.closetimestamp resource[:close_time_stamp]

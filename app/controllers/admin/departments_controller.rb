@@ -4,9 +4,9 @@
 # @description Sets data for views, sets redirects, sets errors
 
 class Admin::DepartmentsController < AdminController
-  before_action :set_department, only: [:show, :edit, :update, :destroy]
-  before_action :allow_admin_only, only:[:create, :new, :destroy]
-  before_action :users_can_edit_dept, only:[:show, :edit, :update]
+  before_action :set_department, only: %i[show edit update destroy]
+  before_action :allow_admin_only, only: %i[create new destroy]
+  before_action :users_can_edit_dept, only: %i[show edit update]
 
   # GET /departments
   # GET /departments.json
@@ -35,7 +35,8 @@ class Admin::DepartmentsController < AdminController
 
     respond_to do |format|
       if @department.save
-        format.html { redirect_to @department, success: 'Department was successfully created.' }
+        success_str = 'Department was successfully created.'
+        format.html { redirect_to @department, success: success_str }
         format.json { render :show, status: :created, location: @department }
       else
         format.html { render :new }
@@ -49,7 +50,8 @@ class Admin::DepartmentsController < AdminController
   def update
     respond_to do |format|
       if @department.update(department_params)
-        format.html { redirect_to @department, success: 'Department was successfully updated.' }
+        success_str = 'Department was successfully updated.'
+        format.html { redirect_to @department, success: success_str }
         format.json { render :show, status: :ok, location: @department }
       else
         format.html { render :edit }
@@ -63,7 +65,8 @@ class Admin::DepartmentsController < AdminController
   def destroy
     @department.destroy
     respond_to do |format|
-      format.html { redirect_to departments_url, success: 'Department was successfully destroyed.' }
+      success_str = 'Department was successfully destroyed.'
+      format.html { redirect_to departments_url, success: success_str }
       format.json { head :no_content }
     end
   end
@@ -85,7 +88,8 @@ class Admin::DepartmentsController < AdminController
 
   def allow_admin_only
     if !check_is_admin
-      redirect_to libraries_url, error: 'You do not have admin access to create or delete libraries.'
+      error_str = 'You do not have admin access to create or delete libraries.'
+      redirect_to libraries_url, error: error_str
     else
       true
     end
@@ -102,10 +106,11 @@ class Admin::DepartmentsController < AdminController
   # permission to edit the details of the department.
 
   def users_can_edit_dept
-    if (@user_depts != nil && (@user_depts.include? params[:id].to_s)) || check_is_admin
+    if (!@user_depts.nil? && (@user_depts.include? params[:id].to_s)) || check_is_admin
       true
     else
-      redirect_to departments_url, error: 'You do not have permission to access this department.'
+      error_str = 'You do not have permission to access this department.'
+      redirect_to departments_url, error: error_str
     end
   end
 

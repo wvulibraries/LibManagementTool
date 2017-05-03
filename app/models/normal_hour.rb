@@ -54,12 +54,19 @@ class NormalHour < ApplicationRecord
     Date::DAYNAMES[day]
   end
 
-  # comment
+  # open_close_time
   # @author Tracy A. McCormick
   # @param time a time string from the database
   # @return string containing both the hr_open_time and hr_end_time
-  def comment
+  def open_close_time
     hr_open_time + ' - ' + hr_close_time if !open_time.nil? && !close_time.nil?
+  end
+
+  # comment
+  # @author Tracy A. McCormick
+  def comment
+    'Closed' if open_time.nil? && close_time.nil?
+    ''
   end
 
   private
@@ -69,11 +76,8 @@ class NormalHour < ApplicationRecord
   # @param time a time string from the database
   # @return a human readable time string
   def human_readable_time(time)
-    if !time.nil?
-      time.strftime('%l:%M %p').strip
-    else
-      ''
-    end
+    return '' if time.nil?
+    time.strftime('%l:%M %p').strip
   end
 
   # day_of_week_set

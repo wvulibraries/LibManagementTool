@@ -2,9 +2,9 @@
 # @author David J. Davis
 # Sets data for views, sets redirects, sets errors
 class Admin::UserPermissionsController < AdminController
-  before_action :set_admin_user_permission, only: [:show, :edit, :update, :destroy]
-  before_action :set_option_groups, only:[:edit, :create, :new]
-  before_action :allow_admin_only, only: [:create, :new, :show, :edit, :update, :destroy]
+  before_action :set_admin_user_permission, only: %i[show edit update destroy]
+  before_action :set_option_groups, only: %i[edit create new]
+  before_action :allow_admin_only, only: %i[create new show edit update destroy]
 
 
   # GET /admin/user_permissions
@@ -15,8 +15,7 @@ class Admin::UserPermissionsController < AdminController
 
   # GET /admin/user_permissions/1
   # GET /admin/user_permissions/1.json
-  def show
-  end
+  def show; end
 
   # GET /admin/user_permissions/new
   def new
@@ -35,10 +34,12 @@ class Admin::UserPermissionsController < AdminController
 
     respond_to do |format|
       if @admin_user_permission.save
-        format.html { redirect_to @admin_user_permission, success: 'User permission was successfully created.' }
+        success_str = 'User permission was successfully created.'
+        format.html { redirect_to @admin_user_permission, success: success_str }
         format.json { render :show, status: :created, location: @admin_user_permission }
       else
-        format.html { render :new, error: 'User permissions has errors, please correct them.' }
+        error_str = 'User permissions has errors, please correct them.'
+        format.html { render :new, error: error_str }
         format.json { render json: @admin_user_permission.errors, status: :unprocessable_entity }
       end
     end
@@ -49,10 +50,12 @@ class Admin::UserPermissionsController < AdminController
   def update
     respond_to do |format|
       if @admin_user_permission.update(admin_user_permission_params)
-        format.html { redirect_to @admin_user_permission, notice: 'User permission was successfully updated.' }
+        notice_str = 'User permission was successfully updated.'
+        format.html { redirect_to @admin_user_permission, notice: notice_str }
         format.json { render :show, status: :ok, location: @admin_user_permission }
       else
-        format.html { render :edit, error: 'User permission form has errors, please correct them.' }
+        error_str = 'User permission form has errors, please correct them.'
+        format.html { render :edit, error: error_str }
         format.json { render json: @admin_user_permission.errors, status: :unprocessable_entity }
       end
     end
@@ -63,12 +66,14 @@ class Admin::UserPermissionsController < AdminController
   def destroy
     @admin_user_permission.destroy
     respond_to do |format|
-      format.html { redirect_to user_permissions_url, success: 'User permission was successfully destroyed.' }
+      success_str = 'User permission was successfully destroyed.'
+      format.html { redirect_to user_permissions_url, success: success_str }
       format.json { head :no_content }
     end
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_admin_user_permission
     @admin_user_permission = UserPermission.find(params[:id])
@@ -79,15 +84,16 @@ class Admin::UserPermissionsController < AdminController
   # @return hash of libraries from by library id
   # @description used to create option groups in lists or multi-selects
   def set_option_groups
-    @libraries = Library.joins(:departments).group('libraries.id').having( 'count( library_id ) >= 1')
+    @libraries = Library.joins(:departments).group('libraries.id').having('count( library_id ) >= 1')
   end
 
-  # allow_admin_only 
+  # allow_admin_only
   # @author David J. Davis
   # @return boolean
   def allow_admin_only
     if !check_is_admin
-      redirect_to users_path, error: 'You do not have admin access to edit, create, or delete user permissions in this application.'
+      redirect_to users_path, error: 'You do not have admin access to edit, \
+      create, or delete user permissions in this application.'
     else
       true
     end

@@ -37,21 +37,29 @@ class SpecialHour < ApplicationRecord
     hr_time(close_time)
   end
 
+  # open_close_time
+  # @author Tracy A. McCormick
+  # @param time a time string from the database
+  # @return string containing both the hr_open_time and hr_end_time
+  def open_close_time
+    hr_open_time + ' - ' + hr_close_time if !open_time.nil? && !close_time.nil?
+  end
+
   # comment
   # @author Tracy A. McCormick
   # @return a comment string
   def comment
     if open_24 then 'Open 24 Hours'
-    elsif no_open_time then 'Opens at ' + hr_open_time
-    elsif no_close_time then 'Closes at ' + hr_close_time
-    else hr_open_time + ' - ' + hr_close_time
+    elsif no_open_time then 'no open time set'
+    elsif no_close_time then 'no close time set'
+    else ''
     end
   end
 
   # get resource
   # @author David J. Davis
   # @return a human readable time string
-  def get_resource
+  def resource_name
     if special_type == 'department'
       special = Department.find(special_id)
       special.name + ' - ' + special.library.name
@@ -68,11 +76,8 @@ class SpecialHour < ApplicationRecord
   # @author David J. Davis
   # @return a human readable time string as 12 hour minute am/pm
   def hr_time(time)
-    if !time.nil?
-      time.strftime('%l:%M %p')
-    else
-      ''
-    end
+    return '' if time.nil?
+    time.strftime('%l:%M %p')
   end
 
   # hr_time
@@ -80,10 +85,7 @@ class SpecialHour < ApplicationRecord
   # @author David J. Davis
   # @return a human readable date as full month day, year.
   def hr_date(date)
-    if !date.nil?
-      date.strftime('%B %d, %Y')
-    else
-      ''
-    end
+    return '' if date.nil?
+    date.strftime('%B %d, %Y')
   end
 end

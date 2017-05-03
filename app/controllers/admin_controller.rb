@@ -12,10 +12,10 @@ class AdminController < ApplicationController
     @username = session[:cas_user]
     @email = session[:cas_extra_attributes][:mail]
     @last_name = session[:cas_extra_attributes][:sn]
-    if !session[:welcome]
-      flash[:success] = "Welcome #{@username}!  You have been sucessfully logged in!"
-      session[:welcome] = true
-    end
+    return if session[:welcome]
+    flash[:success] = "Welcome #{@username}!  You have been sucessfully logged \
+    in!"
+    session[:welcome] = true
   end
 
   def logout
@@ -31,12 +31,14 @@ class AdminController < ApplicationController
   # Date : 2/10/2017
   #
   # Description:
-  # uses the session that is provided buy the cas_user and authenticates that it is a valid cas session
-  # Following that it checks that the user has been added and authorized to use the system.
+  # uses the session that is provided buy the cas_user and authenticates that it
+  # is a valid cas session following that it checks that the user has been added
+  # and authorized to use the system.
   def check_permissions
     has_permission = User.where(username: session[:cas_user]).exists?
     if !has_permission
-      error_str = 'You do not have administrative permissions, please contact the system administrator if you feel that this has been reached in error.'
+      error_str = 'You do not have administrative permissions, please contact \
+      the system administrator if you feel that this has been reached in error.'
       redirect_to root_path, error: error_str
     elsif session[:cas_user].nil? && session[:cas_last_valid_ticket]
       error_str = 'Something went wrong or a faulty login was detected.'
