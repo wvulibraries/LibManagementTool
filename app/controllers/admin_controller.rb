@@ -14,7 +14,7 @@ class AdminController < ApplicationController
     @last_name = session[:cas_extra_attributes][:sn]
     if !session[:welcome]
       flash[:success] = "Welcome #{@username}!  You have been sucessfully logged in!"
-      session[:welcome] = true;
+      session[:welcome] = true
     end
   end
 
