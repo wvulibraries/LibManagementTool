@@ -2,9 +2,9 @@
 # @author David J. Davis
 # Sets data for views, sets redirects, sets errors
 class Admin::UserPermissionsController < AdminController
-  before_action :set_admin_user_permission, only: %i[show edit update destroy]
-  before_action :set_option_groups, only: %i[edit create new]
-  before_action :allow_admin_only, only: %i[create new show edit update destroy]
+  before_action :set_admin_user_permission, only: [:show, :edit, :update, :destroy]
+  before_action :set_option_groups, only: [:edit, :create, :new]
+  before_action :allow_admin_only, only: [:create, :new, :show, :edit, :update, :destroy]
 
 
   # GET /admin/user_permissions

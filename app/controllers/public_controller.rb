@@ -1,8 +1,3 @@
 class PublicController < ApplicationController
-  def index
-  end
-
-  def test
-  end
-
+  def index; end
 end

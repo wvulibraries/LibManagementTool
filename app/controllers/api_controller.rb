@@ -1,17 +1,17 @@
 class ApiController < ApplicationController
-  def getlibs
+  def libs
     @libraries = Library.all
   end
 
-  def getdepts
+  def depts
     @departments = Department.all
   end
 
-  def getdeptsbylib
+  def deptsbylib
     @departments = Department.lib_sorted
   end
 
-  def gethours
+  def hours
     @presenter = ApiPresenter.new(params)
     @presenter.generate_list
     @hours = @presenter.api_array

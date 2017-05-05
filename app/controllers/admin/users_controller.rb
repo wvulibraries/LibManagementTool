@@ -2,8 +2,8 @@
 # @author David J. Davis
 # Sets data for views, sets redirects, sets errors
 class Admin::UsersController < AdminController
-  before_action :set_user, only: %i[show edit update destroy]
-  before_action :allow_admin_only, only: %i[create new show edit update destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :allow_admin_only, only: [:create, :new, :show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
@@ -74,12 +74,8 @@ class Admin::UsersController < AdminController
   end
 
   def allow_admin_only
-    if !check_is_admin
-      redirect_to users_path, error: 'You do not have admin access to edit, \
-      create, or delete users of this application.'
-    else
-      true
-    end
+    return true if check_is_admin
+    redirect_to users_path, error: 'You do not have admin access to edit, create, or delete users of this application.'
   end
 
   # Never trust parameters from the scary internet,

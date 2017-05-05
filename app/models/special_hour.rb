@@ -42,7 +42,7 @@ class SpecialHour < ApplicationRecord
   # @param time a time string from the database
   # @return string containing both the hr_open_time and hr_end_time
   def open_close_time
-    hr_open_time + ' - ' + hr_close_time if !open_time.nil? && !close_time.nil?
+    !open_time.nil? && !close_time.nil? ? hr_open_time + ' - ' + hr_close_time : ''
   end
 
   # comment
@@ -73,11 +73,10 @@ class SpecialHour < ApplicationRecord
 
   # hr_time
   # @param time : a time string from db
-  # @author David J. Davis
+  # @author David J. Davis, Tracy A. McCormick
   # @return a human readable time string as 12 hour minute am/pm
   def hr_time(time)
-    return '' if time.nil?
-    time.strftime('%l:%M %p')
+    time.nil? ? time.strftime('%l:%M %p') : ''
   end
 
   # hr_time
@@ -85,7 +84,6 @@ class SpecialHour < ApplicationRecord
   # @author David J. Davis
   # @return a human readable date as full month day, year.
   def hr_date(date)
-    return '' if date.nil?
-    date.strftime('%B %d, %Y')
+    date.nil? ? date.strftime('%B %d, %Y') : ''
   end
 end

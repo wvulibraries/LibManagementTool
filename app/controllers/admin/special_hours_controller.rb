@@ -4,15 +4,14 @@
 # Sets data for views, sets redirects, sets errors
 
 class Admin::SpecialHoursController < AdminController
-  #require 'time'
-  before_action :set_special_hour, only: %i[show edit update destroy]
-  before_action :authenticate_rights, only: %i[show edit update destroy]
+  before_action :set_special_hour, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_rights, only: [:show, :edit, :update, :destroy]
   before_action :check_param_resource_access, only: [:create]
 
   # validate start_date and end_date
-  before_action :check_date_range, only: %i[create update]
-  before_action :check_start_date, only: %i[create update]
-  before_action :check_end_date, only: %i[create update]
+  before_action :check_date_range, only: [:create, :update]
+  before_action :check_start_date, only: [:create, :update]
+  before_action :check_end_date, only: [:create, :update]
 
   # GET /special_hours
   # GET /special_hours.json
@@ -157,14 +156,11 @@ class Admin::SpecialHoursController < AdminController
   # @description
   # Checks to see if the user has access to the library or department.
   def check_resource_access
-    if check_is_admin
-      true
-    elsif !@special_hour.special_id.nil?
-      check_access = CheckAccess.new
-      check_access.depts = @user_depts
-      check_access.libs = @user_libs
-      check_access.check(@special_hour.special_type.to_s, @special_hour.special_id.to_i)
-    end
+    return true if check_is_admin
+    check_access = CheckAccess.new
+    check_access.depts = @user_depts
+    check_access.libs = @user_libs
+    check_access.check(@special_hour.special_type.to_s, @special_hour.special_id.to_i)
   end
 
   # check_param_resource_access
@@ -175,14 +171,11 @@ class Admin::SpecialHoursController < AdminController
   # Checks params to see if user has access to the library or department they
   # are trying to set
   def check_param_resource_access
-    if check_is_admin
-      true
-    elsif !params[:special_hour][:special_id].nil?
-      check_access = CheckAccess.new
-      check_access.depts = @user_depts
-      check_access.libs = @user_libs
-      check_access.check(params[:special_hour][:special_type], params[:special_hour][:special_id])
-    end
+    return true if check_is_admin
+    check_access = CheckAccess.new
+    check_access.depts = @user_depts
+    check_access.libs = @user_libs
+    check_access.check(params[:special_hour][:special_type], params[:special_hour][:special_id])
   end
 
   # authenticate_rights
@@ -194,12 +187,9 @@ class Admin::SpecialHoursController < AdminController
   # department. Also checks to see if they are admin. If neither of these are
   # true it redirects them back to there previous page and shows them an error.
   def authenticate_rights
-    if check_resource_access
-      true
-    else
-      error_str = 'You do not have permission to access this resource.'
-      redirect_back(fallback_location: special_hours_url, error: error_str)
-    end
+    return true if check_resource_access
+    error_str = 'You do not have permission to access this resource.'
+    redirect_back(fallback_location: special_hours_url, error: error_str)
   end
 
   # Never trust parameters from the scary internet,

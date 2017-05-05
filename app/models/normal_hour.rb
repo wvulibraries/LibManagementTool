@@ -65,19 +65,17 @@ class NormalHour < ApplicationRecord
   # comment
   # @author Tracy A. McCormick
   def comment
-    'Closed' if open_time.nil? && close_time.nil?
-    ''
+    open_time.nil? && close_time.nil? ? 'Closed' : ''
   end
 
   private
 
   # human_readable_time
-  # @author David J. Davis
+  # @author David J. Davis, Tracy A. McCormick
   # @param time a time string from the database
   # @return a human readable time string
   def human_readable_time(time)
-    return '' if time.nil?
-    time.strftime('%l:%M %p').strip
+    time.nil? ? time.strftime('%l:%M %p').strip : ''
   end
 
   # day_of_week_set

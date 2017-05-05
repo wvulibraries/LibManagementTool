@@ -37,12 +37,8 @@ class RssPresenter < HoursPresenter
   # Takes the passed string and joins concats it with a date string
   # that is set the presenter in global @date.
   # Returns a integer containing the unix time.
-  def create_time_stamp(time_str = nil)
-    date_time_str = if time_str.nil? || time_str.empty?
-                      @date + ' ' + '12:00 AM'
-                    else
-                      @date + ' ' + time_str
-                    end
+  def create_time_stamp(time_str = '12:00 AM')
+    date_time_str = @date + ' ' + time_str
     format_str = DATE_FORMAT + ' ' + '%H:%M %p'
     date_obj = Time.zone.strptime(date_time_str, format_str)
     date_obj.to_time.to_i
@@ -89,7 +85,7 @@ class RssPresenter < HoursPresenter
   # @return (hash) - cleaned object of params that are allowed removes - not allowed params
   # Removes all parameters that are not in the whitelist of allowed parameters.
   def validated_params(params)
-    allowed_keys = %i[id type date_start date_end]
+    allowed_keys = [:id, :type, :date_start, :date_end]
     params.select { |key,value| allowed_keys.include?(key) }
   end
 end

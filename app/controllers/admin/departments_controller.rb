@@ -4,9 +4,9 @@
 # @description Sets data for views, sets redirects, sets errors
 
 class Admin::DepartmentsController < AdminController
-  before_action :set_department, only: %i[show edit update destroy]
-  before_action :allow_admin_only, only: %i[create new destroy]
-  before_action :users_can_edit_dept, only: %i[show edit update]
+  before_action :set_department, only: [:show, :edit, :update, :destroy]
+  before_action :allow_admin_only, only: [:create, :new, :destroy]
+  before_action :users_can_edit_dept, only: [:show, :edit, :update]
 
   # GET /departments
   # GET /departments.json

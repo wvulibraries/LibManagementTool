@@ -6,10 +6,10 @@ Rails.application.routes.draw do
   get  '/admin', to: 'admin#index'
   get  '/admin/logout', to: 'admin#logout'
 
-  get 'api/getlibs'
-  get 'api/getdepts'
-  get 'api/getdeptsbylib'
-  get 'api/gethours'
+  get 'api/libs'
+  get 'api/depts'
+  get 'api/deptsbylib'
+  get 'api/hours'
 
   # get 'api/:month/gethours' => 'api#gethours'
   # get 'api/:day/gethours' => 'api#gethours'
@@ -17,10 +17,9 @@ Rails.application.routes.draw do
   # get 'api/:lib/gethours' => 'api#gethours'
   # get 'api/:dept/gethours' => 'api#gethours'
 
-  get 'rss', to: 'feeds#index', :format => 'rss'
-
-  get 'feed.rss', to: 'feeds#rss', :format => 'rss'
-  get 'feed', to: 'feeds#rss', :format => 'rss'
+  get 'rss', to: 'feeds#index', format: 'rss'
+  get 'feed.rss', to: 'feeds#rss', format: 'rss'
+  get 'feed', to: 'feeds#rss', format: 'rss'
 
   # forces the controllers to use the admin name space
   # this is going to allow for the addition of a function to restrict access
@@ -30,6 +29,5 @@ Rails.application.routes.draw do
   end
 
   get '/hours', to: 'public/hours#index'
-  get '/test', to: 'public#test'
   get '/admin/departments/list', to: 'departments#index'
 end

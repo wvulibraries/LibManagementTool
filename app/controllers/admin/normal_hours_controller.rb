@@ -89,14 +89,11 @@ class Admin::NormalHoursController < AdminController
   # @description
   # Checks to see if the user has access to the library or department.
   def check_resource_access
-    if check_is_admin
-      true
-    elsif !@normal_hour.resource_id.nil?
-      check_access = CheckAccess.new
-      check_access.depts = @user_depts
-      check_access.libs = @user_libs
-      check_access.check(@normal_hour.resource_type.to_s, @normal_hour.resource_id.to_i)
-    end
+    return true if check_is_admin
+    check_access = CheckAccess.new
+    check_access.depts = @user_depts
+    check_access.libs = @user_libs
+    check_access.check(@normal_hour.resource_type.to_s, @normal_hour.resource_id.to_i)
   end
 
   # check_param_resource_access
@@ -107,14 +104,11 @@ class Admin::NormalHoursController < AdminController
   # Checks params to see if user has access to the library or department they
   # are trying to set
   def check_param_resource_access
-    if check_is_admin
-      true
-    elsif !params[:normal_hour][:resource_id].nil?
-      check_access = CheckAccess.new
-      check_access.depts = @user_depts
-      check_access.libs = @user_libs
-      check_access.check(params[:normal_hour][:resource_type], params[:normal_hour][:resource_id])
-    end
+    return true if check_is_admin
+    check_access = CheckAccess.new
+    check_access.depts = @user_depts
+    check_access.libs = @user_libs
+    check_access.check(params[:normal_hour][:resource_type], params[:normal_hour][:resource_id])
   end
 
   # authenticate_rights
@@ -126,12 +120,9 @@ class Admin::NormalHoursController < AdminController
   # department. Also checks to see if they are admin. If neither of these are
   # true it redirects them back to there previous page and shows them an error.
   def authenticate_rights
-    if check_resource_access
-      true
-    else
-      error_str = 'You do not have permission to access this resource.'
-      redirect_back(fallback_location: normal_hours_url, error: error_str)
-    end
+    return true if check_resource_access
+    error_str = 'You do not have permission to access this resource.'
+    redirect_back(fallback_location: normal_hours_url, error: error_str)
   end
 
   # Never trust parameters from the scary internet,

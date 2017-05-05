@@ -83,7 +83,7 @@ class ApiPresenter < HoursPresenter
   # Removes all parameters that are not in the whitelist
   # of allowed parameters.
   def validated_params(params)
-    allowed_keys = %i[id type date_start date_end]
+    allowed_keys = [:id, :type, :date_start, :date_end]
     params.select { |key,value| allowed_keys.include?(key) }
   end
 end

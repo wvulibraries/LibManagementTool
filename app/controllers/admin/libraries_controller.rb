@@ -7,9 +7,9 @@ class Admin::LibrariesController < AdminController
   # Before action fires the method assigned to it before
   # other methods are called acting as a filter in some cases
   # or to apply data in a dry aspect in other cases
-  before_action :set_library, only: %i[show edit update destroy]
-  before_action :allow_admin_only, only: %i[create new destroy]
-  before_action :users_can_edit_library, only: %i[show edit update]
+  before_action :set_library, only: [:show, :edit, :update, :destroy]
+  before_action :allow_admin_only, only: [:create, :new, :destroy]
+  before_action :users_can_edit_library, only: [:show,:edit,:update]
 
   # GET /libraries
   # GET /libraries.json

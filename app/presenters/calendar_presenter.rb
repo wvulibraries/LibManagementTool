@@ -7,12 +7,12 @@ class CalendarPresenter < HoursPresenter
   # @date 03/28/2017
   # @param - hash (hash)
   # returns either the Library name or combined department name & library name
-  def resource_name(hash = {})
-    if hash[:type] == 'department'
-      resource = Department.find(hash[:id])
+  def resource_name(resource_hash = {})
+    if resource_hash[:type] == 'department'
+      resource = Department.find(resource_hash[:id])
       resource.name + ' - ' + resource.library.name
     else
-      resource = Library.find(hash[:id])
+      resource = Library.find(resource_hash[:id])
       resource.name
     end
   end
@@ -23,13 +23,13 @@ class CalendarPresenter < HoursPresenter
   # @param - hash (hash)
   # takes hash that contains id, type and date
   # returns open_time, close_time and a comment in a hash
-  def find_hours_for_date(hash = {})
+  def find_hours_for_date(resource_hash = {})
     # Convert date from Y-m-d to d-m-Y
     @date = Date.strptime(hash[:date], API_DATE_FORMAT).strftime(DATE_FORMAT)
-    resource = if hash[:type] == 'department'
-                 Department.find(hash[:id])
+    resource = if resource_hash[:type] == 'department'
+                 Department.find(resource_hash[:id])
                else
-                 Library.find(hash[:id])
+                 Library.find(resource_hash[:id])
                end
     find_hours(resource)
   end
