@@ -106,7 +106,7 @@ class Admin::SpecialHoursController < AdminController
     end
   end
 
-  # check_date_range
+  # check_date
   # @author : Tracy A. McCormick
   # @date 4/4/2017
   #
@@ -121,7 +121,7 @@ class Admin::SpecialHoursController < AdminController
     end
   end
 
-  # check_end_date
+  # check_start_date
   # @author : Tracy A. McCormick
   # @date 3/30/2017
   #
@@ -150,7 +150,7 @@ class Admin::SpecialHoursController < AdminController
     redirect_back(fallback_location: special_hours_url, error: error_str)
   end
 
-  # user_has_access
+  # check_resource_access
   # @author : Tracy A. McCormick
   # @date 2/22/2017
   #
@@ -167,7 +167,7 @@ class Admin::SpecialHoursController < AdminController
     end
   end
 
-  # check_params
+  # check_param_resource_access
   # @author : Tracy A. McCormick
   # @date 2/28/2017
   #

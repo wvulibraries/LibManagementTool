@@ -82,7 +82,7 @@ class Admin::NormalHoursController < AdminController
     @normal_hour = NormalHour.find(params[:id])
   end
 
-  # user_has_access
+  # check_resource_access
   # @author Tracy A. McCormick
   # @date 2/22/2017
   #
@@ -99,7 +99,7 @@ class Admin::NormalHoursController < AdminController
     end
   end
 
-  # check_params
+  # check_param_resource_access
   # @author Tracy A. McCormick
   # @date 2/28/2017
   #
