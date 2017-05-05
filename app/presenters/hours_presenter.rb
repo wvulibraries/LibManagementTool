@@ -1,5 +1,9 @@
 require 'date'
 
+# HoursPresenter
+# @author David J. Davis
+# @author Tracy A. McCormick
+
 class HoursPresenter
   DATE_FORMAT = '%m-%d-%Y'.freeze
   API_DATE_FORMAT = '%Y-%m-%d'.freeze
