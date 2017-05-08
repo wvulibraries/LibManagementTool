@@ -26,11 +26,7 @@ class CalendarPresenter < HoursPresenter
   def find_hours_for_date(resource_hash = {})
     # Convert date from Y-m-d to d-m-Y
     @date = Date.strptime(hash[:date], API_DATE_FORMAT).strftime(DATE_FORMAT)
-    resource = if resource_hash[:type] == 'department'
-                 Department.find(resource_hash[:id])
-               else
-                 Library.find(resource_hash[:id])
-               end
+    resource = resource_hash[:type] == 'department' ? Department.find(resource_hash[:id]) : Library.find(resource_hash[:id])
     find_hours(resource)
   end
 end

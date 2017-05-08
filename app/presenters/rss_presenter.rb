@@ -37,7 +37,8 @@ class RssPresenter < HoursPresenter
   # Takes the passed string and joins concats it with a date string
   # that is set the presenter in global @date.
   # Returns a integer containing the unix time.
-  def create_time_stamp(time_str = '12:00 AM')
+  def create_time_stamp(time_str)
+    time_str = '12:00 AM' if time_str.nil? || time_str == ''
     date_time_str = @date + ' ' + time_str
     format_str = DATE_FORMAT + ' ' + '%H:%M %p'
     date_obj = Time.zone.strptime(date_time_str, format_str)

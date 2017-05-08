@@ -1,3 +1,5 @@
+require 'date'
+require 'time'
 # Special Hour model this is used for adding special hours to the projects
 # versus consistent hours from normal hours.
 # @author David J. Davis
@@ -76,14 +78,14 @@ class SpecialHour < ApplicationRecord
   # @author David J. Davis, Tracy A. McCormick
   # @return a human readable time string as 12 hour minute am/pm
   def hr_time(time)
-    time.nil? ? time.strftime('%l:%M %p') : ''
+    !time.nil? ? time.strftime('%l:%M %p') : ''
   end
 
   # hr_time
   # @param date : a datetime string from db
-  # @author David J. Davis
+  # @author David J. Davis, Tracy A. McCormick
   # @return a human readable date as full month day, year.
   def hr_date(date)
-    date.nil? ? date.strftime('%B %d, %Y') : ''
+    !date.nil? ? date.strftime('%B %d, %Y') : ''
   end
 end
