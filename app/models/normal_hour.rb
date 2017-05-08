@@ -4,7 +4,7 @@
 class NormalHour < ApplicationRecord
   belongs_to :resource, polymorphic: true
 
-  validates :id,  numericality: { only_integer: true, allow_nil: true }
+  validates :id, numericality: { only_integer: true, allow_nil: true }
   validates :resource_type, inclusion: { in: %w[library department] }
 
   validates :open_time, presence: true, allow_blank: false
@@ -19,10 +19,10 @@ class NormalHour < ApplicationRecord
 
   validate :day_of_week_set
 
-  # get_resource
+  # resource_name
   # @author David J. Davis
   # determines if library or department and returns the name of the resource
-  def get_resource
+  def resource_name
     if resource_type == 'department'
       resource = Department.find(resource_id)
       resource.name + ' - ' + resource.library.name
@@ -59,7 +59,7 @@ class NormalHour < ApplicationRecord
   # @param time a time string from the database
   # @return string containing both the hr_open_time and hr_end_time
   def open_close_time
-    hr_open_time + ' - ' + hr_close_time if !open_time.nil? && !close_time.nil?
+    open_time.nil? || close_time.nil? ? '' : hr_open_time + ' - ' + hr_close_time
   end
 
   # comment
@@ -75,7 +75,7 @@ class NormalHour < ApplicationRecord
   # @param time a time string from the database
   # @return a human readable time string
   def human_readable_time(time)
-    time.nil? ? time.strftime('%l:%M %p').strip : ''
+    !time.nil? ? time.strftime('%l:%M %p').strip : ''
   end
 
   # day_of_week_set

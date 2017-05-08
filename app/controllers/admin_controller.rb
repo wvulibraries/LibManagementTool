@@ -72,9 +72,9 @@ class AdminController < ApplicationController
   # This will be used in other controllers in the admin section to be sure that
   # the user has the granualr permissions and is only used if the user is not an admin.
   def set_user_permission
+    user_permissions = UserPermission.find_by(username: session[:cas_user]) if session[:cas_user]
     # return if no cas_user is set or if they are an admin
-    return unless session[:cas_user] || check_is_admin
-    user_permissions = UserPermission.find_by(username: session[:cas_user])
+    return unless !user_permissions.nil? || check_is_admin
     @user_libs = clean_array user_permissions.libraries
     @user_depts = clean_array user_permissions.departments
   end
