@@ -25,7 +25,9 @@ class CalendarPresenter < HoursPresenter
   # returns open_time, close_time and a comment in a hash
   def find_hours_for_date(resource_hash = {})
     # Convert date from Y-m-d to d-m-Y
-    @date = Date.strptime(hash[:date], API_DATE_FORMAT).strftime(DATE_FORMAT)
+    date_to_use = Date.strptime(resource_hash[:date], API_DATE_FORMAT)
+    @date = date_to_use.strftime(DATE_FORMAT)
+
     resource = resource_hash[:type] == 'department' ? Department.find(resource_hash[:id]) : Library.find(resource_hash[:id])
     find_hours(resource)
   end
