@@ -1,68 +1,87 @@
-#wrapper {
-  padding-left: 20%;
-  transition: all 0.4s ease 0s;
-}
-
-#sidebar-wrapper {
-  margin-left: -20%;
-  left: 20%;
-  width: 20%;
-  position: fixed;
-  height: 100%;
-  overflow-y: auto;
-  z-index: 1000;
-  transition: all 0.4s ease 0s;
-}
-
-#page-content-wrapper {
-  width: 100%;
-}
-
-.sidebar-nav {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  margin: 0;
-  padding: 5%;
-  list-style: none;
-}
-
-.sidebar-nav li a {
-    display: block;
-    text-decoration: none;
-    color: #999999;
-}
-
-.sidebar-nav li a:hover {
-    text-decoration: none;
-    color: #fff;
-    background: rgba(255,255,255,0.2);
-}
-
-.sidebar-nav li a:active,
-.sidebar-nav li a:focus {
-    text-decoration: none;
-}
-
-@media (max-width:767px) {
-
-    #wrapper {
-      padding-left: 0;
+.calendar-section { 
+    .sidebar {   
+        @include span-columns(12); 
+    }
+    .calendar-wrapper{ 
+        @include span-columns(12); 
     }
 
-    #sidebar-wrapper {
-      left: 0;
+    @include breakpoint(tablet){ 
+        .sidebar { 
+            @include span-columns(4); 
+        }
+        .calendar-wrapper{ 
+            @include span-columns(8); 
+            @include omega(); 
+        }
+    }
+}
+
+.sidebar { 
+    ul { 
+        @include span-columns(12);
+        li {
+            @include span-columns(12); 
+            padding:5px;
+            ul { 
+                @include span-columns(11);
+                @include shift(1); 
+                @include omega();
+            }
+        }         
+    }    
+}
+
+.simple-calendar { 
+    td { 
+        position:relative; 
     }
 
-    #wrapper.active {
-      position: relative;
-      left: 250px;
+    td.past.prev-month, td.next-month, td.future.prev-month { 
+        background: rgba($pms432, .5);
+
+        .date, .opentime, .closetime, .comments { 
+           display:none;
+        }
+    }   
+
+    .prev-month-button, .next-month-button { 
+        @include span-columns(1);
+        padding:8px; 
+    }
+    .next-month-button { 
+        @include omega();
+        text-align:right;
+    }
+    .calendar-title { 
+        @include span-columns(10); 
+        font-size: 1.25em; 
+        font-weight:bold;
+        text-align:center; 
+    }
+}
+
+
+
+.calendar-square { 
+    @include span-columns(12); 
+    padding: 20px 0 0;
+
+    .date { 
+        position:absolute; 
+        color: $pms300;
+        font-size: .75em;
+        left:10px; 
+        top: 5px;
+        z-index:1;  
     }
 
-    #wrapper.active #sidebar-wrapper {
-      left: 250px;
-      width: 250px;
-      transition: all 0.4s ease 0s;
+    .opentime, .closetime, .comments { 
+        font-size:12px;
+        padding:5px;
+        border-bottom:1px solid #eee;
+        &:last-of-type { border:none; }        
     }
 
+    .label { font-weight:bold; }
 }

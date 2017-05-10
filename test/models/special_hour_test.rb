@@ -30,12 +30,12 @@ class SpecialHourTest < ActiveSupport::TestCase
   end
 
   test "should get resource name for library" do
-    name = @spec_hour.get_resource
+    name = @spec_hour.resource_name
     assert_not_predicate name, :empty?
   end
 
   test "should get resource name for department" do
-    name = @spec_hour2.get_resource
+    name = @spec_hour2.resource_name
     assert_not_predicate name, :empty?
   end
 

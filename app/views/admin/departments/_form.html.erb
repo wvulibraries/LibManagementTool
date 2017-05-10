@@ -25,11 +25,9 @@
     <%= f.label :library_id %>
     <%= f.collection_select(
       :library_id, Library.all, :id, :name,
-      {:prompt => "Select A Library"}
+      { prompt: 'Select A Library' }
     ) %>
-
   </div>
-
 
   <div class="actions">
     <%= f.submit %>

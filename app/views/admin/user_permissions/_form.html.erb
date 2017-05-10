@@ -18,12 +18,12 @@
 
   <div class="field">
     <%= f.label :libraries %>
-    <%= f.collection_select(:libraries, Library.all, :id, :name, {}, {:multiple => true, :class => 'libraries_select'}) %>
+    <%= f.collection_select(:libraries, Library.all, :id, :name, {}, { multiple: true, class: 'libraries_select' }) %>
   </div>
 
   <div class="field">
     <%= f.label :departments %>
-    <%= f.grouped_collection_select :departments, @libraries, :departments, :name, :id, :name, {}, {:multiple => true, :class => 'departments_select'} %>
+    <%= f.grouped_collection_select :departments, @libraries, :departments, :name, :id, :name, {}, { multiple: true, class: 'departments_select' } %>
   </div>
 
   <div class="actions">

@@ -8,7 +8,8 @@ class Public::HoursController < ApplicationController
       params[:type] = 'library'
     end
 
-    @presenter = HoursPresenter.new({})
+    @presenter = CalendarPresenter.new
+    @libraries = Library.all
   end
 
 end

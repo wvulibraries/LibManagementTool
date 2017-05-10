@@ -8,8 +8,8 @@ class Admin::LibrariesController < AdminController
   # other methods are called acting as a filter in some cases
   # or to apply data in a dry aspect in other cases
   before_action :set_library, only: [:show, :edit, :update, :destroy]
-  before_action :allow_admin_only, only:[:create, :new, :destroy]
-  before_action :users_can_edit_library, only:[:show,:edit,:update]
+  before_action :allow_admin_only, only: [:create, :new, :destroy]
+  before_action :users_can_edit_library, only: [:show,:edit,:update]
 
   # GET /libraries
   # GET /libraries.json
@@ -38,7 +38,8 @@ class Admin::LibrariesController < AdminController
 
     respond_to do |format|
       if @library.save
-        format.html { redirect_to @library, success: 'Library was successfully created.' }
+        success_str = 'Library was successfully created.'
+        format.html { redirect_to @library, success: success_str }
         format.json { render :show, status: :created, location: @library }
       else
         format.html { render :new }
@@ -52,7 +53,8 @@ class Admin::LibrariesController < AdminController
   def update
     respond_to do |format|
       if @library.update(library_params)
-        format.html { redirect_to @library, success: 'Library was successfully updated.' }
+        success_str = 'Library was successfully updated.'
+        format.html { redirect_to @library, success: success_str }
         format.json { render :show, status: :ok, location: @library }
       else
         format.html { render :edit }
@@ -66,7 +68,8 @@ class Admin::LibrariesController < AdminController
   def destroy
     @library.destroy
     respond_to do |format|
-      format.html { redirect_to libraries_url, success: 'Library was successfully destroyed.' }
+      success_str = 'Library was successfully destroyed.'
+      format.html { redirect_to libraries_url, success: success_str }
       format.json { head :no_content }
     end
   end
@@ -86,7 +89,8 @@ class Admin::LibrariesController < AdminController
 
     def allow_admin_only
       if !check_is_admin
-        redirect_to libraries_url, error: 'You do not have admin access to create or delete libraries.'
+        error_str = 'You do not have admin access to create or delete libraries.'
+        redirect_to libraries_url, error: error_str
       else
         true
       end
@@ -101,10 +105,11 @@ class Admin::LibrariesController < AdminController
     # If the user is not an admin, the next check sees if they have been given
     # permission to edit the details of the library.
     def users_can_edit_library
-      if (@user_libs != nil && (@user_libs.to_a.include? params[:id].to_s)) || check_is_admin
+      if (!@user_libs.nil? && (@user_libs.to_a.include? params[:id].to_s)) || check_is_admin
         true
       else
-        redirect_to libraries_url, error: 'You do not have permission to access this library.'
+        error_str = 'You do not have permission to access this library.'
+        redirect_to libraries_url, error: error_str
       end
     end
 

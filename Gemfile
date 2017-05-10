@@ -31,10 +31,6 @@ gem "simple_calendar", "~> 2.0"
 group :test  do
   gem 'simplecov', :require => false
   gem 'simplecov-shield'
-end
-
-group :development, :test do
-  gem 'byebug', platform: :mri
   gem 'rails-controller-testing'
 end
 
