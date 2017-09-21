@@ -1,2 +1,8 @@
 <h1>Admin</h1>
 <p>Find me in app/views/admin/index.html.erb</p>
+
+from view <%= request.env['PATH_INFO'] %> 
+
+<br><br>
+
+from controller <%= @url.inspect %>

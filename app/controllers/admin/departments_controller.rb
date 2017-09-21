@@ -87,7 +87,7 @@ class Admin::DepartmentsController < AdminController
   # if not a flash message is added to the UI and the user is re-directed.
 
   def allow_admin_only
-    if !check_is_admin
+    if !is_admin?
       error_str = 'You do not have admin access to create or delete libraries.'
       redirect_to libraries_url, error: error_str
     else
@@ -106,7 +106,7 @@ class Admin::DepartmentsController < AdminController
   # permission to edit the details of the department.
 
   def users_can_edit_dept
-    if (!@user_depts.nil? && (@user_depts.include? params[:id].to_s)) || check_is_admin
+    if user_permitted || check_is_admin
       true
     else
       error_str = 'You do not have permission to access this department.'

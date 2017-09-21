@@ -18,10 +18,10 @@ gem 'jbuilder', '~> 2.5'
 gem 'rubycas-client', :git => 'https://github.com/rubycas/rubycas-client.git'
 
 # frontend
-gem 'bourbon'
-gem 'neat'
-gem 'bitters'
-gem 'normalize-scss'
+# gem 'bourbon'
+# gem 'neat'
+# gem 'bitters'
+# gem 'normalize-scss'
 gem 'font-awesome-sass'
 gem 'pickadate-rails'
 gem "select2-rails"

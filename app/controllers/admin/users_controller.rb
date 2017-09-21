@@ -74,7 +74,7 @@ class Admin::UsersController < AdminController
   end
 
   def allow_admin_only
-    return true if check_is_admin
+    return true if is_admin?
     redirect_to users_path, error: 'You do not have admin access to edit, create, or delete users of this application.'
   end
 

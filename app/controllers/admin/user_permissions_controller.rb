@@ -91,7 +91,7 @@ class Admin::UserPermissionsController < AdminController
   # @author David J. Davis
   # @return boolean
   def allow_admin_only
-    if !check_is_admin
+    if !is_admin?
       redirect_to users_path, error: 'You do not have admin access to edit, \
       create, or delete user permissions in this application.'
     else

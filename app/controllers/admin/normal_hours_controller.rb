@@ -89,7 +89,7 @@ class Admin::NormalHoursController < AdminController
   # @description
   # Checks to see if the user has access to the library or department.
   def check_resource_access
-    return true if check_is_admin
+    return true if is_admin?
     check_access = CheckAccess.new
     check_access.depts = @user_depts
     check_access.libs = @user_libs
@@ -104,7 +104,7 @@ class Admin::NormalHoursController < AdminController
   # Checks params to see if user has access to the library or department they
   # are trying to set
   def check_param_resource_access
-    return true if check_is_admin
+    return true if is_admin?
     check_access = CheckAccess.new
     check_access.depts = @user_depts
     check_access.libs = @user_libs

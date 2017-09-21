@@ -6,7 +6,7 @@
 class AdminController < ApplicationController
   # perform filter before action
   before_action CASClient::Frameworks::Rails::Filter
-  before_action :set_user_permission, :check_permissions
+  before_action :valid_cas, :check_permissions
 
   def index
     @username = session[:cas_user]
@@ -23,59 +23,21 @@ class AdminController < ApplicationController
   end
 
   private
+  
+  # @author David J. Davis
+  # @date 8/11/2017
+  # @description 
+  # validates if the user has a proper login or if session jacking occuring 
+  def valid_cas
+    error_str = "Faulty Login was detected, please try again or contact the system administrator."
+    redirect_to root_path, error: error_str if session[:cas_user].nil? && session[:cas_last_valid_ticket]
+  end 
 
-  # check_permissions
-  # ==================================================
-  # Name : David J. Davis
-  # Date : 2/10/2017
-  #
-  # Description:
-  # uses the session that is provided buy the cas_user and authenticates that it
-  # is a valid cas session following that it checks that the user has been added
-  # and authorized to use the system.
-  def check_permissions
-    has_permission = User.where(username: session[:cas_user]).exists?
-    return true if has_permission
-    if session[:cas_user].nil? && session[:cas_last_valid_ticket]
-      error_str = 'Something went wrong or a faulty login was detected.'
-    else
-      error_str = 'You do not have administrative permissions, please contact the system administrator if you feel that this has been reached in error.'
-    end
-    redirect_to root_path, error: error_str
-  end
-
-  # check_is_admin
-  # ==================================================
-  # Name : David J. Davis
-  # Date : 2/10/2017
-  #
-  # Modified By : Tracy A. McCormick
-  # Date : 3/9/2017
-  # Description:
-  # Gets the user by the session and checks returns the boolean value in the database
-  def check_is_admin
-    user = User.find_by(username: session[:cas_user])
-    return false if user.nil?
-    user.admin
-  end
-
-  # get_user_permission
-  # ==================================================
-  # Name : David J. Davis
-  # Date : 2/10/2017
-  #
-  # Modified : Tracy A. McCormick
-  # Date : 3/9/2017
-  #
-  # Description:
-  # Sets the users libraries and department permissions in the session.
-  # This will be used in other controllers in the admin section to be sure that
-  # the user has the granualr permissions and is only used if the user is not an admin.
-  def set_user_permission
-    user_permissions = UserPermission.find_by(username: session[:cas_user]) if session[:cas_user]
-    # return if no cas_user is set or if they are an admin
-    return unless !user_permissions.nil? || check_is_admin
-    @user_libs = clean_array user_permissions.libraries
-    @user_depts = clean_array user_permissions.departments
+  # @author David J. Davis
+  # @date 8/11/2017
+  # @description 
+  # users the check access method for setting granular permissions 
+  def check_permissions 
+    @check_access = CheckAccess.new(session[:cas_user])
   end
 end
