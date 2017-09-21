@@ -17,11 +17,11 @@
  // WVU Brand Stuff
 @import 'wvu_brand_theme/4-custom/variables';
 @import 'wvu_brand_theme/0-plugins/*';
-@import 'wvu_brand_theme/1-base/*';
-// @import 'wvu_brand_theme/2-modules/*';
-// @import 'wvu_brand_theme/3-layouts/*';
-// @import 'wvu_brand_theme/1-base/ie9';
-// @import 'wvu_brand_theme/4-custom/*';
+@import 'wvu_brand_theme/1-base/base_import';
+@import 'wvu_brand_theme/2-modules/*';
+@import 'wvu_brand_theme/3-layouts/*';
+@import 'wvu_brand_theme/1-base/ie9';
+@import 'wvu_brand_theme/4-custom/*';
 
 // body { 
 //   background:$blue;
@@ -36,7 +36,7 @@
 // @import "custom_objects/alerts_defined";
 
 // application wide
-// @import "partials/*";
+@import "partials/*";
 
 // library for pick date for time and date stuff
 @import "pickadate/default";

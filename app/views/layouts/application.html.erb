@@ -9,13 +9,17 @@
   </head>
 
   <body>
-    <!-- Header -->
-    <header>
-      <h1> Library Management Tool </h1>
-      <nav>
-         <%= link_to "Login", "/admin", :class=>"button admin-button" %>
-      </nav>
-    </header>
+    <!-- Skip to Navigation --> 
+    <a class="wvu-skip-nav" href="#maincontent">Skip to main content</a>
+
+    <header class="wvu-masthead">
+      <div class="wvu-masthead__container"> 
+        <a class="header-logo" href="/"> Library Managment Tool </a>
+        <div class="button-container">  
+        <%= link_to "Login", "/admin", :class=>"button admin-button" %>
+        </div> 
+      </div> 
+    </header> 
 
     <!-- Flash Messages / Alerts -->
     <% flash.each do |key, value| %>
@@ -26,9 +30,9 @@
     <% end %>
 
     <!-- Main Content Yeiled by Views -->
-    <main>
+    <div class="wvu-container">
       <%= yield %>
-    </main>
+    </div>
 
     <!-- Footers -->
     <footer>

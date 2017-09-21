@@ -2,7 +2,7 @@
   &.small-only{
     display:table;
     margin:0;
-    @include breakpoint(tablet){
+    @include media(tablet){
       display:none;
     }
     &:nth-of-type(even){
@@ -13,14 +13,14 @@
 
   &.large-only{
     display:none;
-    @include breakpoint(tablet){
+    @include media(tablet){
       display:table;
     }
   }
 }
 
 tr {
-  @include breakpoint(tablet){
+  @include media(tablet){
     &:nth-of-type(even){
       background:lighten($light-gray,4%);
     }

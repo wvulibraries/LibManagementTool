@@ -1,33 +1,33 @@
-header{
-  width:100%;
-  background: $header-background;
-  padding: 10px;
-  border-bottom: $border;
-  color: $gray-text;
-
-  h1 {
-    font-size:14px;
-    margin:0;
-    padding:9px;
-    @include span-columns(8);
-
-    @include breakpoint(tablet){
-      @include span-columns(6);
-    }
-  }
-
-  nav {
-    @include span-columns(4);
-    @include omega();
-    text-align:right;
-
-    @include breakpoint(tablet){
-      @include span-columns(6);
-      @include omega();
-    }
+.header-logo { 
+  color:#fff; 
+  font-size:1.5em; 
+  margin: 20px 0; 
+  text-decoration:none; 
+  @include span-columns(12);
+  text-align:center; 
+  
+  @include media(720px){ 
+    @include span-columns(6);
+    text-align:left; 
   }
 }
 
+.button-container { 
+  @include span-columns(12); 
+  margin: 20px 0; 
+  text-align:center;
+
+  @include media(720px){ 
+    @include span-columns(6);
+    @include omega(); 
+    text-align:right; 
+  }
+
+  .button  { 
+    margin:0; 
+    padding: .5em 1em;
+  }
+}
 
 nav > .button {
   padding:5px 12px;
