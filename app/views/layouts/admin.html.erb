@@ -17,13 +17,14 @@
       <div class="wvu-masthead__container"> 
         <a class="header-logo" href="/"> Library Managment Tool </a>
         <div class="button-container">  
-          <a href="" class="button button--pms-629-c js-menu-trigger">
+          <a href="javascript:void(0)" class="button button--pms-629-c sliding-panel-button js-menu-trigger">
             <i class="fa fa-bars" aria-hidden="true"></i> Menu
           </a>
           <%= link_to "Logout", "/admin/logout", :class=>"button button--wvu-gold" %>
         </div> 
       </div> 
     </header>
+    
 
     <!-- Flash Messages / Alerts -->
     <% flash.each do |key, value| %>
@@ -32,6 +33,12 @@
         <span class="exit-alert"> <i class="fa fa-times-circle-o" aria-hidden="true"></i> </span>
       </div>
     <% end %>
+
+     <!-- Navigation / Menu -->
+    <nav class="js-menu sliding-panel-content">
+      <%= admin_links %>
+    </nav>
+    <div class="js-menu-screen sliding-panel-fade-screen"></div>
 
     <!-- Main Content Yeiled by Views -->
     <div class="wvu-container">

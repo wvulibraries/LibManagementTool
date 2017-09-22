@@ -1,6 +1,5 @@
-// Typography
-$base-font-family: $helvetica;
-$heading-font-family: $base-font-family;
+// visual grid 
+$visual-grid: true;
 
 // Font Sizes
 $base-font-size: 1em;
@@ -26,18 +25,6 @@ $gray-text: #aaa;
 $dark-gray: #333;
 $medium-gray: #999;
 $light-gray: $default;
-
-// WVU COLORS
-$pms432: #333F48;
-$pms429: #A2AAAD;
-$pms300: #005EB8;
-$pms144c: #ED8B00;
-$dark-green: #0D5257;
-$light-green: #9ABEAA;
-$red: #BE3A34;
-$red-orange: #E35205;
-$yellow: #FDDA24;
-$light-blue: #9BD3DD;
 
 // Web Application Colors
 $link-color: #009bff;

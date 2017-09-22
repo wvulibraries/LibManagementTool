@@ -2,7 +2,7 @@
   &.small-only{
     display:table;
     margin:0;
-    @include media(tablet){
+    @include media(720px){
       display:none;
     }
     &:nth-of-type(even){
@@ -13,14 +13,14 @@
 
   &.large-only{
     display:none;
-    @include media(tablet){
+    @include media(720px){
       display:table;
     }
   }
 }
 
 tr {
-  @include media(tablet){
+  @include media(720px){
     &:nth-of-type(even){
       background:lighten($light-gray,4%);
     }

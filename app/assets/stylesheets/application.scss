@@ -23,17 +23,13 @@
 @import 'wvu_brand_theme/1-base/ie9';
 @import 'wvu_brand_theme/4-custom/*';
 
-// body { 
-//   background:$blue;
-// }
-
 // Font Awesome
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
 // import mixins so that all partials can use them.
-// @import "mixins/*";
-// @import "custom_objects/alerts_defined";
+@import "mixins/*";
+@import "custom_objects/alerts_defined";
 
 // application wide
 @import "partials/*";
