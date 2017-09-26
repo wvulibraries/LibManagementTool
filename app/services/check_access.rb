@@ -37,11 +37,41 @@ class CheckAccess
     User.where(username: @user).exists?
   end
 
-  # def libraries
-  #   @user_permission.libraries
-  # end
+  def library_permission? resource_id
+    if admin?
+      true
+    elsif !libraries.nil? && (libraries.include? resource_id)
+      true
+    else 
+      false
+    end 
+  end 
 
-  # def departments
-  #   @user_permission.departments
-  # end
+  def department_permission? resource_id
+    if admin?
+      true
+    elsif !departments.nil? && (departments.include? resource_id)
+      true
+    else 
+      false
+    end 
+  end 
+
+  def granular_permission? type, resource_id
+    if type == "library" 
+      library_permission? resource_id 
+    elsif type == "department" 
+      department_permission? resource_id
+    else
+      false
+    end
+  end
+
+  def libraries
+    @user_permission.libraries.to_a
+  end
+
+  def departments
+    @user_permission.departments.to_a
+  end
 end
