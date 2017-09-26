@@ -1,6 +1,7 @@
 # Lib Management Tool
 
-[![Build Status](https://travis-ci.org/wvulibraries/LibManagementTool.svg?branch=master)](https://travis-ci.org/wvulibraries/LibManagementTool)![Coverage Status](/coverage/coverage.png?raw=true)
+[![Build Status](https://travis-ci.org/wvulibraries/LibManagementTool.svg?branch=master)](https://travis-ci.org/wvulibraries/LibManagementTool)[![Code Climate](https://codeclimate.com/github/wvulibraries/LibManagementTool/badges/gpa.svg)](https://codeclimate.com/github/wvulibraries/LibManagementTool)[![Test Coverage](https://codeclimate.com/github/wvulibraries/LibManagementTool/badges/coverage.svg)](https://codeclimate.com/github/wvulibraries/LibManagementTool/coverage)[![Issue Count](https://codeclimate.com/github/wvulibraries/LibManagementTool/badges/issue_count.svg)](https://codeclimate.com/github/wvulibraries/LibManagementTool)
+
 
 The goal of this application is to create an application using a standard web framework so that it could be easily adopted by a community of schools and developers.   
 
