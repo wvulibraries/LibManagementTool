@@ -39,5 +39,6 @@ class AdminController < ApplicationController
   # users the check access method for setting granular permissions 
   def check_permissions 
     @check_access = CheckAccess.new(session[:cas_user])
+    redirect_to root_path "You do not have permssions to access this page" unless @check_access.permission? 
   end
 end

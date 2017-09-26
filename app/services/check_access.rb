@@ -28,25 +28,20 @@ class CheckAccess
     @logged_user.admin?
   end
 
-  def libraries
-     @user_permission.libraries
-  end
-
-  def departments
-     @user_permission.departments
-  end
-
   # permission?
-  # @author David J. Davis 
-  # @description: checks to see if user exists in the database if so they have permission
+  # @author David J. Davis
+  # @description:
+  # checks to see if user exists in the database if so they have permission
   # @return boolean [true/false]
   def permission?
     User.where(username: @user).exists?
   end
 
-  private
-  
-  def user_permission
-    errors.add(:user, 'you do not have permission') unless permission?
-  end
+  # def libraries
+  #   @user_permission.libraries
+  # end
+
+  # def departments
+  #   @user_permission.departments
+  # end
 end
