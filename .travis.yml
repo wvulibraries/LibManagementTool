@@ -1,6 +1,5 @@
 language: ruby
 sudo: false
-rvm: 2.3.1
 env:
   global:
     - CC_TEST_REPORTER_ID=ca59e1eafbb34bd7ae0b3bac2710906a72ba7b1fa06c4c6dd9001427ccb20303
@@ -10,7 +9,7 @@ branches:
     - master
 language: ruby
 rvm:
-  - 2.2.0
+  - 2.3.1
 before_script:
   - mysql -e 'create database LibraryManagementTool_test'
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
