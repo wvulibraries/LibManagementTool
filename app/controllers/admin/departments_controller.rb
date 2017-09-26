@@ -80,38 +80,25 @@ class Admin::DepartmentsController < AdminController
 
   # allow_admin_only
   # @author: David J. Davis
-  # Date : 2/10/2017
+  # Date : 9/26/2017
   #
   # @description:
   # Users the admin controller to check if the user is an admin.
   # if not a flash message is added to the UI and the user is re-directed.
-
   def allow_admin_only
-    if !is_admin?
-      error_str = 'You do not have admin access to create or delete libraries.'
-      redirect_to libraries_url, error: error_str
-    else
-      true
-    end
+    error_string = 'You do not have admin access to edit, create, or delete departments.'
+    redirect_to departments_path, error: error_string unless @check_access.admin?
   end
 
   # users_can_edit_dept
   # @author David J. Davis
-  # @author Tracy A. McCormick
-  # @date 2/10/2017
-  # @updated 3/09/2017
-  #
+  # @date 9/26/2017
   # @description:
   # If the user is not an admin, the next check sees if they have been given
   # permission to edit the details of the department.
-
   def users_can_edit_dept
-    if user_permitted || check_is_admin
-      true
-    else
-      error_str = 'You do not have permission to access this department.'
-      redirect_to departments_url, error: error_str
-    end
+    error_str = 'You do not have permission to access this department.'
+    redirect_to departments_url, error: error_str unless @check_access.department_permission? params[:id]
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
