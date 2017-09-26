@@ -2,14 +2,24 @@ language: ruby
 sudo: false
 rvm: 2.3.1
 env:
-  - DB=mysql
+  global:
+    - CC_TEST_REPORTER_ID=787a2f89b15c637323c7340d65ec17e898ac44480706b4b4122ea040c2a88f1d
+    - DB=mysql
 branches:
   only:
     - master
-script:
-- bundle install
-- RAILS_ENV=test bundle exec rake db:reset
-- RAILS_ENV=test bundle exec rake db:migrate --trace
-- bundle exec rake db:test:prepare test
+language: ruby
+rvm:
+  - 2.2.0
 before_script:
   - mysql -e 'create database LibraryManagementTool_test'
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+script:
+  - bundle install
+  - RAILS_ENV=test bundle exec rake db:reset
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake db:test:prepare test
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
