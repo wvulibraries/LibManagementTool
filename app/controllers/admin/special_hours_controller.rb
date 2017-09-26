@@ -128,12 +128,8 @@ class Admin::SpecialHoursController < AdminController
   # Throws an error if the end_date is already set in another special_hour
   # for this resource.
   def check_start_date
-    if check_date(params[:special_hour][:start_date])
       error_str = 'Start Date overlaps currently set special hour.'
-      redirect_back(fallback_location: special_hours_url, error: error_str)
-    else
-      false
-    end
+      redirect_back(fallback_location: special_hours_url, error: error_str) unless check_date(params[:special_hour][:start_date])
   end
 
   # check_end_date
@@ -144,23 +140,8 @@ class Admin::SpecialHoursController < AdminController
   # Throws an error if the end_date is already set in another special_hour for
   # this resource.
   def check_end_date
-    return unless check_date(params[:special_hour][:end_date])
     error_str = 'End Date overlaps currently set special hour.'
-    redirect_back(fallback_location: special_hours_url, error: error_str)
-  end
-
-  # check_resource_access
-  # @author : Tracy A. McCormick
-  # @date 2/22/2017
-  #
-  # @description
-  # Checks to see if the user has access to the library or department.
-  def check_resource_access
-    return true if is_admin?
-    check_access = CheckAccess.new
-    check_access.depts = @user_depts
-    check_access.libs = @user_libs
-    check_access.check(@special_hour.special_type.to_s, @special_hour.special_id.to_i)
+    redirect_back(fallback_location: special_hours_url, error: error_str) unless check_date(params[:special_hour][:end_date])
   end
 
   # check_param_resource_access
@@ -171,11 +152,11 @@ class Admin::SpecialHoursController < AdminController
   # Checks params to see if user has access to the library or department they
   # are trying to set
   def check_param_resource_access
-    return true if is_admin?
-    check_access = CheckAccess.new
-    check_access.depts = @user_depts
-    check_access.libs = @user_libs
-    check_access.check(params[:special_hour][:special_type], params[:special_hour][:special_id])
+    type = params[:special_hour][:special_type]
+    id = params[:special_hour][:special_id]
+    check_resource_access = @check_access.granular_permission? type,id 
+    error_st = "You do not have permission to modify these special hours."
+    redirect_back fallback_location: special_hours_url, error: error_str unless check_resource_access
   end
 
   # authenticate_rights
@@ -187,9 +168,9 @@ class Admin::SpecialHoursController < AdminController
   # department. Also checks to see if they are admin. If neither of these are
   # true it redirects them back to there previous page and shows them an error.
   def authenticate_rights
-    return true if check_resource_access
-    error_str = 'You do not have permission to access this resource.'
-    redirect_back(fallback_location: special_hours_url, error: error_str)
+    check_resources_access = @check_access.granular_permission? @special_hour.special_type, @special_hour.special_id
+    error_str = 'You do not have permission update these special hours.'
+    redirect_back fallback_location: special_hours_url, error: error_str unless check_resource_access
   end
 
   # Never trust parameters from the scary internet,
