@@ -91,8 +91,8 @@ class Admin::UserPermissionsController < AdminController
   # @author David J. Davis
   # @return boolean
   def allow_admin_only
-    error_string = 'You do not have admin access to edit, create, or delete users.'
-    redirect_to user_path, error: error_string unless @check_access.admin?
+    error_string = 'You do not have admin access to edit, create, or delete users permissions'
+    redirect_to user_permissions_path, error: error_string unless @check_access.admin?
   end
 
   # set_option_groups

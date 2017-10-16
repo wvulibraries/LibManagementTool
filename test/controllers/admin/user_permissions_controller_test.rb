@@ -24,7 +24,7 @@ class Admin::UserPermissionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get edit" do
-    get edit_user_permission_url(@admin_user_permission)
+    get edit_user_permission_url @admin_user_permission
     assert_response :success
   end
 
@@ -33,7 +33,7 @@ class Admin::UserPermissionsControllerTest < ActionDispatch::IntegrationTest
       post user_permissions_url, params: { user_permission: { departments: @admin_user_permission.departments, libraries: @admin_user_permission.libraries, username: @admin_user_permission.username } }
     end
 
-    assert_redirected_to user_permission_url(UserPermission.last)
+    assert_redirected_to user_permission_url UserPermission.last
   end
 
   test "should show user_permission" do
@@ -58,6 +58,6 @@ class Admin::UserPermissionsControllerTest < ActionDispatch::IntegrationTest
     @user = User.find(10)
     CASClient::Frameworks::Rails::Filter.fake(@user.username, {:sn => "not_admin", :mail => "username10@nowhere.com"})
     get user_permission_url(@admin_user_permission)
-    assert_redirected_to users_url
+    assert_redirected_to user_permissions_url
   end
 end

@@ -10,8 +10,8 @@ class Admin::SpecialHoursController < AdminController
 
   # validate start_date and end_date
   before_action :check_date_range, only: [:create, :update]
-  before_action :check_start_date, only: [:create, :update]
-  before_action :check_end_date, only: [:create, :update]
+  # before_action :check_start_date, only: [:create, :update]
+  # before_action :check_end_date, only: [:create, :update]
 
   # GET /special_hours
   # GET /special_hours.json
@@ -53,21 +53,15 @@ class Admin::SpecialHoursController < AdminController
   # PATCH/PUT /special_hours/1.json
   def update
     respond_to do |format|
-      if check_param_resource_access
-        if @special_hour.update(special_hour_params)
-          success_str = 'Special hour was successfully updated.'
-          format.html { redirect_to @special_hour, success: success_str }
-          format.json { render :show, status: :ok, location: @special_hour }
-        else
-          format.html { render :edit }
-          format.json { render json: @special_hour.errors, status: :unprocessable_entity }
-        end
+      if @special_hour.update(special_hour_params)
+        success_str = 'Special hour was successfully updated.'
+        format.html { redirect_to @special_hour, success: success_str }
+        format.json { render :show, status: :ok, location: @special_hour }
       else
-        error_str = 'Error: Access to this department or library has been denied.'
-        format.html { redirect_back(fallback_location: special_hours_url, error: error_str) }
+        format.html { render :edit }
         format.json { render json: @special_hour.errors, status: :unprocessable_entity }
       end
-    end
+    end 
   end
 
   # DELETE /special_hours/1
@@ -89,21 +83,37 @@ class Admin::SpecialHoursController < AdminController
   end
 
   # check_date_range
-  # @author : Tracy A. McCormick
-  # @date 4/4/2017
+  # @author : David J. Davis 
+  # @date 10/12/2017
   #
   # @description
   # Throws an error if the end_date is before start_date.
   def check_date_range
-    if params[:special_hour][:start_date].present? && params[:special_hour][:end_date].present?
-      if !(Date.parse(params[:special_hour][:start_date]) <= Date.parse(params[:special_hour][:end_date]))
-        error_str = 'End Date Cannot be before Start Date'
-        redirect_back(fallback_location: special_hours_url, error: error_str)
-      end
-    else
-      false
+    unless dates_present? && valid_date_range?  
+      error_str = 'Dates are not present or start date is after the end date.'
+      redirect_to special_hours_url, error: error_str 
     end
   end
+
+  # dates_present 
+  # @author : David J. Davis 
+  # @date 10/12/2017
+  # @description
+  # boolean to see if the dates exist in the params 
+  def dates_present?
+    dates_present = params[:special_hour][:start_date].present? && params[:special_hour][:end_date].present?
+  end 
+
+  # valid_date_range?  
+  # @author : David J. Davis 
+  # @date 10/12/2017
+  # @description
+  # boolean to see if date ranges are acceptable 
+  def valid_date_range?  
+    start_date =  Date.parse params[:special_hour][:start_date] 
+    end_date = Date.parse params[:special_hour][:end_date]
+    start_date <= end_date 
+  end     
 
   # check_date
   # @author : Tracy A. McCormick
@@ -111,37 +121,9 @@ class Admin::SpecialHoursController < AdminController
   #
   # @description
   # returns true if date_to_check is found in any set special_hour
-  def check_date(date_to_check)
-    if !date_to_check.nil?
-      check = Date.parse(date_to_check)
-      SpecialHour.where.not(id: params[:id]).where('special_id = ?', params[:special_hour][:special_id]).where('special_type = ?', params[:special_hour][:special_type]).where('start_date <= ?', check).where('end_date >= ?', check).exists?
-    else
-      false
-    end
-  end
-
-  # check_start_date
-  # @author : Tracy A. McCormick
-  # @date 3/30/2017
-  #
-  # @description
-  # Throws an error if the end_date is already set in another special_hour
-  # for this resource.
-  def check_start_date
-      error_str = 'Start Date overlaps currently set special hour.'
-      redirect_back(fallback_location: special_hours_url, error: error_str) unless check_date(params[:special_hour][:start_date])
-  end
-
-  # check_end_date
-  # @author : Tracy A. McCormick
-  # @date 3/30/2017
-  #
-  # @description
-  # Throws an error if the end_date is already set in another special_hour for
-  # this resource.
-  def check_end_date
-    error_str = 'End Date overlaps currently set special hour.'
-    redirect_back(fallback_location: special_hours_url, error: error_str) unless check_date(params[:special_hour][:end_date])
+  def check_date date_to_check
+    check = Date.parse(date_to_check)
+    SpecialHour.where.not(id: params[:id]).where('special_id = ?', params[:special_hour][:special_id]).where('special_type = ?', params[:special_hour][:special_type]).where('start_date <= ?', check).where('end_date >= ?', check).exists?
   end
 
   # check_param_resource_access
@@ -155,8 +137,8 @@ class Admin::SpecialHoursController < AdminController
     type = params[:special_hour][:special_type]
     id = params[:special_hour][:special_id]
     check_resource_access = @check_access.granular_permission? type,id 
-    error_st = "You do not have permission to modify these special hours."
-    redirect_back fallback_location: special_hours_url, error: error_str unless check_resource_access
+    error_str = "You do not have permission to modify these special hours."
+    redirect_to special_hours_url, error: error_str unless check_resource_access
   end
 
   # authenticate_rights
@@ -168,9 +150,9 @@ class Admin::SpecialHoursController < AdminController
   # department. Also checks to see if they are admin. If neither of these are
   # true it redirects them back to there previous page and shows them an error.
   def authenticate_rights
-    check_resources_access = @check_access.granular_permission? @special_hour.special_type, @special_hour.special_id
-    error_str = 'You do not have permission update these special hours.'
-    redirect_back fallback_location: special_hours_url, error: error_str unless check_resource_access
+    check_resource_access = @check_access.granular_permission? @special_hour.special_type, @special_hour.special_id
+    error_str = 'You do not have permission create or modify these special hours.'
+    redirect_to special_hours_url, error: error_str unless check_resource_access
   end
 
   # Never trust parameters from the scary internet,
