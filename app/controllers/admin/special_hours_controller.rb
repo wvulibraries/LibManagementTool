@@ -10,8 +10,7 @@ class Admin::SpecialHoursController < AdminController
 
   # validate start_date and end_date
   before_action :check_date_range, only: [:create, :update]
-  # before_action :check_start_date, only: [:create, :update]
-  # before_action :check_end_date, only: [:create, :update]
+  before_action :check_overlapping_dates, only: [:create]
 
   # GET /special_hours
   # GET /special_hours.json
@@ -83,15 +82,28 @@ class Admin::SpecialHoursController < AdminController
   end
 
   # check_date_range
-  # @author : David J. Davis 
+  # @author : David J. Davis
   # @date 10/12/2017
   #
   # @description
   # Throws an error if the end_date is before start_date.
   def check_date_range
-    unless dates_present? && valid_date_range?  
+    unless dates_present? && valid_date_range?
       error_str = 'Dates are not present or start date is after the end date.'
-      redirect_to special_hours_url, error: error_str 
+      redirect_to special_hours_url, error: error_str
+    end
+  end
+
+  # check_time_range
+  # @author : David J. Davis
+  # @date 10/29/2017
+  #
+  # @description
+  # Throws an error if the end time is before the start time. 
+  def check_date_range
+    unless dates_present? && valid_date_range?
+      error_str = 'Dates are not present or start date is after the end date.'
+      redirect_to special_hours_url, error: error_str
     end
   end
 
@@ -101,29 +113,44 @@ class Admin::SpecialHoursController < AdminController
   # @description
   # boolean to see if the dates exist in the params 
   def dates_present?
-    dates_present = params[:special_hour][:start_date].present? && params[:special_hour][:end_date].present?
-  end 
+    params[:special_hour][:start_date].present? && params[:special_hour][:end_date].present?
+  end
 
   # valid_date_range?  
   # @author : David J. Davis 
   # @date 10/12/2017
   # @description
   # boolean to see if date ranges are acceptable 
-  def valid_date_range?  
-    start_date =  Date.parse params[:special_hour][:start_date] 
+  def valid_date_range?
+    start_date = Date.parse params[:special_hour][:start_date]
     end_date = Date.parse params[:special_hour][:end_date]
-    start_date <= end_date 
-  end     
+    start_date <= end_date
+  end
+
+  # valid_date_range?
+  # @author : David J. Davis
+  # @date 10/12/2017
+  # @description
+  # uses the check_date method to check both posted start and end dates
+  def check_overlapping_dates
+    start_date = check_date params[:special_hour][:start_date]
+    end_date = check_date params[:special_hour][:end_date]
+    if start_date || end_date
+      error_str = 'Dates can not overlap a library or departments already set dates associated with special open and close times, please check to make sure that there are no other conflicting dates and modify yours accordingly.'
+      redirect_to special_hours_url, error: error_str
+    else
+      true
+    end
+  end
 
   # check_date
-  # @author : Tracy A. McCormick
-  # @date 4/4/2017
-  #
+  # @author : David J. Davis
+  # @date 10/30/2017
   # @description
   # returns true if date_to_check is found in any set special_hour
   def check_date date_to_check
     check = Date.parse(date_to_check)
-    SpecialHour.where.not(id: params[:id]).where('special_id = ?', params[:special_hour][:special_id]).where('special_type = ?', params[:special_hour][:special_type]).where('start_date <= ?', check).where('end_date >= ?', check).exists?
+    date_exists = SpecialHour.where('special_id = ?', params[:special_hour][:special_id]).where('special_type = ?', params[:special_hour][:special_type]).where('start_date <= ?', check).where('end_date >= ?', check).exists?
   end
 
   # check_param_resource_access
