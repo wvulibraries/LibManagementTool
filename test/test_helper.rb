@@ -1,5 +1,11 @@
 require 'simplecov'
-SimpleCov.start
+
+SimpleCov.profiles.define 'ignore_vendor' do
+  load_profile 'rails'
+  add_filter 'vendor' # Don't include vendored stuff
+end
+
+SimpleCov.start 'ignore_vendor'
 
 # require 'simplecov-shield'
 # SimpleCov.formatter = SimpleCov::Formatter::ShieldFormatter
