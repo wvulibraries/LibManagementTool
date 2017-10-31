@@ -47,12 +47,10 @@ class HoursPresenter
   # Generates an array of DB Objects and returns that for iteration later.
   def resources_for_list(id = nil, type = nil)
     resources = []
-    if id.present? && type == 'library'
-      resources << (libraries id)
+    if id.present?
+      resources << (resource_with_id id, type)
     elsif type == 'library'
       resources << libraries
-    elsif id.present? && type == 'department'
-      resources << (departments id)
     elsif type == 'department'
       resources << departments
     else
@@ -60,6 +58,18 @@ class HoursPresenter
       resources << libraries
     end
     resources
+  end
+
+  # resource_with_id
+  # @author David J. Davis
+  # @date 3.23.2017
+  # Generates an array of DB Objects and returns that for iteration later.
+  def resource_with_id(id = nil, type = nil)
+    if type == 'library'
+      libraries id
+    else
+      departments id
+    end
   end
 
   # find_normal_hours

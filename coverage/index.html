@@ -14,14 +14,14 @@
       <img src="./assets/0.8.0/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2017-10-31T16:35:44+00:00">2017-10-31T16:35:44+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2017-10-31T18:19:14+00:00">2017-10-31T18:19:14+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="green">96.18%</span></span>
+    (<span class="covered_percent"><span class="green">96.26%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
@@ -32,9 +32,9 @@
   <a name="AllFiles"></a>
   <div>
     <b>69</b> files in total.
-    <b>1231</b> relevant lines. 
-    <span class="green"><b>1184</b> lines covered</span> and
-    <span class="red"><b>47</b> lines missed </span>
+    <b>1229</b> relevant lines. 
+    <span class="green"><b>1183</b> lines covered</span> and
+    <span class="red"><b>46</b> lines missed </span>
   </div>
   <table class="file_list">
     <thead>
@@ -82,11 +82,11 @@
       
       <tr>
         <td class="strong"><a href="#f1132966fc6914ab2f64bdba5c5114e22655ff8c" class="src_link" title="app/controllers/admin/special_hours_controller.rb">app/controllers/admin/special_hours_controller.rb</a></td>
-        <td class="yellow strong">84.0 %</td>
-        <td>191</td>
-        <td>75</td>
-        <td>63</td>
-        <td>12</td>
+        <td class="yellow strong">87.32 %</td>
+        <td>178</td>
+        <td>71</td>
+        <td>62</td>
+        <td>9</td>
         <td>1.9</td>
       </tr>
       
@@ -362,12 +362,12 @@
       
       <tr>
         <td class="strong"><a href="#5bd2edb26d10f77de4dd66bf8df47f6f85d78017" class="src_link" title="app/presenters/hours_presenter.rb">app/presenters/hours_presenter.rb</a></td>
-        <td class="yellow strong">87.23 %</td>
-        <td>140</td>
-        <td>47</td>
+        <td class="yellow strong">83.67 %</td>
+        <td>150</td>
+        <td>49</td>
         <td>41</td>
-        <td>6</td>
-        <td>16.1</td>
+        <td>8</td>
+        <td>15.3</td>
       </tr>
       
       <tr>
@@ -2769,11 +2769,11 @@
         <div class="source_table" id="f1132966fc6914ab2f64bdba5c5114e22655ff8c">
   <div class="header">
     <h3>app/controllers/admin/special_hours_controller.rb</h3>
-    <h4><span class="yellow">84.0 %</span> covered</h4>
+    <h4><span class="yellow">87.32 %</span> covered</h4>
     <div>
-      <b>75</b> relevant lines. 
-      <span class="green"><b>63</b> lines covered</span> and
-      <span class="red"><b>12</b> lines missed.</span>
+      <b>71</b> relevant lines. 
+      <span class="green"><b>62</b> lines covered</span> and
+      <span class="red"><b>9</b> lines missed.</span>
     </div>
   </div>
   
@@ -3281,7 +3281,7 @@
         <li class="never" data-hits="" data-linenumber="84">
           
           
-          <code class="ruby">  # check_date_range</code>
+          <code class="ruby">  # check_time_range</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="85">
@@ -3293,7 +3293,7 @@
         <li class="never" data-hits="" data-linenumber="86">
           
           
-          <code class="ruby">  # @date 10/12/2017</code>
+          <code class="ruby">  # @date 10/29/2017</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="87">
@@ -3311,7 +3311,7 @@
         <li class="never" data-hits="" data-linenumber="89">
           
           
-          <code class="ruby">  # Throws an error if the end_date is before start_date.</code>
+          <code class="ruby">  # Throws an error if the end time is before the start time. </code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="90">
@@ -3320,20 +3320,20 @@
           <code class="ruby">  def check_date_range</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="91">
-          
+        <li class="covered" data-hits="6" data-linenumber="91">
+          <span class="hits">6</span>
           
           <code class="ruby">    unless dates_present? &amp;&amp; valid_date_range?</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="92">
-          
+        <li class="covered" data-hits="4" data-linenumber="92">
+          <span class="hits">4</span>
           
           <code class="ruby">      error_str = &#39;Dates are not present or start date is after the end date.&#39;</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="93">
-          
+        <li class="covered" data-hits="4" data-linenumber="93">
+          <span class="hits">4</span>
           
           <code class="ruby">      redirect_to special_hours_url, error: error_str</code>
         </li>
@@ -3359,568 +3359,490 @@
         <li class="never" data-hits="" data-linenumber="97">
           
           
-          <code class="ruby">  # check_time_range</code>
+          <code class="ruby">  # dates_present </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="98">
           
           
-          <code class="ruby">  # @author : David J. Davis</code>
+          <code class="ruby">  # @author : David J. Davis </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="99">
           
           
-          <code class="ruby">  # @date 10/29/2017</code>
+          <code class="ruby">  # @date 10/12/2017</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="100">
           
           
-          <code class="ruby">  #</code>
+          <code class="ruby">  # @description</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="101">
           
           
-          <code class="ruby">  # @description</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="102">
-          
-          
-          <code class="ruby">  # Throws an error if the end time is before the start time. </code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="103">
-          <span class="hits">1</span>
-          
-          <code class="ruby">  def check_date_range</code>
-        </li>
-      
-        <li class="covered" data-hits="6" data-linenumber="104">
-          <span class="hits">6</span>
-          
-          <code class="ruby">    unless dates_present? &amp;&amp; valid_date_range?</code>
-        </li>
-      
-        <li class="covered" data-hits="4" data-linenumber="105">
-          <span class="hits">4</span>
-          
-          <code class="ruby">      error_str = &#39;Dates are not present or start date is after the end date.&#39;</code>
-        </li>
-      
-        <li class="covered" data-hits="4" data-linenumber="106">
-          <span class="hits">4</span>
-          
-          <code class="ruby">      redirect_to special_hours_url, error: error_str</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="107">
-          
-          
-          <code class="ruby">    end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="108">
-          
-          
-          <code class="ruby">  end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="109">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="110">
-          
-          
-          <code class="ruby">  # dates_present </code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="111">
-          
-          
-          <code class="ruby">  # @author : David J. Davis </code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="112">
-          
-          
-          <code class="ruby">  # @date 10/12/2017</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="113">
-          
-          
-          <code class="ruby">  # @description</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="114">
-          
-          
           <code class="ruby">  # boolean to see if the dates exist in the params </code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="115">
+        <li class="covered" data-hits="1" data-linenumber="102">
           <span class="hits">1</span>
           
           <code class="ruby">  def dates_present?</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="116">
+        <li class="covered" data-hits="6" data-linenumber="103">
           <span class="hits">6</span>
           
           <code class="ruby">    params[:special_hour][:start_date].present? &amp;&amp; params[:special_hour][:end_date].present?</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="117">
+        <li class="never" data-hits="" data-linenumber="104">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="118">
+        <li class="never" data-hits="" data-linenumber="105">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="119">
+        <li class="never" data-hits="" data-linenumber="106">
           
           
           <code class="ruby">  # valid_date_range?  </code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="120">
+        <li class="never" data-hits="" data-linenumber="107">
           
           
           <code class="ruby">  # @author : David J. Davis </code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="121">
+        <li class="never" data-hits="" data-linenumber="108">
           
           
           <code class="ruby">  # @date 10/12/2017</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="122">
+        <li class="never" data-hits="" data-linenumber="109">
           
           
           <code class="ruby">  # @description</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="123">
+        <li class="never" data-hits="" data-linenumber="110">
           
           
           <code class="ruby">  # boolean to see if date ranges are acceptable </code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="124">
+        <li class="covered" data-hits="1" data-linenumber="111">
           <span class="hits">1</span>
           
           <code class="ruby">  def valid_date_range?</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="125">
+        <li class="covered" data-hits="4" data-linenumber="112">
           <span class="hits">4</span>
           
           <code class="ruby">    start_date = Date.parse params[:special_hour][:start_date]</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="126">
+        <li class="covered" data-hits="4" data-linenumber="113">
           <span class="hits">4</span>
           
           <code class="ruby">    end_date = Date.parse params[:special_hour][:end_date]</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="127">
+        <li class="covered" data-hits="4" data-linenumber="114">
           <span class="hits">4</span>
           
           <code class="ruby">    start_date &lt;= end_date</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="128">
+        <li class="never" data-hits="" data-linenumber="115">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="129">
+        <li class="never" data-hits="" data-linenumber="116">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="130">
+        <li class="never" data-hits="" data-linenumber="117">
           
           
           <code class="ruby">  # valid_date_range?</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="131">
+        <li class="never" data-hits="" data-linenumber="118">
           
           
           <code class="ruby">  # @author : David J. Davis</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="132">
+        <li class="never" data-hits="" data-linenumber="119">
           
           
           <code class="ruby">  # @date 10/12/2017</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="133">
+        <li class="never" data-hits="" data-linenumber="120">
           
           
           <code class="ruby">  # @description</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="134">
+        <li class="never" data-hits="" data-linenumber="121">
           
           
           <code class="ruby">  # uses the check_date method to check both posted start and end dates</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="135">
+        <li class="covered" data-hits="1" data-linenumber="122">
           <span class="hits">1</span>
           
           <code class="ruby">  def check_overlapping_dates</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="136">
+        <li class="covered" data-hits="2" data-linenumber="123">
           <span class="hits">2</span>
           
           <code class="ruby">    start_date = check_date params[:special_hour][:start_date]</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="137">
+        <li class="covered" data-hits="2" data-linenumber="124">
           <span class="hits">2</span>
           
           <code class="ruby">    end_date = check_date params[:special_hour][:end_date]</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="138">
+        <li class="covered" data-hits="2" data-linenumber="125">
           <span class="hits">2</span>
           
           <code class="ruby">    if start_date || end_date</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="139">
+        <li class="covered" data-hits="1" data-linenumber="126">
           <span class="hits">1</span>
           
           <code class="ruby">      error_str = &#39;Dates can not overlap a library or departments already set dates associated with special open and close times, please check to make sure that there are no other conflicting dates and modify yours accordingly.&#39;</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="140">
+        <li class="covered" data-hits="1" data-linenumber="127">
           <span class="hits">1</span>
           
           <code class="ruby">      redirect_to special_hours_url, error: error_str</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="141">
+        <li class="never" data-hits="" data-linenumber="128">
           
           
           <code class="ruby">    else</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="142">
+        <li class="covered" data-hits="1" data-linenumber="129">
           <span class="hits">1</span>
           
           <code class="ruby">      true</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="143">
+        <li class="never" data-hits="" data-linenumber="130">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="144">
+        <li class="never" data-hits="" data-linenumber="131">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="145">
+        <li class="never" data-hits="" data-linenumber="132">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="146">
+        <li class="never" data-hits="" data-linenumber="133">
           
           
           <code class="ruby">  # check_date</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="147">
+        <li class="never" data-hits="" data-linenumber="134">
           
           
           <code class="ruby">  # @author : David J. Davis</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="148">
+        <li class="never" data-hits="" data-linenumber="135">
           
           
           <code class="ruby">  # @date 10/30/2017</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="149">
+        <li class="never" data-hits="" data-linenumber="136">
           
           
           <code class="ruby">  # @description</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="150">
+        <li class="never" data-hits="" data-linenumber="137">
           
           
           <code class="ruby">  # returns true if date_to_check is found in any set special_hour</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="151">
+        <li class="covered" data-hits="1" data-linenumber="138">
           <span class="hits">1</span>
           
           <code class="ruby">  def check_date date_to_check</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="152">
+        <li class="covered" data-hits="4" data-linenumber="139">
           <span class="hits">4</span>
           
           <code class="ruby">    check = Date.parse(date_to_check)</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="153">
+        <li class="covered" data-hits="4" data-linenumber="140">
           <span class="hits">4</span>
           
-          <code class="ruby">    date_exists = SpecialHour.where(&#39;special_id = ?&#39;, params[:special_hour][:special_id]).where(&#39;special_type = ?&#39;, params[:special_hour][:special_type]).where(&#39;start_date &lt;= ?&#39;, check).where(&#39;end_date &gt;= ?&#39;, check).exists?</code>
+          <code class="ruby">    SpecialHour.where(&#39;special_id = ?&#39;, params[:special_hour][:special_id]).where(&#39;special_type = ?&#39;, params[:special_hour][:special_type]).where(&#39;start_date &lt;= ?&#39;, check).where(&#39;end_date &gt;= ?&#39;, check).exists?</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="154">
+        <li class="never" data-hits="" data-linenumber="141">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="155">
+        <li class="never" data-hits="" data-linenumber="142">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="156">
+        <li class="never" data-hits="" data-linenumber="143">
           
           
           <code class="ruby">  # check_param_resource_access</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="157">
+        <li class="never" data-hits="" data-linenumber="144">
           
           
           <code class="ruby">  # @author : Tracy A. McCormick</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="158">
+        <li class="never" data-hits="" data-linenumber="145">
           
           
           <code class="ruby">  # @date 2/28/2017</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="159">
+        <li class="never" data-hits="" data-linenumber="146">
           
           
           <code class="ruby">  #</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="160">
+        <li class="never" data-hits="" data-linenumber="147">
           
           
           <code class="ruby">  # @description</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="161">
+        <li class="never" data-hits="" data-linenumber="148">
           
           
           <code class="ruby">  # Checks params to see if user has access to the library or department they</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="162">
+        <li class="never" data-hits="" data-linenumber="149">
           
           
           <code class="ruby">  # are trying to set</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="163">
+        <li class="covered" data-hits="1" data-linenumber="150">
           <span class="hits">1</span>
           
           <code class="ruby">  def check_param_resource_access</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="164">
+        <li class="covered" data-hits="5" data-linenumber="151">
           <span class="hits">5</span>
           
           <code class="ruby">    special_type = params[:special_hour][:special_type]</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="165">
+        <li class="covered" data-hits="5" data-linenumber="152">
           <span class="hits">5</span>
           
           <code class="ruby">    special_id = params[:special_hour][:special_id]</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="166">
+        <li class="covered" data-hits="5" data-linenumber="153">
           <span class="hits">5</span>
           
           <code class="ruby">    check_resource_access = (@check_access.granular_permission? special_type, special_id)</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="167">
+        <li class="covered" data-hits="5" data-linenumber="154">
           <span class="hits">5</span>
           
           <code class="ruby">    error_str = &quot;You do not have permission to modify these special hours.&quot;</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="168">
+        <li class="covered" data-hits="5" data-linenumber="155">
           <span class="hits">5</span>
           
           <code class="ruby">    redirect_to special_hours_url, error: error_str unless check_resource_access</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="169">
+        <li class="never" data-hits="" data-linenumber="156">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="170">
+        <li class="never" data-hits="" data-linenumber="157">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="171">
+        <li class="never" data-hits="" data-linenumber="158">
           
           
           <code class="ruby">  # authenticate_rights</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="172">
+        <li class="never" data-hits="" data-linenumber="159">
           
           
           <code class="ruby">  # @author : Tracy A. McCormick</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="173">
+        <li class="never" data-hits="" data-linenumber="160">
           
           
           <code class="ruby">  # @date 2/22/2017</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="174">
+        <li class="never" data-hits="" data-linenumber="161">
           
           
           <code class="ruby">  #</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="175">
+        <li class="never" data-hits="" data-linenumber="162">
           
           
           <code class="ruby">  # @description</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="176">
+        <li class="never" data-hits="" data-linenumber="163">
           
           
           <code class="ruby">  # Calls user_has_access to see if they have access to the library or</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="177">
+        <li class="never" data-hits="" data-linenumber="164">
           
           
           <code class="ruby">  # department. Also checks to see if they are admin. If neither of these are</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="178">
+        <li class="never" data-hits="" data-linenumber="165">
           
           
           <code class="ruby">  # true it redirects them back to there previous page and shows them an error.</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="179">
+        <li class="covered" data-hits="1" data-linenumber="166">
           <span class="hits">1</span>
           
           <code class="ruby">  def authenticate_rights</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="180">
+        <li class="covered" data-hits="5" data-linenumber="167">
           <span class="hits">5</span>
           
           <code class="ruby">    check_resource_access = (@check_access.granular_permission? @special_hour.special_type, @special_hour.special_id)</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="181">
+        <li class="covered" data-hits="5" data-linenumber="168">
           <span class="hits">5</span>
           
           <code class="ruby">    @access = check_resource_access</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="182">
+        <li class="covered" data-hits="5" data-linenumber="169">
           <span class="hits">5</span>
           
           <code class="ruby">    error_str = &#39;You do not have permission create or modify these special hours.&#39;</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="183">
+        <li class="covered" data-hits="5" data-linenumber="170">
           <span class="hits">5</span>
           
           <code class="ruby">    redirect_to special_hours_url, error: error_str unless check_resource_access</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="184">
+        <li class="never" data-hits="" data-linenumber="171">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="185">
+        <li class="never" data-hits="" data-linenumber="172">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="186">
+        <li class="never" data-hits="" data-linenumber="173">
           
           
           <code class="ruby">  # Never trust parameters from the scary internet,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="187">
+        <li class="never" data-hits="" data-linenumber="174">
           
           
           <code class="ruby">  # only allow the white list through.</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="188">
+        <li class="covered" data-hits="1" data-linenumber="175">
           <span class="hits">1</span>
           
           <code class="ruby">  def special_hour_params</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="189">
+        <li class="covered" data-hits="1" data-linenumber="176">
           <span class="hits">1</span>
           
           <code class="ruby">    params.require(:special_hour).permit(:start_date, :end_date, :name, :open_time, :close_time, :open_24, :no_close_time, :no_open_time, :special_type, :special_id)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="190">
+        <li class="never" data-hits="" data-linenumber="177">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="191">
+        <li class="never" data-hits="" data-linenumber="178">
           
           
           <code class="ruby">end</code>
@@ -8471,7 +8393,7 @@
         <li class="covered" data-hits="7" data-linenumber="87">
           <span class="hits">7</span>
           
-          <code class="ruby">    params.select { |key,value| allowed_keys.include?(key) }</code>
+          <code class="ruby">    params.select { |key,_value| allowed_keys.include?(key) }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="88">
@@ -8715,11 +8637,11 @@
         <div class="source_table" id="5bd2edb26d10f77de4dd66bf8df47f6f85d78017">
   <div class="header">
     <h3>app/presenters/hours_presenter.rb</h3>
-    <h4><span class="yellow">87.23 %</span> covered</h4>
+    <h4><span class="yellow">83.67 %</span> covered</h4>
     <div>
-      <b>47</b> relevant lines. 
+      <b>49</b> relevant lines. 
       <span class="green"><b>41</b> lines covered</span> and
-      <span class="red"><b>6</b> lines missed.</span>
+      <span class="red"><b>8</b> lines missed.</span>
     </div>
   </div>
   
@@ -9023,13 +8945,13 @@
         <li class="covered" data-hits="7" data-linenumber="50">
           <span class="hits">7</span>
           
-          <code class="ruby">    if id.present? &amp;&amp; type == &#39;library&#39;</code>
+          <code class="ruby">    if id.present?</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="51">
           
           
-          <code class="ruby">      resources &lt;&lt; (libraries id)</code>
+          <code class="ruby">      resources &lt;&lt; (resource_with_id id, type)</code>
         </li>
       
         <li class="covered" data-hits="7" data-linenumber="52">
@@ -9047,229 +8969,229 @@
         <li class="covered" data-hits="6" data-linenumber="54">
           <span class="hits">6</span>
           
-          <code class="ruby">    elsif id.present? &amp;&amp; type == &#39;department&#39;</code>
+          <code class="ruby">    elsif type == &#39;department&#39;</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="55">
           
           
-          <code class="ruby">      resources &lt;&lt; (departments id)</code>
-        </li>
-      
-        <li class="covered" data-hits="6" data-linenumber="56">
-          <span class="hits">6</span>
-          
-          <code class="ruby">    elsif type == &#39;department&#39;</code>
-        </li>
-      
-        <li class="missed" data-hits="0" data-linenumber="57">
-          
-          
           <code class="ruby">      resources &lt;&lt; departments</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="58">
+        <li class="never" data-hits="" data-linenumber="56">
           
           
           <code class="ruby">    else</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="59">
+        <li class="covered" data-hits="6" data-linenumber="57">
           <span class="hits">6</span>
           
           <code class="ruby">      resources &lt;&lt; departments</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="60">
+        <li class="covered" data-hits="6" data-linenumber="58">
           <span class="hits">6</span>
           
           <code class="ruby">      resources &lt;&lt; libraries</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="61">
+        <li class="never" data-hits="" data-linenumber="59">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="62">
+        <li class="covered" data-hits="7" data-linenumber="60">
           <span class="hits">7</span>
           
           <code class="ruby">    resources</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="63">
+        <li class="never" data-hits="" data-linenumber="61">
           
           
           <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="62">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="63">
+          
+          
+          <code class="ruby">  # resource_with_id</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="64">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">  # @author David J. Davis</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="65">
           
           
-          <code class="ruby">  # find_normal_hours</code>
+          <code class="ruby">  # @date 3.23.2017</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="66">
           
           
-          <code class="ruby">  # @author David J. Davis</code>
+          <code class="ruby">  # Generates an array of DB Objects and returns that for iteration later.</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="67">
+        <li class="covered" data-hits="1" data-linenumber="67">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">  # @author Tracy A. McCormick</code>
+          <code class="ruby">  def resource_with_id(id = nil, type = nil)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="68">
+        <li class="missed" data-hits="0" data-linenumber="68">
           
           
-          <code class="ruby">  # @date 3.24.2017</code>
+          <code class="ruby">    if type == &#39;library&#39;</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="69">
+        <li class="missed" data-hits="0" data-linenumber="69">
           
           
-          <code class="ruby">  # @param - date (date): sets to today by default</code>
+          <code class="ruby">      libraries id</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="70">
           
           
-          <code class="ruby">  # @param - resource (hash): sets type and id, doesn&#39;t have to exist</code>
+          <code class="ruby">    else</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="71">
+        <li class="missed" data-hits="0" data-linenumber="71">
           
           
-          <code class="ruby">  # @return var (type) - description</code>
+          <code class="ruby">      departments id</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="72">
           
           
-          <code class="ruby">  # gets the normal hours from the database</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="73">
-          <span class="hits">1</span>
-          
-          <code class="ruby">  def find_normal_hours(resource)</code>
-        </li>
-      
-        <li class="covered" data-hits="57" data-linenumber="74">
-          <span class="hits">57</span>
-          
-          <code class="ruby">    resource.normal_hours.each do |hour|</code>
-        </li>
-      
-        <li class="covered" data-hits="125" data-linenumber="75">
-          <span class="hits">125</span>
-          
-          <code class="ruby">      next unless hour.day_of_week == Date.strptime(@date, DATE_FORMAT).wday</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="76">
-          
-          
-          <code class="ruby">      return { open_time: hour.hr_open_time,</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="77">
-          
-          
-          <code class="ruby">               close_time: hour.hr_close_time,</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="78">
-          
-          
-          <code class="ruby">               open_close_time: hour.open_close_time,</code>
-        </li>
-      
-        <li class="covered" data-hits="30" data-linenumber="79">
-          <span class="hits">30</span>
-          
-          <code class="ruby">               comment: hour.comment }</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="80">
-          
-          
           <code class="ruby">    end</code>
         </li>
       
-        <li class="covered" data-hits="27" data-linenumber="81">
-          <span class="hits">27</span>
-          
-          <code class="ruby">    { open_time: nil, close_time: nil, open_close_time: nil, comment: &#39;Closed&#39; }</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="82">
+        <li class="never" data-hits="" data-linenumber="73">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="83">
+        <li class="never" data-hits="" data-linenumber="74">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="84">
+        <li class="never" data-hits="" data-linenumber="75">
+          
+          
+          <code class="ruby">  # find_normal_hours</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="76">
+          
+          
+          <code class="ruby">  # @author David J. Davis</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="77">
           
           
           <code class="ruby">  # @author Tracy A. McCormick</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="85">
+        <li class="never" data-hits="" data-linenumber="78">
           
           
-          <code class="ruby">  # @date 4.26.2017</code>
+          <code class="ruby">  # @date 3.24.2017</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="79">
+          
+          
+          <code class="ruby">  # @param - date (date): sets to today by default</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="80">
+          
+          
+          <code class="ruby">  # @param - resource (hash): sets type and id, doesn&#39;t have to exist</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="81">
+          
+          
+          <code class="ruby">  # @return var (type) - description</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="82">
+          
+          
+          <code class="ruby">  # gets the normal hours from the database</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="83">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def find_normal_hours(resource)</code>
+        </li>
+      
+        <li class="covered" data-hits="57" data-linenumber="84">
+          <span class="hits">57</span>
+          
+          <code class="ruby">    resource.normal_hours.each do |hour|</code>
+        </li>
+      
+        <li class="covered" data-hits="125" data-linenumber="85">
+          <span class="hits">125</span>
+          
+          <code class="ruby">      next unless hour.day_of_week == Date.strptime(@date, DATE_FORMAT).wday</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="86">
           
           
-          <code class="ruby">  # @param - start_date (string), end_date (string)</code>
+          <code class="ruby">      return { open_time: hour.hr_open_time,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="87">
           
           
-          <code class="ruby">  # @return boolean</code>
+          <code class="ruby">               close_time: hour.hr_close_time,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="88">
           
           
-          <code class="ruby">  # converts date string to date object and checks if current date set in @date</code>
+          <code class="ruby">               open_close_time: hour.open_close_time,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="89">
+        <li class="covered" data-hits="30" data-linenumber="89">
+          <span class="hits">30</span>
           
-          
-          <code class="ruby">  # is in that range.</code>
+          <code class="ruby">               comment: hour.comment }</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="90">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="90">
           
-          <code class="ruby">  def date_in_range(start_date, end_date)</code>
+          
+          <code class="ruby">    end</code>
         </li>
       
-        <li class="covered" data-hits="57" data-linenumber="91">
-          <span class="hits">57</span>
+        <li class="covered" data-hits="27" data-linenumber="91">
+          <span class="hits">27</span>
           
-          <code class="ruby">    Date.strptime(@date, DATE_FORMAT).between?(Date.parse(start_date), Date.parse(end_date))</code>
+          <code class="ruby">    { open_time: nil, close_time: nil, open_close_time: nil, comment: &#39;Closed&#39; }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="92">
@@ -9287,280 +9209,340 @@
         <li class="never" data-hits="" data-linenumber="94">
           
           
-          <code class="ruby">  # special_hour_exists</code>
+          <code class="ruby">  # @author Tracy A. McCormick</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="95">
           
           
-          <code class="ruby">  # @author David J. Davis</code>
+          <code class="ruby">  # @date 4.26.2017</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="96">
           
           
-          <code class="ruby">  # @date 3.23.2017</code>
+          <code class="ruby">  # @param - start_date (string), end_date (string)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="97">
           
           
-          <code class="ruby">  # @author Tracy A. McCormick</code>
+          <code class="ruby">  # @return boolean</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="98">
           
           
-          <code class="ruby">  # @param date (date): sets to today by default</code>
+          <code class="ruby">  # converts date string to date object and checks if current date set in @date</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="99">
           
           
-          <code class="ruby">  # @param resource (hash): sets type and id, doesn&#39;t have to exist</code>
+          <code class="ruby">  # is in that range.</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="100">
-          
-          
-          <code class="ruby">  # @return (boolean) - true or false of existance</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="101">
-          
-          
-          <code class="ruby">  # checks if a record exists</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="102">
+        <li class="covered" data-hits="1" data-linenumber="100">
           <span class="hits">1</span>
           
-          <code class="ruby">  def special_hours_exists?(resource)</code>
+          <code class="ruby">  def date_in_range(start_date, end_date)</code>
         </li>
       
-        <li class="covered" data-hits="68" data-linenumber="103">
-          <span class="hits">68</span>
+        <li class="covered" data-hits="57" data-linenumber="101">
+          <span class="hits">57</span>
           
-          <code class="ruby">    return false unless resource.special_hours.count &gt; 0</code>
+          <code class="ruby">    Date.strptime(@date, DATE_FORMAT).between?(Date.parse(start_date), Date.parse(end_date))</code>
         </li>
       
-        <li class="covered" data-hits="46" data-linenumber="104">
-          <span class="hits">46</span>
-          
-          <code class="ruby">    resource.special_hours.each do |hour|</code>
-        </li>
-      
-        <li class="covered" data-hits="46" data-linenumber="105">
-          <span class="hits">46</span>
-          
-          <code class="ruby">      next unless date_in_range(hour.start_date.to_s, hour.end_date.to_s)</code>
-        </li>
-      
-        <li class="covered" data-hits="11" data-linenumber="106">
-          <span class="hits">11</span>
-          
-          <code class="ruby">      return true</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="107">
-          
-          
-          <code class="ruby">    end</code>
-        </li>
-      
-        <li class="covered" data-hits="35" data-linenumber="108">
-          <span class="hits">35</span>
-          
-          <code class="ruby">    false</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="109">
+        <li class="never" data-hits="" data-linenumber="102">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="110">
+        <li class="never" data-hits="" data-linenumber="103">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="111">
+        <li class="never" data-hits="" data-linenumber="104">
           
           
-          <code class="ruby">  # find_special_hours</code>
+          <code class="ruby">  # special_hour_exists</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="112">
+        <li class="never" data-hits="" data-linenumber="105">
           
           
           <code class="ruby">  # @author David J. Davis</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="113">
+        <li class="never" data-hits="" data-linenumber="106">
+          
+          
+          <code class="ruby">  # @date 3.23.2017</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="107">
           
           
           <code class="ruby">  # @author Tracy A. McCormick</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="114">
+        <li class="never" data-hits="" data-linenumber="108">
           
           
-          <code class="ruby">  # @date 3.27.2017</code>
+          <code class="ruby">  # @param date (date): sets to today by default</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="115">
+        <li class="never" data-hits="" data-linenumber="109">
           
           
-          <code class="ruby">  # @param - date (date): sets to today by default</code>
+          <code class="ruby">  # @param resource (hash): sets type and id, doesn&#39;t have to exist</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="116">
+        <li class="never" data-hits="" data-linenumber="110">
           
           
-          <code class="ruby">  # @param - resource (hash): sets type and id, doesn&#39;t have to exist</code>
+          <code class="ruby">  # @return (boolean) - true or false of existance</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="111">
+          
+          
+          <code class="ruby">  # checks if a record exists</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="112">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def special_hours_exists?(resource)</code>
+        </li>
+      
+        <li class="covered" data-hits="68" data-linenumber="113">
+          <span class="hits">68</span>
+          
+          <code class="ruby">    return false unless resource.special_hours.count &gt; 0</code>
+        </li>
+      
+        <li class="covered" data-hits="46" data-linenumber="114">
+          <span class="hits">46</span>
+          
+          <code class="ruby">    resource.special_hours.each do |hour|</code>
+        </li>
+      
+        <li class="covered" data-hits="46" data-linenumber="115">
+          <span class="hits">46</span>
+          
+          <code class="ruby">      next unless date_in_range(hour.start_date.to_s, hour.end_date.to_s)</code>
+        </li>
+      
+        <li class="covered" data-hits="11" data-linenumber="116">
+          <span class="hits">11</span>
+          
+          <code class="ruby">      return true</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="117">
           
           
-          <code class="ruby">  # @return (boolean) - the record from database</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="118">
-          
-          
-          <code class="ruby">  # gets the special hours from the database</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="119">
-          <span class="hits">1</span>
-          
-          <code class="ruby">  def find_special_hours(resource)</code>
-        </li>
-      
-        <li class="covered" data-hits="11" data-linenumber="120">
-          <span class="hits">11</span>
-          
-          <code class="ruby">    resource.special_hours.each do |hour|</code>
-        </li>
-      
-        <li class="covered" data-hits="11" data-linenumber="121">
-          <span class="hits">11</span>
-          
-          <code class="ruby">      next unless date_in_range(hour.start_date.to_s, hour.end_date.to_s)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="122">
-          
-          
-          <code class="ruby">      return { open_time: hour.hr_open_time,</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="123">
-          
-          
-          <code class="ruby">               close_time: hour.hr_close_time,</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="124">
-          
-          
-          <code class="ruby">               open_close_time: hour.open_close_time,</code>
-        </li>
-      
-        <li class="covered" data-hits="11" data-linenumber="125">
-          <span class="hits">11</span>
-          
-          <code class="ruby">               comment: hour.comment }</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="126">
-          
-          
           <code class="ruby">    end</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="127">
+        <li class="covered" data-hits="35" data-linenumber="118">
+          <span class="hits">35</span>
           
-          
-          <code class="ruby">    { open_time: nil, close_time: nil, open_close_time: nil, comment: nil }</code>
+          <code class="ruby">    false</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="128">
+        <li class="never" data-hits="" data-linenumber="119">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="129">
+        <li class="never" data-hits="" data-linenumber="120">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="130">
+        <li class="never" data-hits="" data-linenumber="121">
           
           
-          <code class="ruby">  # find_hours</code>
+          <code class="ruby">  # find_special_hours</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="131">
+        <li class="never" data-hits="" data-linenumber="122">
+          
+          
+          <code class="ruby">  # @author David J. Davis</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="123">
           
           
           <code class="ruby">  # @author Tracy A. McCormick</code>
         </li>
       
+        <li class="never" data-hits="" data-linenumber="124">
+          
+          
+          <code class="ruby">  # @date 3.27.2017</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="125">
+          
+          
+          <code class="ruby">  # @param - date (date): sets to today by default</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="126">
+          
+          
+          <code class="ruby">  # @param - resource (hash): sets type and id, doesn&#39;t have to exist</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="127">
+          
+          
+          <code class="ruby">  # @return (boolean) - the record from database</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="128">
+          
+          
+          <code class="ruby">  # gets the special hours from the database</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="129">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def find_special_hours(resource)</code>
+        </li>
+      
+        <li class="covered" data-hits="11" data-linenumber="130">
+          <span class="hits">11</span>
+          
+          <code class="ruby">    resource.special_hours.each do |hour|</code>
+        </li>
+      
+        <li class="covered" data-hits="11" data-linenumber="131">
+          <span class="hits">11</span>
+          
+          <code class="ruby">      next unless date_in_range(hour.start_date.to_s, hour.end_date.to_s)</code>
+        </li>
+      
         <li class="never" data-hits="" data-linenumber="132">
           
           
-          <code class="ruby">  # @date 4.26.2017</code>
+          <code class="ruby">      return { open_time: hour.hr_open_time,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="133">
           
           
-          <code class="ruby">  # @param - item: item is a object of either library or department</code>
+          <code class="ruby">               close_time: hour.hr_close_time,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="134">
           
           
-          <code class="ruby">  # @return hash - containing open_time, close_time and a comment</code>
+          <code class="ruby">               open_close_time: hour.open_close_time,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="135">
+        <li class="covered" data-hits="11" data-linenumber="135">
+          <span class="hits">11</span>
           
-          
-          <code class="ruby">  # gets the normal hours from the database</code>
+          <code class="ruby">               comment: hour.comment }</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="136">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="136">
           
-          <code class="ruby">  def find_hours(item)</code>
+          
+          <code class="ruby">    end</code>
         </li>
       
-        <li class="covered" data-hits="68" data-linenumber="137">
-          <span class="hits">68</span>
+        <li class="missed" data-hits="0" data-linenumber="137">
           
-          <code class="ruby">    return find_special_hours(item) if special_hours_exists?(item)</code>
+          
+          <code class="ruby">    { open_time: nil, close_time: nil, open_close_time: nil, comment: nil }</code>
         </li>
       
-        <li class="covered" data-hits="57" data-linenumber="138">
-          <span class="hits">57</span>
-          
-          <code class="ruby">    find_normal_hours item</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="139">
+        <li class="never" data-hits="" data-linenumber="138">
           
           
           <code class="ruby">  end</code>
         </li>
       
+        <li class="never" data-hits="" data-linenumber="139">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
         <li class="never" data-hits="" data-linenumber="140">
+          
+          
+          <code class="ruby">  # find_hours</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="141">
+          
+          
+          <code class="ruby">  # @author Tracy A. McCormick</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="142">
+          
+          
+          <code class="ruby">  # @date 4.26.2017</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="143">
+          
+          
+          <code class="ruby">  # @param - item: item is a object of either library or department</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="144">
+          
+          
+          <code class="ruby">  # @return hash - containing open_time, close_time and a comment</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="145">
+          
+          
+          <code class="ruby">  # gets the normal hours from the database</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="146">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def find_hours(item)</code>
+        </li>
+      
+        <li class="covered" data-hits="68" data-linenumber="147">
+          <span class="hits">68</span>
+          
+          <code class="ruby">    return find_special_hours(item) if special_hours_exists?(item)</code>
+        </li>
+      
+        <li class="covered" data-hits="57" data-linenumber="148">
+          <span class="hits">57</span>
+          
+          <code class="ruby">    find_normal_hours item</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="149">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="150">
           
           
           <code class="ruby">end</code>
@@ -10121,7 +10103,7 @@
         <li class="covered" data-hits="7" data-linenumber="90">
           <span class="hits">7</span>
           
-          <code class="ruby">    params.select { |key,value| allowed_keys.include?(key) }</code>
+          <code class="ruby">    params.select { |key,_value| allowed_keys.include?(key) }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="91">
