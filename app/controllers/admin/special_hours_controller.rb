@@ -161,9 +161,9 @@ class Admin::SpecialHoursController < AdminController
   # Checks params to see if user has access to the library or department they
   # are trying to set
   def check_param_resource_access
-    type = params[:special_hour][:special_type]
-    id = params[:special_hour][:special_id]
-    check_resource_access = @check_access.granular_permission? type,id 
+    special_type = params[:special_hour][:special_type]
+    special_id = params[:special_hour][:special_id]
+    check_resource_access = (@check_access.granular_permission? special_type, special_id)
     error_str = "You do not have permission to modify these special hours."
     redirect_to special_hours_url, error: error_str unless check_resource_access
   end
@@ -177,7 +177,8 @@ class Admin::SpecialHoursController < AdminController
   # department. Also checks to see if they are admin. If neither of these are
   # true it redirects them back to there previous page and shows them an error.
   def authenticate_rights
-    check_resource_access = @check_access.granular_permission? @special_hour.special_type, @special_hour.special_id
+    check_resource_access = (@check_access.granular_permission? @special_hour.special_type, @special_hour.special_id)
+    @access = check_resource_access
     error_str = 'You do not have permission create or modify these special hours.'
     redirect_to special_hours_url, error: error_str unless check_resource_access
   end

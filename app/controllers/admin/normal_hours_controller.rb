@@ -5,8 +5,8 @@
 
 class Admin::NormalHoursController < AdminController
 
-  before_action :set_normal_hour, only: %i[show edit update destroy]
-  before_action :authenticate_rights, only: %i[show edit update destroy]
+  before_action :set_normal_hour, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_rights, only: [:show, :edit, :update, :destroy]
   before_action :check_param_resource_access, only: [:create]
 
   # GET /admin/normal_hours
@@ -47,18 +47,12 @@ class Admin::NormalHoursController < AdminController
   # PATCH/PUT /admin/normal_hours/1.json
   def update
     respond_to do |format|
-      if check_param_resource_access
-        if @normal_hour.update(normal_hour_params)
-          notice_str = 'Normal hour was successfully updated.'
-          format.html { redirect_to @normal_hour, notice: notice_str }
-          format.json { render :show, status: :ok, location: @normal_hour }
-        else
-          format.html { render :edit }
-          format.json { render json: @normal_hour.errors, status: :unprocessable_entity }
-        end
+      if @normal_hour.update(normal_hour_params)
+        notice_str = 'Normal hour was successfully updated.'
+        format.html { redirect_to @normal_hour, notice: notice_str }
+        format.json { render :show, status: :ok, location: @normal_hour }
       else
-        error_str = 'Error: Access to this department or library has been denied.'
-        format.html { redirect_back(fallback_location: normal_hours_url, error: error_str) }
+        format.html { render :edit }
         format.json { render json: @normal_hour.errors, status: :unprocessable_entity }
       end
     end
@@ -82,20 +76,6 @@ class Admin::NormalHoursController < AdminController
     @normal_hour = NormalHour.find(params[:id])
   end
 
-  # check_resource_access
-  # @author Tracy A. McCormick
-  # @date 2/22/2017
-  #
-  # @description
-  # Checks to see if the user has access to the library or department.
-  def check_resource_access
-    return true if is_admin?
-    check_access = CheckAccess.new
-    check_access.depts = @user_depts
-    check_access.libs = @user_libs
-    check_access.check(@normal_hour.resource_type.to_s, @normal_hour.resource_id.to_i)
-  end
-
   # check_param_resource_access
   # @author Tracy A. McCormick
   # @date 2/28/2017
@@ -104,25 +84,22 @@ class Admin::NormalHoursController < AdminController
   # Checks params to see if user has access to the library or department they
   # are trying to set
   def check_param_resource_access
-    return true if is_admin?
-    check_access = CheckAccess.new
-    check_access.depts = @user_depts
-    check_access.libs = @user_libs
-    check_access.check(params[:normal_hour][:resource_type], params[:normal_hour][:resource_id])
+    r_type = params[:normal_hour][:resource_type]
+    r_id = params[:normal_hour][:resource_id]
+    check_resource_access = (@check_access.granular_permission? r_type, r_id)
+    error_str = 'You do not have permission to modify these normal hours.'
+    redirect_to normal_hours_url, error: error_str unless check_resource_access
   end
 
   # authenticate_rights
-  # @author Tracy A. McCormick
-  # @date 2/22/2017
-  #
+  # @author David J. Davis
+  # @date 10-20-2017
   # @description
-  # Calls user_has_access to see if they have access to the library or
-  # department. Also checks to see if they are admin. If neither of these are
-  # true it redirects them back to there previous page and shows them an error.
+  # check_access granular permissions check and error routing
   def authenticate_rights
-    return true if check_resource_access
-    error_str = 'You do not have permission to access this resource.'
-    redirect_back(fallback_location: normal_hours_url, error: error_str)
+    check_resource_access = (@check_access.granular_permission? @normal_hour.resource_type, @normal_hour.resource_id)
+    error_str = 'You do not have permission create or modify these normal hours.'
+    redirect_to normal_hours_url, error: error_str unless check_resource_access
   end
 
   # Never trust parameters from the scary internet,
