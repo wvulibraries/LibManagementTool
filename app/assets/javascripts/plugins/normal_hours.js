@@ -10,13 +10,11 @@ $(document).on('change', '#normal_hour_resource_type', function() {
 });
 
 function hide_select(elm){
-  console.log('hide select working' + " " + elm);
   elm.hide();
   elm.find('select').hide().prop('disabled', true);
 }
 
 function show_select(elm){
-  console.log('show select working' + " " + elm);
   elm.show();
   elm.find('select').show().prop('disabled', false);
 }
