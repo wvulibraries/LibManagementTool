@@ -137,7 +137,7 @@ class Admin::SpecialHoursController < AdminController
   # returns true if date_to_check is found in any set special_hour
   def check_date date_to_check
     check = Date.parse(date_to_check)
-    date_exists = SpecialHour.where('special_id = ?', params[:special_hour][:special_id]).where('special_type = ?', params[:special_hour][:special_type]).where('start_date <= ?', check).where('end_date >= ?', check).exists?
+    SpecialHour.where('special_id = ?', params[:special_hour][:special_id]).where('special_type = ?', params[:special_hour][:special_type]).where('start_date <= ?', check).where('end_date >= ?', check).exists?
   end
 
   # check_param_resource_access
