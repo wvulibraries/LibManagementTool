@@ -38,20 +38,20 @@ class CheckAccess
   end
 
   def library_permission? resource_id
-    if admin? || !libraries.nil? && (libraries.include? resource_id)
+    if admin? || (!libraries.nil? && (libraries.include? resource_id.to_i))
       true
-    else 
+    else
       false
-    end 
-  end 
+    end
+  end
 
   def department_permission? resource_id
-    if admin? || !departments.nil? && (departments.include? resource_id)
+    if admin? || (!departments.nil? && (departments.include? resource_id.to_i))
       true
-    else 
+    else
       false
-    end 
-  end 
+    end
+  end
 
   def granular_permission? type, resource_id
     if type == 'library'
@@ -64,11 +64,13 @@ class CheckAccess
   end
 
   def libraries
-    @user_permission.libraries.to_a
+    libs = @user_permission.libraries.to_a
+    libs.map!(&:to_i)
   end
 
   def departments
-    @user_permission.departments.to_a
+    depts = @user_permission.departments.to_a
+    depts.map!(&:to_i)
   end
 
   private
