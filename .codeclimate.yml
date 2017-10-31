@@ -1,0 +1,5 @@
+exclude_paths:
+- "tests/"
+- "spec/"
+- "vendor/"
+- "app/assets/stylesheets/wvu_brand_theme/"
