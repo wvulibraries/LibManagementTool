@@ -12,13 +12,9 @@ rvm:
   - 2.3.1
 before_script:
   - mysql -e 'create database LibraryManagementTool_test'
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
 script:
   - bundle install
   - RAILS_ENV=test bundle exec rake db:reset
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - bundle exec rake db:test:prepare test
-after_script:
-  - ./cc-test-reporter after-build --debug --exit-code $TRAVIS_TEST_RESULT
+  - CODECLIMATE_REPO_TOKEN=ca59e1eafbb34bd7ae0b3bac2710906a72ba7b1fa06c4c6dd9001427ccb20303 bundle exec codeclimate-test-reporter

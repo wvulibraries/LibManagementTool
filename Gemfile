@@ -30,6 +30,7 @@ gem "simple_calendar", "~> 2.0"
 # TEST ONLY GEMS
 group :test  do
   gem 'simplecov', :require => false
+  gem "codeclimate-test-reporter", "~> 1.0.0"
   gem 'simplecov-shield'
   gem 'rails-controller-testing'
 end
