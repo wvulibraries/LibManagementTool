@@ -21,7 +21,6 @@ ratings:
   - app/**
   - lib/**
   - "**.rb"
-  - "**.go"
 exclude_paths:
   - "tests/"
   - "spec/"
