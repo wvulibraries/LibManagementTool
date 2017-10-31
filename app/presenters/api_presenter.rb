@@ -84,6 +84,6 @@ class ApiPresenter < HoursPresenter
   # of allowed parameters.
   def validated_params(params)
     allowed_keys = [:id, :type, :date_start, :date_end]
-    params.select { |key,value| allowed_keys.include?(key) }
+    params.select { |key,_value| allowed_keys.include?(key) }
   end
 end
