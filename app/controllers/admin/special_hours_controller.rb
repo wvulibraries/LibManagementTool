@@ -81,19 +81,6 @@ class Admin::SpecialHoursController < AdminController
     @special_hour = SpecialHour.find(params[:id])
   end
 
-  # check_date_range
-  # @author : David J. Davis
-  # @date 10/12/2017
-  #
-  # @description
-  # Throws an error if the end_date is before start_date.
-  def check_date_range
-    unless dates_present? && valid_date_range?
-      error_str = 'Dates are not present or start date is after the end date.'
-      redirect_to special_hours_url, error: error_str
-    end
-  end
-
   # check_time_range
   # @author : David J. Davis
   # @date 10/29/2017
