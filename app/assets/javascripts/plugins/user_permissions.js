@@ -1,4 +1,4 @@
-$(document).on('ready turbolinks:load', function () {
+$( function () {
   if($('.libraries_select').length){
     $('.libraries_select').select2();
   }

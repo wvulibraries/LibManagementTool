@@ -8,7 +8,6 @@
 // ----------------------------------------------------------------
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 
 
 //  Responsive Table JS

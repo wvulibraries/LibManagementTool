@@ -1,4 +1,4 @@
-$(document).on("load turbolinks:load",function(){
+$(function(){
   if($('table').length){
     $('table').cardtable();
   }
