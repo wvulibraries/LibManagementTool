@@ -19,7 +19,7 @@ function show_select(elm){
   elm.find('select').show().prop('disabled', false);
 }
 
-$(document).on("turbolinks:load ready", function() {
+$(function() {
   if ($('#normal_hour_resource_type').length) {
     $('#normal_hour_resource_type').change();
   }

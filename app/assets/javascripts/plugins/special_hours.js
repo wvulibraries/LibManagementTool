@@ -9,7 +9,7 @@ $(document).on('change', '#special_hour_special_type', function() {
   }
 });
 
-$(document).on("turbolinks:load ready", function() {
+$(function() {
   if ($('#special_hour_special_type').length) {
     $('#special_hour_special_type').change();
   }

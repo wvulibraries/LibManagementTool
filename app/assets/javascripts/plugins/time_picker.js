@@ -1,4 +1,4 @@
-$(document).on("turbolinks:load ready", function() {
+$(function() {
   if ($('.timepicker').length) {
     return $('.timepicker').pickatime({
       interval: 60,
